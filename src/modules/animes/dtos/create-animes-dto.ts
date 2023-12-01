@@ -1,4 +1,5 @@
-import { IsString } from 'class-validator';
+import { IsString, IsBoolean } from 'class-validator';
+import { CreateCategoriesDto } from 'src/modules/categories/dtos/create-categories-dto';
 
 export class CreateAnimesDto {
   @IsString()
@@ -10,9 +11,8 @@ export class CreateAnimesDto {
   @IsString()
   readonly thumbnailUrl: string;
 
-  @IsString()
+  @IsBoolean()
   readonly feature: boolean;
 
-  @IsString()
-  readonly categoryId: number;
+  readonly category: CreateCategoriesDto;
 }
