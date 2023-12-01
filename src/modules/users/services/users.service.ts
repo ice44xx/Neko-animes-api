@@ -1,11 +1,11 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { Users } from './entities/users.entity';
+import { Users } from '../entities/users.entity';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
-import { CreateUsersDto } from './dtos/create-users-dto';
-import { UpdateUsersPasswordDto } from './dtos/update-users-password-dto';
+import { CreateUsersDto } from '../dtos/create-users-dto';
+import { UpdateUsersPasswordDto } from '../dtos/update-users-password-dto';
 import * as bcrypt from 'bcrypt';
-import { UpdateUsersDto } from './dtos/update-users-dto';
+import { UpdateUsersDto } from '../dtos/update-users-dto';
 
 @Injectable()
 export class UsersService {
