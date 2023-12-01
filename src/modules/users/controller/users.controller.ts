@@ -19,9 +19,9 @@ export class UsersController {
   constructor(private readonly userService: UsersService) {}
 
   @Get()
-  async findAll(@Res() response) {
+  async findAll(@Res() res) {
     const users = await this.userService.findAll();
-    return response.status(201).send(users);
+    return res.status(201).send(users);
   }
 
   @Get(':id')

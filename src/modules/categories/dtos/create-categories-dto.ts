@@ -1,9 +1,9 @@
-import { IsString } from 'class-validator';
+import { IsString, IsNumber } from 'class-validator';
 
 export class CreateCategoriesDto {
   @IsString()
   readonly name: string;
 
-  @IsString()
+  @IsNumber()
   readonly position: number;
 }
