@@ -18,6 +18,8 @@ export class Animes {
   @Column()
   feature: boolean;
 
-  @ManyToMany(() => Categories, (category) => category.animes)
+  @ManyToMany(() => Categories, (category) => category.animes, {
+    cascade: true,
+  })
   categories: Categories[];
 }

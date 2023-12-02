@@ -1,7 +1,7 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException, BadRequestException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Animes } from '../entities/animes.entity';
-import { Repository } from 'typeorm';
+import { Repository, In } from 'typeorm';
 import { CreateAnimesDto } from '../dtos/create-animes-dto';
 import { UpdateAnimesDto } from '../dtos/update-animes-dto';
 import { Categories } from 'src/modules/categories/entities/categories.entity';
@@ -22,6 +22,7 @@ export class AnimesService {
 
   async findByName(name: string) {
     const anime = await this.animesRepository.findOne({
+      relations: ['categories'],
       where: { name },
     });
     if (!anime) {
@@ -32,6 +33,7 @@ export class AnimesService {
 
   async findById(id: number) {
     const anime = await this.animesRepository.findOne({
+      relations: ['categories'],
       where: { id },
     });
     if (!anime) {
@@ -41,28 +43,28 @@ export class AnimesService {
   }
 
   async create(createAnimesDto: CreateAnimesDto) {
-    const { name, categoryName, ...otherAnimeData } = createAnimesDto;
+    let { categoryName, ...otherData } = createAnimesDto;
 
-    let category = await this.categoriesRepository.findOne({
-      where: { name: categoryName },
+    categoryName = categoryName.map((name) => name.toLocaleLowerCase());
+
+    const categories = await this.categoriesRepository.find({
+      where: { name: In(categoryName) },
     });
-    if (!category) {
-      category = this.categoriesRepository.create({ name: categoryName });
+
+    if (categories.length !== categoryName.length) {
+      throw new BadRequestException('Algumas categorias fornecidas não existem.');
     }
 
-    const anime = this.animesRepository.create({
-      name,
-      categories: [category],
-      ...otherAnimeData,
-    });
+    const anime = this.animesRepository.create({ ...otherData });
 
-    const savedAnime = await this.animesRepository.save(anime);
+    anime.categories = categories;
 
-    return savedAnime;
+    return await this.animesRepository.save(anime);
   }
 
   async update(id: number, updateAnimesDto: UpdateAnimesDto) {
-    const { categoryName, ...otherAnimeData } = updateAnimesDto;
+    let { categoryName, ...otherData } = updateAnimesDto;
+
     const anime = await this.animesRepository.findOne({
       where: { id },
     });
@@ -70,19 +72,19 @@ export class AnimesService {
       throw new NotFoundException(`Anime ${id} não encontrado.`);
     }
 
-    const category = await this.categoriesRepository.findOne({
-      where: { name: categoryName },
+    categoryName = categoryName.map((name) => name.toLocaleLowerCase());
+
+    const categories = await this.categoriesRepository.find({
+      where: { name: In(categoryName) },
     });
 
-    if (!category) {
-      throw new NotFoundException(
-        `Categoria ${updateAnimesDto.categoryName} não encontrada.`,
-      );
+    if (categories.length !== categoryName.length) {
+      throw new BadRequestException('Algumas categorias fornecidas não existem.');
     }
 
-    anime.categories = [category];
+    anime.categories = categories;
+    Object.assign(anime, otherData);
 
-    Object.assign(anime, otherAnimeData);
     return this.animesRepository.save(anime);
   }
 

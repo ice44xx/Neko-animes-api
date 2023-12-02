@@ -1,4 +1,4 @@
-import { IsString, IsBoolean, ValidateNested } from 'class-validator';
+import { IsString, IsBoolean, IsArray, ValidateNested } from 'class-validator';
 import { Type } from 'class-transformer';
 import { CreateCategoriesDto } from 'src/modules/categories/dtos/create-categories-dto';
 
@@ -15,8 +15,9 @@ export class CreateAnimesDto {
   @IsBoolean()
   readonly feature: boolean;
 
-  @IsString()
-  readonly categoryName: string;
+  @IsArray()
+  @IsString({ each: true })
+  readonly categoryName: string[];
 
   @ValidateNested({ each: true })
   @Type(() => CreateCategoriesDto)

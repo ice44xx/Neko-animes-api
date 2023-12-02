@@ -23,15 +23,15 @@ export class AnimesController {
     return res.status(201).send(anime);
   }
 
-  @Get(':name')
-  async findByName(@Param('name') name: string, @Res() res) {
-    const anime = await this.animesService.findByName(name);
-    return res.status(201).send(anime);
-  }
-
   @Get(':id')
   async findById(@Param('id') id: number, @Res() res) {
     const anime = await this.animesService.findById(id);
+    return res.status(201).send(anime);
+  }
+
+  @Get('name/:name')
+  async findByName(@Param('name') name: string, @Res() res) {
+    const anime = await this.animesService.findByName(name);
     return res.status(201).send(anime);
   }
 

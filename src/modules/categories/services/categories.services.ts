@@ -13,7 +13,7 @@ export class CategoriesService {
   ) {}
 
   async findAll() {
-    return this.categoriesRepository.find();
+    return this.categoriesRepository.find({ relations: ['animes'] });
   }
 
   async findByName(name: string) {
@@ -35,7 +35,7 @@ export class CategoriesService {
     return this.categoriesRepository.save(newCategory);
   }
 
-  async update(id: number, { name, position }: UpdateCategoryDto) {
+  async update(id: number, { name }: UpdateCategoryDto) {
     const nameLower = name.toLocaleLowerCase();
 
     const categoryUpdate = await this.categoriesRepository.findOne({
@@ -43,7 +43,6 @@ export class CategoriesService {
     });
 
     categoryUpdate.name = nameLower;
-    categoryUpdate.position = position;
 
     const category = await this.categoriesRepository.save(categoryUpdate);
     return category;
