@@ -1,5 +1,5 @@
 import { Categories } from 'src/modules/categories/entities/categories.entity';
-import { Entity, Column, PrimaryGeneratedColumn, ManyToMany } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, ManyToMany, JoinTable } from 'typeorm';
 
 @Entity('animes')
 export class Animes {
@@ -18,8 +18,6 @@ export class Animes {
   @Column()
   feature: boolean;
 
-  @ManyToMany(() => Categories, (category) => category.animes, {
-    cascade: true,
-  })
+  @ManyToMany(() => Categories, (category) => category.animes)
   categories: Categories[];
 }
