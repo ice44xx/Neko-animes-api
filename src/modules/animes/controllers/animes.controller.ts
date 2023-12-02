@@ -9,7 +9,7 @@ import {
   Put,
   Res,
 } from '@nestjs/common';
-import { AnimesService } from '../services/animes.services';
+import { AnimesService } from '../services/animes.service';
 import { CreateAnimesDto } from '../dtos/create-animes-dto';
 import { UpdateAnimesDto } from '../dtos/update-animes-dto';
 

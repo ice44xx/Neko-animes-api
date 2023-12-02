@@ -9,7 +9,7 @@ import {
   Put,
   Res,
 } from '@nestjs/common';
-import { CategoriesService } from '../services/categories.services';
+import { CategoriesService } from '../services/categories.service';
 import { CreateCategoriesDto } from '../dtos/create-categories-dto';
 import { UpdateCategoryDto } from '../dtos/update-categories-dto';
 
