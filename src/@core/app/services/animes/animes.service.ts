@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException, BadRequestException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Animes } from '../../../domain/entities/animes/animes.entity';
-import { Repository, In } from 'typeorm';
+import { Repository, In, Like } from 'typeorm';
 import { CreateAnimesDto } from '../../dto/requests/animes/create-animes-dto';
 import { UpdateAnimesDto } from '../../dto/requests/animes/update-animes-dto';
 import { Categories } from 'src/@core/domain/entities/categories/categories.entity';
@@ -16,14 +16,16 @@ export class AnimesService {
   ) {}
 
   async findAll() {
-    const anime = await this.animesRepository.find({ relations: ['categories'] });
+    const anime = await this.animesRepository.find({
+      relations: ['categories', 'season'],
+    });
     return anime;
   }
 
   async findByName(name: string) {
     const anime = await this.animesRepository.findOne({
       relations: ['categories'],
-      where: { name },
+      where: { name: Like(`%${name.toLocaleLowerCase().trim()}%`) },
     });
     if (!anime) {
       throw new NotFoundException(`Anime ${name} não encontrado.`);
@@ -43,7 +45,7 @@ export class AnimesService {
   }
 
   async create(createAnimesDto: CreateAnimesDto) {
-    let { categoryName, ...otherData } = createAnimesDto;
+    let { categoryName, name, ...otherData } = createAnimesDto;
 
     categoryName = categoryName.map((name) => name.toLocaleLowerCase());
 
@@ -55,7 +57,9 @@ export class AnimesService {
       throw new BadRequestException('Algumas categorias fornecidas não existem.');
     }
 
-    const anime = this.animesRepository.create({ ...otherData });
+    const nameLowerCase = name.toLocaleLowerCase().trim();
+
+    const anime = this.animesRepository.create({ name: nameLowerCase, ...otherData });
 
     anime.categories = categories;
 
@@ -63,7 +67,7 @@ export class AnimesService {
   }
 
   async update(id: number, updateAnimesDto: UpdateAnimesDto) {
-    let { categoryName, ...otherData } = updateAnimesDto;
+    let { categoryName, name, ...otherData } = updateAnimesDto;
 
     const anime = await this.animesRepository.findOne({
       where: { id },
@@ -82,7 +86,10 @@ export class AnimesService {
       throw new BadRequestException('Algumas categorias fornecidas não existem.');
     }
 
+    const nameLowerCase = name.toLocaleLowerCase().trim();
+
     anime.categories = categories;
+    anime.name = nameLowerCase;
     Object.assign(anime, otherData);
 
     return this.animesRepository.save(anime);

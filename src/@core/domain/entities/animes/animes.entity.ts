@@ -1,5 +1,14 @@
-import { Entity, Column, PrimaryGeneratedColumn, ManyToMany, JoinTable } from 'typeorm';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  ManyToMany,
+  JoinTable,
+  ManyToOne,
+  OneToMany,
+} from 'typeorm';
 import { Categories } from '../categories/categories.entity';
+import { Seasons } from '../seasons/seasons.entity';
 
 @Entity('animes')
 export class Animes {
@@ -22,4 +31,7 @@ export class Animes {
     cascade: true,
   })
   categories: Categories[];
+
+  @OneToMany(() => Seasons, (season) => season.anime, { eager: true })
+  season: Seasons[];
 }

@@ -23,6 +23,12 @@ export class EpisodesController {
     return episodes;
   }
 
+  @Get(':name')
+  async findByName(@Res() res, @Param('name') name: string) {
+    const episode = await this.episodesService.findByName(name);
+    return res.status(201).send(episode);
+  }
+
   @Post('create')
   create(@Body() createEpisodesDto: CreateEpisodesDto) {
     const episode = this.episodesService.create(createEpisodesDto);
