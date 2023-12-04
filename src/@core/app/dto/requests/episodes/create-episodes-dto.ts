@@ -8,5 +8,8 @@ export class CreateEpisodesDto {
   readonly url: string;
 
   @IsNumber()
-  readonly episodeOrder: string;
+  readonly episodeOrder: number;
+
+  @IsNumber()
+  readonly seasonId: number;
 }
