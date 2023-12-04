@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Like, Repository } from 'typeorm';
 import { Episodes } from '../../../domain/entities/episodes/episodes.entity';
 import { CreateEpisodesDto } from '../../dto/requests/episodes/create-episodes-dto';
 import { Seasons } from 'src/@core/domain/entities/seasons/seasons.entity';
@@ -16,12 +16,32 @@ export class EpisodesService {
   ) {}
 
   async findAll() {
-    const episodes = await this.episodesRepository.find({ relations: ['season'] });
+    const episodes = await this.episodesRepository
+      .createQueryBuilder('episode')
+      .select([
+        'episode.id AS id',
+        'episode.name AS name',
+        'episode.url AS url',
+        'episode.episodeOrder AS episodeOrder',
+        'season.name AS season',
+      ])
+      .leftJoin('episode.season', 'season')
+      .getRawMany();
     return episodes;
   }
 
+  async findByName(name: string) {
+    const episode = await this.episodesRepository.findOne({
+      where: { name: Like(`%${name.toLocaleLowerCase().trim()}%`) },
+    });
+    if (!episode) {
+      throw new NotFoundException(`Episódio ${name} não encontrado`);
+    }
+    return episode;
+  }
+
   async create(createEpisodesDto: CreateEpisodesDto) {
-    const { seasonId, ...episodeData } = createEpisodesDto;
+    const { seasonId, name, episodeOrder, url } = createEpisodesDto;
 
     const season = await this.seasonsRepository.findOne({
       where: { id: seasonId },
@@ -31,8 +51,12 @@ export class EpisodesService {
       throw new NotFoundException(`Temporada ${seasonId} não encontrada`);
     }
 
+    const nameLowerCase = name.toLocaleLowerCase().trim();
+
     const newEpisode = this.episodesRepository.create({
-      ...episodeData,
+      name: nameLowerCase,
+      episodeOrder,
+      url,
       season,
     });
 
@@ -50,7 +74,9 @@ export class EpisodesService {
       throw new NotFoundException(`Episódio ${id} não encontrado`);
     }
 
-    const { seasonId, ...otherFields } = updateEpisodesDto;
+    const { seasonId, name, ...otherFields } = updateEpisodesDto;
+
+    const nameLowerCase = name ? name.toLocaleLowerCase().trim() : undefined;
 
     const season = await this.seasonsRepository.findOne({ where: { id: seasonId } });
 
@@ -59,6 +85,10 @@ export class EpisodesService {
     }
 
     episode.season = season;
+
+    if (nameLowerCase) {
+      episode.name = nameLowerCase;
+    }
 
     if (otherFields) {
       Object.assign(episode, otherFields);

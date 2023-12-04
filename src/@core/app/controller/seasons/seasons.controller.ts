@@ -36,9 +36,13 @@ export class SeasonsController {
   }
 
   @Put(':id')
-  async update(@Body() updateSeasonsDto: UpdateSeasonsDto, @Param('id') id: number) {
-    const season = this.seasonsService.update(id, updateSeasonsDto);
-    return season;
+  async update(
+    @Res() res,
+    @Body() updateSeasonsDto: UpdateSeasonsDto,
+    @Param('id') id: number,
+  ) {
+    this.seasonsService.update(id, updateSeasonsDto);
+    return res.status(201).json({ message: 'Temporada atualizada' });
   }
 
   @Delete(':id')

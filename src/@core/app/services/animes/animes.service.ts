@@ -16,7 +16,9 @@ export class AnimesService {
   ) {}
 
   async findAll() {
-    const anime = await this.animesRepository.find({ relations: ['categories'] });
+    const anime = await this.animesRepository.find({
+      relations: ['categories', 'season'],
+    });
     return anime;
   }
 
