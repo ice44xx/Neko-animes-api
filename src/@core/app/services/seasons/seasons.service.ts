@@ -3,7 +3,6 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Seasons } from '../../../domain/entities/seasons/seasons.entity';
 import { CreateSeasonsDto } from '../../dto/requests/seasons/create-seasons-dto';
-import { Like } from 'typeorm';
 import { UpdateSeasonsDto } from '../../dto/requests/seasons/update-seasons-dto';
 import { Animes } from 'src/@core/domain/entities/animes/animes.entity';
 
