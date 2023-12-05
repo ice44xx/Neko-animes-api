@@ -1,5 +1,5 @@
-import { Injectable } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
+import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { UsersService } from '../users/users.service';
 import { ValidateUsersDto } from '../../dto/requests/auth/validate-users-dto';
@@ -16,6 +16,7 @@ export class AuthServices {
 
   async login(user: Users) {
     const payload: UsersPayloadDto = {
+      id: user.id,
       firstName: user.firstName,
       email: user.email,
       userName: user.userName,

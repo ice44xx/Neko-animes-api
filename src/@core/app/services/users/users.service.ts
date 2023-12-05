@@ -1,9 +1,8 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { Users } from '../../../domain/entities/users/users.entity';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CreateUsersDto } from '../../dto/requests/users/create-users-dto';
-import { UpdateUsersPasswordDto } from '../../dto/requests/users/update-users-password-dto';
 import * as bcrypt from 'bcrypt';
 import { UpdateUsersDto } from '../../dto/requests/users/update-users-dto';
 
@@ -51,24 +50,21 @@ export class UsersService {
     return await this.usersRepository.save(user);
   }
 
-  async update(id: number, updateUsersDto: UpdateUsersDto) {
+  async update(userId: number, updateUsersDto: UpdateUsersDto) {
     const user = await this.usersRepository.findOne({
-      where: { id },
+      where: { id: userId },
     });
 
     if (!user) {
-      throw new NotFoundException(`O usuário ${id} não foi encontrado`);
+      throw new NotFoundException(`O usuário ${userId} não foi encontrado`);
     }
 
     Object.assign(user, updateUsersDto);
     return this.usersRepository.save(user);
   }
 
-  async updatePassword(
-    id: number,
-    updateUsersPasswordDto: UpdateUsersPasswordDto,
-    oldPassword: string,
-  ) {
+  /*
+  async updatePassword(id: number, updateUsersDto: UpdateUsersDto) {
     const user = await this.usersRepository.findOne({
       where: { id },
     });
@@ -77,23 +73,23 @@ export class UsersService {
       throw new NotFoundException(`O usuário ${id} não foi encontrado`);
     }
 
-    const isPasswordValid = await bcrypt.compare(oldPassword, user.password);
+    const isPasswordValid = await bcrypt.compare(
+      updateUsersDto.oldpassword,
+      user.password,
+    );
 
     if (!isPasswordValid) {
-      throw new NotFoundException('Senha antiga incorreta');
+      throw new UnauthorizedException('Senha antiga incorreta');
     }
 
-    const { password, ...userData } = updateUsersPasswordDto;
+    const saltRounds = 10;
+    const hashedPassword = await bcrypt.hash(updateUsersDto.password, saltRounds);
+    user.password = hashedPassword;
 
-    if (password) {
-      const saltRounds = 10;
-      const hashedPassword = await bcrypt.hash(password, saltRounds);
-      Object.assign(userData, { password: hashedPassword });
-    }
-
-    const updateUser = await this.usersRepository.save({ ...user, ...userData });
+    const updateUser = await this.usersRepository.save(user);
     return updateUser;
   }
+  */
 
   async remove(id: number) {
     const user = await this.usersRepository.findOne({
