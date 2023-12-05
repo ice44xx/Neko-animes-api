@@ -8,11 +8,12 @@ import {
   Post,
   Put,
   Res,
+  Request,
 } from '@nestjs/common';
 import { UsersService } from '../../services/users/users.service';
 import { CreateUsersDto } from '../../dto/requests/users/create-users-dto';
-import { UpdateUsersPasswordDto } from '../../dto/requests/users/update-users-password-dto';
 import { UpdateUsersDto } from '../../dto/requests/users/update-users-dto';
+import { AuthRequest } from 'src/@core/infra/auth/models/auth-request';
 
 @Controller('users')
 export class UsersController {
@@ -35,25 +36,16 @@ export class UsersController {
     return this.usersService.create(createUsersDto);
   }
 
-  @Put(':id')
+  @Put()
   async update(
-    @Param('id') id: number,
+    @Request() req: AuthRequest,
     @Body() updateUserDto: UpdateUsersDto,
     @Res() res,
   ) {
-    const user = await this.usersService.update(id, updateUserDto);
+    const currentUser = req.user;
+    console.log(currentUser);
+    const user = await this.usersService.update(currentUser.id, updateUserDto);
     return res.status(201).json({ message: 'Usuário atualizado!', user: user });
-  }
-
-  @Put(':id')
-  async updatePassword(
-    @Param('id') id: number,
-    @Body() updateUsersPasswordDto: UpdateUsersPasswordDto,
-    @Body('oldPassword') oldPassword: string,
-    @Res() res,
-  ) {
-    await this.usersService.updatePassword(id, updateUsersPasswordDto, oldPassword);
-    return res.status(201).send({ message: 'Senha atualizada com sucesso!' });
   }
 
   @HttpCode(204)

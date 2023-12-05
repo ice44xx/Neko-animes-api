@@ -12,17 +12,20 @@ import {
 import { CategoriesService } from '../../services/categories/categories.service';
 import { CreateCategoriesDto } from '../../dto/requests/categories/create-categories-dto';
 import { UpdateCategoryDto } from '../../dto/requests/categories/update-categories-dto';
+import { IsPublic } from 'src/@core/infra/decorators/is-public.decorator';
 
 @Controller('categories')
 export class CategoriesController {
   constructor(private readonly categoriesService: CategoriesService) {}
 
+  @IsPublic()
   @Get()
   async findAll(@Res() res) {
     const categories = await this.categoriesService.findAll();
     return res.status(201).json(categories);
   }
 
+  @IsPublic()
   @Get(':name')
   async findByName(@Param('name') name: string) {
     const category = await this.categoriesService.findByName(name);

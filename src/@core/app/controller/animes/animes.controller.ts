@@ -12,23 +12,27 @@ import {
 import { AnimesService } from '../../services/animes/animes.service';
 import { CreateAnimesDto } from '../../dto/requests/animes/create-animes-dto';
 import { UpdateAnimesDto } from '../../dto/requests/animes/update-animes-dto';
+import { IsPublic } from 'src/@core/infra/decorators/is-public.decorator';
 
 @Controller('animes')
 export class AnimesController {
   constructor(private readonly animesService: AnimesService) {}
 
+  @IsPublic()
   @Get()
   async findAll(@Res() res) {
     const anime = await this.animesService.findAll();
     return res.status(201).send(anime);
   }
 
+  @IsPublic()
   @Get(':id')
   async findById(@Param('id') id: number, @Res() res) {
     const anime = await this.animesService.findById(id);
     return res.status(201).send(anime);
   }
 
+  @IsPublic()
   @Get('name/:name')
   async findByName(@Param('name') name: string, @Res() res) {
     const anime = await this.animesService.findByName(name);
