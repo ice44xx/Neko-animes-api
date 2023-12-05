@@ -28,6 +28,17 @@ export class UsersService {
     return user;
   }
 
+  async findByEmail(email: string) {
+    const user = await this.usersRepository.findOne({
+      where: { email },
+    });
+    if (!user) {
+      throw new NotFoundException('Usuário não encontrado.');
+    }
+
+    return user;
+  }
+
   async create(createUsersDto: CreateUsersDto) {
     const { password, ...userData } = createUsersDto;
     const saltRounds = 10;
