@@ -43,7 +43,6 @@ export class UsersController {
     @Res() res,
   ) {
     const currentUser = req.user;
-    console.log(currentUser);
     const user = await this.usersService.update(currentUser.id, updateUserDto);
     return res.status(201).json({ message: 'Usuário atualizado!', user: user });
   }

@@ -6,6 +6,7 @@ import { Categories } from 'src/@core/domain/entities/categories/categories.enti
 import { Animes } from 'src/@core/domain/entities/animes/animes.entity';
 import { Seasons } from 'src/@core/domain/entities/seasons/seasons.entity';
 import { Episodes } from 'src/@core/domain/entities/episodes/episodes.entity';
+import { Backgrounds } from 'src/@core/domain/entities/backgrounds/backgrounds.entity';
 
 export const dataSourceOptions: DataSourceOptions = {
   type: 'postgres',
@@ -14,7 +15,7 @@ export const dataSourceOptions: DataSourceOptions = {
   username: 'postgres',
   password: '020619',
   database: 'nekoanimes',
-  entities: [Users, Categories, Animes, Seasons, Episodes],
+  entities: [Users, Backgrounds, Categories, Animes, Seasons, Episodes],
   synchronize: true,
 };
 
