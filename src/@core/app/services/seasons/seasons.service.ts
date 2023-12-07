@@ -16,75 +16,97 @@ export class SeasonsService {
   ) {}
 
   async findAll() {
-    const seasons = await this.seasonsRepository
-      .createQueryBuilder('season')
-      .leftJoinAndSelect('season.episodes', 'episodes')
-      .leftJoin('season.anime', 'anime')
-      .select([
-        'season.id',
-        'season.name',
-        'anime.name',
-        'episodes.id',
-        'episodes.name',
-        'episodes.url',
-      ])
-      .getMany();
-    return seasons;
+    try {
+      const seasons = await this.seasonsRepository
+        .createQueryBuilder('season')
+        .leftJoinAndSelect('season.episodes', 'episodes')
+        .leftJoin('season.anime', 'anime')
+        .select([
+          'season.id',
+          'season.name',
+          'anime.name',
+          'episodes.id',
+          'episodes.name',
+          'episodes.url',
+        ])
+        .getMany();
+      return seasons;
+    } catch (error) {
+      throw new Error('Ocorreu um erro ao encontrar todas temporadas') + error.message;
+    }
   }
 
   async findByName(name: string) {
-    const seasons = await this.seasonsRepository
-      .createQueryBuilder('season')
-      .leftJoinAndSelect('season.episodes', 'episodes')
-      .leftJoin('season.anime', 'anime')
-      .select([
-        'season.id',
-        'season.name',
-        'anime.name',
-        'episodes.id',
-        'episodes.name',
-        'episodes.url',
-      ])
-      .where('LOWER(season.name) LIKE :name', { name: `%${name.toLowerCase().trim()}%` })
-      .getOne();
-    if (!seasons) {
-      throw new NotFoundException(`Temporada ${name} não encontrada`);
-    }
+    try {
+      const seasons = await this.seasonsRepository
+        .createQueryBuilder('season')
+        .leftJoinAndSelect('season.episodes', 'episodes')
+        .leftJoin('season.anime', 'anime')
+        .select([
+          'season.id',
+          'season.name',
+          'anime.name',
+          'episodes.id',
+          'episodes.name',
+          'episodes.url',
+        ])
+        .where('LOWER(season.name) LIKE :name', {
+          name: `%${name.toLowerCase().trim()}%`,
+        })
+        .getOne();
+      if (!seasons) {
+        throw new NotFoundException(`Temporada ${name} não encontrada`);
+      }
 
-    return seasons;
+      return seasons;
+    } catch (error) {
+      throw new Error(`Ocorreu um erro ao encontrar a temporada ${name}`);
+    }
   }
 
   async create(createSeasonsDto: CreateSeasonsDto): Promise<Seasons> {
-    const { name, animeId } = createSeasonsDto;
+    try {
+      const { name, animeId } = createSeasonsDto;
 
-    const anime = await this.animesRepository.findOne({ where: { id: animeId } });
+      const anime = await this.animesRepository.findOne({ where: { id: animeId } });
 
-    if (!anime) {
-      throw new NotFoundException(`Anime ${animeId} não encontrado`);
+      if (!anime) {
+        throw new NotFoundException(`Anime ${animeId} não encontrado`);
+      }
+
+      const nameLowerCase = name.toLocaleLowerCase().trim();
+      const newSeason = this.seasonsRepository.create({ name: nameLowerCase, anime });
+
+      return await this.seasonsRepository.save(newSeason);
+    } catch (error) {
+      throw new Error('Ocorreu um erro ao criar a temporada') + error.message;
     }
-
-    const nameLowerCase = name.toLocaleLowerCase().trim();
-    const newSeason = this.seasonsRepository.create({ name: nameLowerCase, anime });
-
-    return await this.seasonsRepository.save(newSeason);
   }
 
   async update(id: number, updateSeasonsDto: UpdateSeasonsDto) {
-    const season = await this.seasonsRepository.findOne({
-      where: { id },
-    });
+    try {
+      const season = await this.seasonsRepository.findOne({
+        where: { id },
+      });
 
-    if (!season) {
-      throw new NotFoundException(`Temporada ${id} não encontrada`);
+      if (!season) {
+        throw new NotFoundException(`Temporada ${id} não encontrada`);
+      }
+
+      season.name = updateSeasonsDto.name.toLocaleLowerCase().trim();
+      const update = await this.seasonsRepository.save(season);
+      return update;
+    } catch (error) {
+      throw new Error('Ocorreu um erro ao atualizar a temporada') + error.message;
     }
-
-    season.name = updateSeasonsDto.name.toLocaleLowerCase().trim();
-    const update = await this.seasonsRepository.save(season);
-    return update;
   }
 
   async delete(id: number) {
-    const season = await this.seasonsRepository.delete(id);
-    return season;
+    try {
+      const season = await this.seasonsRepository.delete(id);
+      return season;
+    } catch (error) {
+      throw new Error('Ocorreu um erro ao deletar a temporada') + error.message;
+    }
   }
 }

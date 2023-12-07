@@ -12,20 +12,20 @@ import {
 import { SeasonsService } from '../../services/seasons/seasons.service';
 import { CreateSeasonsDto } from '../../dto/requests/seasons/create-seasons-dto';
 import { UpdateSeasonsDto } from '../../dto/requests/seasons/update-seasons-dto';
-import { IsPublic } from 'src/@core/infra/decorators/is-public.decorator';
+import { Public } from 'src/@core/infra/decorators/public-route.decorator';
 
 @Controller('seasons')
 export class SeasonsController {
   constructor(private readonly seasonsService: SeasonsService) {}
 
-  @IsPublic()
+  @Public()
   @Get()
   findAll() {
     const season = this.seasonsService.findAll();
     return season;
   }
 
-  @IsPublic()
+  @Public()
   @Get(':name')
   async findByName(@Res() res, @Param('name') name: string) {
     const season = await this.seasonsService.findByName(name);

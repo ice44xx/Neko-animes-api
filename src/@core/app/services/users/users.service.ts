@@ -58,15 +58,26 @@ export class UsersService {
 
   async create(createUsersDto: CreateUsersDto) {
     try {
-      const { password, ...userData } = createUsersDto;
+      const { password, role: incomingRole, ...userData } = createUsersDto;
       const saltRounds = 10;
       const hashedPassword = await bcrypt.hash(password, saltRounds);
+
+      const validRoles = ['user', 'admin'];
+      const role =
+        typeof incomingRole === 'string' && validRoles.includes(incomingRole)
+          ? incomingRole
+          : 'user';
 
       const user = this.usersRepository.create({
         ...userData,
         password: hashedPassword,
+        role,
       });
-      return await this.usersRepository.save(user);
+
+      const save = await this.usersRepository.save(user);
+      const { role: userRole, ...userWithoutRole } = save;
+
+      return userWithoutRole;
     } catch (error) {
       throw new Error('Ocorreu um erro ao criar o usuário') + error.message;
     }

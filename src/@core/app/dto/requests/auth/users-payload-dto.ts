@@ -18,4 +18,6 @@ export class UsersPayloadDto {
 
   @IsNumber()
   readonly exp?: number;
+
+  readonly role: string;
 }
