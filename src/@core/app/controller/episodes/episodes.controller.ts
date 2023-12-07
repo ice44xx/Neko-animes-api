@@ -12,20 +12,20 @@ import {
 import { EpisodesService } from '../../services/episodes/episodes.service';
 import { CreateEpisodesDto } from '../../dto/requests/episodes/create-episodes-dto';
 import { UpdateEpisodesDto } from '../../dto/requests/episodes/update-episodes-dto';
-import { IsPublic } from 'src/@core/infra/decorators/is-public.decorator';
+import { Public } from 'src/@core/infra/decorators/public-route.decorator';
 
 @Controller('episodes')
 export class EpisodesController {
   constructor(private readonly episodesService: EpisodesService) {}
 
-  @IsPublic()
+  @Public()
   @Get()
   async findAll() {
     const episodes = await this.episodesService.findAll();
     return episodes;
   }
 
-  @IsPublic()
+  @Public()
   @Get(':name')
   async findByName(@Res() res, @Param('name') name: string) {
     const episode = await this.episodesService.findByName(name);

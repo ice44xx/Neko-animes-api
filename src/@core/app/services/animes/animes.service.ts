@@ -16,92 +16,116 @@ export class AnimesService {
   ) {}
 
   async findAll() {
-    const anime = await this.animesRepository.find({
-      relations: ['categories', 'season'],
-    });
-    return anime;
+    try {
+      const anime = await this.animesRepository.find({
+        relations: ['categories', 'season'],
+      });
+      return anime;
+    } catch (error) {
+      throw new Error('Ocorreu um erro ao encontrar os animes') + error.message;
+    }
   }
 
   async findByName(name: string) {
-    const anime = await this.animesRepository.findOne({
-      relations: ['categories'],
-      where: { name: Like(`%${name.toLocaleLowerCase().trim()}%`) },
-    });
-    if (!anime) {
-      throw new NotFoundException(`Anime ${name} não encontrado.`);
+    try {
+      const anime = await this.animesRepository.findOne({
+        relations: ['categories'],
+        where: { name: Like(`%${name.toLocaleLowerCase().trim()}%`) },
+      });
+      if (!anime) {
+        throw new NotFoundException(`Anime ${name} não encontrado.`);
+      }
+      return anime;
+    } catch (error) {
+      throw new Error(`Ocorreu um erro ao encontrar o anime ${name}`) + error.message;
     }
-    return anime;
   }
 
   async findById(id: number) {
-    const anime = await this.animesRepository.findOne({
-      relations: ['categories'],
-      where: { id },
-    });
-    if (!anime) {
-      throw new NotFoundException(`Anime ${id} não encontrado.`);
+    try {
+      const anime = await this.animesRepository.findOne({
+        relations: ['categories'],
+        where: { id },
+      });
+      if (!anime) {
+        throw new NotFoundException(`Anime ${id} não encontrado.`);
+      }
+      return anime;
+    } catch (error) {
+      throw new Error('Ocorreu um erro ao encontrar o id do anime') + error.message;
     }
-    return anime;
   }
 
   async create(createAnimesDto: CreateAnimesDto) {
-    let { categoryName, name, ...otherData } = createAnimesDto;
+    try {
+      let { categoryName, name, ...otherData } = createAnimesDto;
 
-    categoryName = categoryName.map((name) => name.toLocaleLowerCase());
+      categoryName = categoryName.map((name) => name.toLocaleLowerCase());
 
-    const categories = await this.categoriesRepository.find({
-      where: { name: In(categoryName) },
-    });
+      const categories = await this.categoriesRepository.find({
+        where: { name: In(categoryName) },
+      });
 
-    if (categories.length !== categoryName.length) {
-      throw new BadRequestException('Algumas categorias fornecidas não existem.');
+      if (categories.length !== categoryName.length) {
+        throw new BadRequestException('Algumas categorias fornecidas não existem.');
+      }
+
+      const nameLowerCase = name.toLocaleLowerCase().trim();
+
+      const anime = this.animesRepository.create({ name: nameLowerCase, ...otherData });
+
+      anime.categories = categories;
+
+      return await this.animesRepository.save(anime);
+    } catch (error) {
+      throw new Error('Ocorreu um erro ao criar o anime') + error.message;
     }
-
-    const nameLowerCase = name.toLocaleLowerCase().trim();
-
-    const anime = this.animesRepository.create({ name: nameLowerCase, ...otherData });
-
-    anime.categories = categories;
-
-    return await this.animesRepository.save(anime);
   }
 
   async update(id: number, updateAnimesDto: UpdateAnimesDto) {
-    let { categoryName, name, ...otherData } = updateAnimesDto;
+    try {
+      let { categoryName, name, ...otherData } = updateAnimesDto;
 
-    const anime = await this.animesRepository.findOne({
-      where: { id },
-    });
-    if (!anime) {
-      throw new NotFoundException(`Anime ${id} não encontrado.`);
+      const anime = await this.animesRepository.findOne({
+        where: { id },
+      });
+      if (!anime) {
+        throw new NotFoundException(`Anime ${id} não encontrado.`);
+      }
+
+      categoryName = categoryName.map((name) => name.toLocaleLowerCase());
+
+      const categories = await this.categoriesRepository.find({
+        where: { name: In(categoryName) },
+      });
+
+      if (categories.length !== categoryName.length) {
+        throw new BadRequestException('Algumas categorias fornecidas não existem.');
+      }
+
+      const nameLowerCase = name.toLocaleLowerCase().trim();
+
+      anime.categories = categories;
+      anime.name = nameLowerCase;
+      Object.assign(anime, otherData);
+
+      return this.animesRepository.save(anime);
+    } catch (error) {
+      throw new Error('Ocorreu um erro ao atualizar o anime') + error.message;
     }
-
-    categoryName = categoryName.map((name) => name.toLocaleLowerCase());
-
-    const categories = await this.categoriesRepository.find({
-      where: { name: In(categoryName) },
-    });
-
-    if (categories.length !== categoryName.length) {
-      throw new BadRequestException('Algumas categorias fornecidas não existem.');
-    }
-
-    const nameLowerCase = name.toLocaleLowerCase().trim();
-
-    anime.categories = categories;
-    anime.name = nameLowerCase;
-    Object.assign(anime, otherData);
-
-    return this.animesRepository.save(anime);
   }
 
   async delete(id: number) {
-    const anime = await this.animesRepository.findOne({
-      where: { id },
-    });
-    if (!anime) {
-      throw new NotFoundException(`Anime ${id} não encontrado.`);
+    try {
+      const anime = await this.animesRepository.findOne({
+        where: { id },
+      });
+      if (!anime) {
+        throw new NotFoundException(`Anime ${id} não encontrado.`);
+      }
+      await this.animesRepository.remove(anime);
+    } catch (error) {
+      throw new Error('Ocorreu um erro ao deletar o anime') + error.message;
     }
-    await this.animesRepository.remove(anime);
   }
 }

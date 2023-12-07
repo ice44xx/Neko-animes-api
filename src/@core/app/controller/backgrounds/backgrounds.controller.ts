@@ -9,7 +9,7 @@ import {
   Post,
   Put,
 } from '@nestjs/common';
-import { IsPublic } from 'src/@core/infra/decorators/is-public.decorator';
+import { Public } from 'src/@core/infra/decorators/public-route.decorator';
 import { BackgroundsService } from '../../services/backgrounds/backgrounds.service';
 import { UpdateBackgroundsDto } from '../../dto/requests/backgrounds/update-backgrounds-dto';
 import { CreateBackgroundsDto } from '../../dto/requests/backgrounds/create-backgrounds-dto';
@@ -18,7 +18,7 @@ import { CreateBackgroundsDto } from '../../dto/requests/backgrounds/create-back
 export class BackgroundsController {
   constructor(private readonly backgroundsService: BackgroundsService) {}
 
-  @IsPublic()
+  @Public()
   @HttpCode(HttpStatus.OK)
   @Get()
   async findAll() {
@@ -26,7 +26,7 @@ export class BackgroundsController {
     return background;
   }
 
-  @IsPublic()
+  @Public()
   @Post('create')
   @HttpCode(HttpStatus.OK)
   async create(@Body() createBackgroundsDto: CreateBackgroundsDto) {
@@ -34,7 +34,7 @@ export class BackgroundsController {
     return background;
   }
 
-  @IsPublic()
+  @Public()
   @Put(':id')
   @HttpCode(HttpStatus.OK)
   async update(@Param('id') id: number, @Body() updateBackgrounds: UpdateBackgroundsDto) {
@@ -42,7 +42,7 @@ export class BackgroundsController {
     return background;
   }
 
-  @IsPublic()
+  @Public()
   @Delete(':id')
   @HttpCode(204)
   async delete(@Param('id') id: number) {

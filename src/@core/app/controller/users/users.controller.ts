@@ -14,28 +14,28 @@ import { UsersService } from '../../services/users/users.service';
 import { CreateUsersDto } from '../../dto/requests/users/create-users-dto';
 import { UpdateUsersDto } from '../../dto/requests/users/update-users-dto';
 import { AuthRequest } from 'src/@core/infra/auth/models/auth-request';
-import { IsPublic } from 'src/@core/infra/decorators/is-public.decorator';
+import { Public } from 'src/@core/infra/decorators/public-route.decorator';
 import { UpdateUsersPasswordDto } from '../../dto/requests/users/update-users-password-dto';
 
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
-  @IsPublic()
+  @Public()
   @Get()
   async findAll(@Res() res) {
     const users = await this.usersService.findAll();
     return res.status(201).send(users);
   }
 
-  @IsPublic()
+  @Public()
   @Get(':id')
   findUserId(@Param('id') id: number) {
     this.usersService.findOne(id);
     return `Usuário com id: ${id} encontrado`;
   }
 
-  @IsPublic()
+  @Public()
   @Post('create')
   create(@Body() createUsersDto: CreateUsersDto) {
     return this.usersService.create(createUsersDto);

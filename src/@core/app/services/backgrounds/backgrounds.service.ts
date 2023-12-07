@@ -13,29 +13,45 @@ export class BackgroundsService {
   ) {}
 
   findAll() {
-    const background = this.backgroundsRepository.find();
-    return background;
+    try {
+      const background = this.backgroundsRepository.find();
+      return background;
+    } catch (error) {
+      throw new Error('Ocorreu um erro ao encontrar todos backgrounds') + error.message;
+    }
   }
 
   create(createBackgroundsDto: CreateBackgroundsDto) {
-    const background = this.backgroundsRepository.create(createBackgroundsDto);
-    return this.backgroundsRepository.save(background);
+    try {
+      const background = this.backgroundsRepository.create(createBackgroundsDto);
+      return this.backgroundsRepository.save(background);
+    } catch (error) {
+      throw new Error('Ocorreu um erro ao criar o background') + error.message;
+    }
   }
 
   async update(id: number, updateBackgroundsDto: UpdateBackgroundsDto) {
-    const background = await this.backgroundsRepository.findOne({
-      where: { id },
-    });
-    if (!background) {
-      throw new NotFoundException('Background não encontrado');
-    }
+    try {
+      const background = await this.backgroundsRepository.findOne({
+        where: { id },
+      });
+      if (!background) {
+        throw new NotFoundException('Background não encontrado');
+      }
 
-    Object.assign(background, updateBackgroundsDto);
-    return this.backgroundsRepository.save(background);
+      Object.assign(background, updateBackgroundsDto);
+      return this.backgroundsRepository.save(background);
+    } catch (error) {
+      throw new Error('Ocorreu um erro ao atualizar o background') + error.message;
+    }
   }
 
   delete(id: number) {
-    const background = this.backgroundsRepository.delete(id);
-    return background;
+    try {
+      const background = this.backgroundsRepository.delete(id);
+      return background;
+    } catch (error) {
+      throw new Error('Ocorreu um erro ao deletar o background') + error.message;
+    }
   }
 }
