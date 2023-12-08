@@ -39,6 +39,13 @@ export class AnimesController {
     return res.status(201).send(anime);
   }
 
+  @Public()
+  @Get()
+  async findLastsReleases(@Res() res) {
+    const anime = await this.animesService.findLastReleases();
+    return res.status(201).send(anime);
+  }
+
   @Post('create')
   async create(@Body() createAnimesDto: CreateAnimesDto) {
     return await this.animesService.create(createAnimesDto);

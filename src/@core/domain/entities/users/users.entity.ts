@@ -1,4 +1,12 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  CreateDateColumn,
+  UpdateDateColumn,
+  OneToMany,
+} from 'typeorm';
+import { Likes } from '../likes/likes.entity';
 
 @Entity('users')
 export class Users {
@@ -19,4 +27,13 @@ export class Users {
 
   @Column()
   role: string;
+
+  @CreateDateColumn()
+  createdAt: Date;
+
+  @UpdateDateColumn()
+  updatedAt: Date;
+
+  @OneToMany(() => Likes, (like) => like.user)
+  likes: Likes[];
 }

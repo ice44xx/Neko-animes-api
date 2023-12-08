@@ -4,9 +4,10 @@ import { Episodes } from '../../../domain/entities/episodes/episodes.entity';
 import { EpisodesController } from '../../controller/episodes/episodes.controller';
 import { EpisodesService } from '../../services/episodes/episodes.service';
 import { Seasons } from '../../../domain/entities/seasons/seasons.entity';
+import { Likes } from 'src/@core/domain/entities/likes/likes.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Episodes, Seasons])],
+  imports: [TypeOrmModule.forFeature([Episodes, Seasons, Likes])],
   controllers: [EpisodesController],
   providers: [EpisodesService],
 })

@@ -9,11 +9,13 @@ import { AuthModule } from './@core/app/modules/auth/auth.module';
 import { APP_GUARD } from '@nestjs/core';
 import { JwtAuthGuard } from './@core/infra/auth/guards/jwt-auth.guard';
 import { BackgroundsModule } from './@core/app/modules/backgrounds/backgrounds.module';
+import { LikesModule } from './@core/app/modules/likes/likes.module';
 
 @Module({
   imports: [
     AuthModule,
     BackgroundsModule,
+    LikesModule,
     EpisodesModule,
     SeasonsModule,
     AnimeModule,

@@ -56,6 +56,18 @@ export class AnimesService {
     }
   }
 
+  async findLastReleases() {
+    try {
+      const animes = await this.animesRepository.find({
+        order: { createdAt: 'DESC' },
+        take: 10,
+      });
+      return animes;
+    } catch (error) {
+      throw new Error('Ocorreu um erro ao buscar os últimos lançamentos de animes');
+    }
+  }
+
   async create(createAnimesDto: CreateAnimesDto) {
     try {
       let { categoryName, name, ...otherData } = createAnimesDto;
