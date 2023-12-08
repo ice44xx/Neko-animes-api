@@ -16,7 +16,7 @@ export class UsersService {
 
   async findAll() {
     try {
-      return this.usersRepository.find();
+      return this.usersRepository.find({ relations: ['favorites.animes'] });
     } catch (error) {
       throw (
         new Error('Ocorreu um erro ao tentar encontrar todos usuários') + error.message

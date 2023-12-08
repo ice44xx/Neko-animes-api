@@ -9,6 +9,7 @@ import { Episodes } from 'src/@core/domain/entities/episodes/episodes.entity';
 import { Backgrounds } from 'src/@core/domain/entities/backgrounds/backgrounds.entity';
 import { LikesEpisodes } from 'src/@core/domain/entities/likes-episodes/likes-episodes.entity';
 import { LikesAnimes } from 'src/@core/domain/entities/likes-animes/likes-animes.entity';
+import { Favorites } from 'src/@core/domain/entities/favorites/favorites.entity';
 
 export const dataSourceOptions: DataSourceOptions = {
   type: 'postgres',
@@ -22,6 +23,7 @@ export const dataSourceOptions: DataSourceOptions = {
     Backgrounds,
     Categories,
     Animes,
+    Favorites,
     LikesAnimes,
     LikesEpisodes,
     Seasons,

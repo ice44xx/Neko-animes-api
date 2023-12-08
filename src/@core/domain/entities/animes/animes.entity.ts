@@ -3,8 +3,6 @@ import {
   Column,
   PrimaryGeneratedColumn,
   ManyToMany,
-  JoinTable,
-  ManyToOne,
   OneToMany,
   CreateDateColumn,
   UpdateDateColumn,
@@ -12,6 +10,7 @@ import {
 import { Categories } from '../categories/categories.entity';
 import { Seasons } from '../seasons/seasons.entity';
 import { LikesAnimes } from '../likes-animes/likes-animes.entity';
+import { Favorites } from '../favorites/favorites.entity';
 
 @Entity('animes')
 export class Animes {
@@ -46,4 +45,7 @@ export class Animes {
 
   @OneToMany(() => LikesAnimes, (like) => like.animes)
   likes: LikesAnimes[];
+
+  @OneToMany(() => Favorites, (favorites) => favorites.animes)
+  favorites: Favorites[];
 }

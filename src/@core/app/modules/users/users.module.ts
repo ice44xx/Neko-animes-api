@@ -4,9 +4,10 @@ import { UsersService } from '../../services/users/users.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Users } from '../../../domain/entities/users/users.entity';
 import { LikesEpisodes } from 'src/@core/domain/entities/likes-episodes/likes-episodes.entity';
+import { Favorites } from 'src/@core/domain/entities/favorites/favorites.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Users, LikesEpisodes])],
+  imports: [TypeOrmModule.forFeature([Users, LikesEpisodes, Favorites])],
   controllers: [UsersController],
   providers: [UsersService],
   exports: [UsersService],

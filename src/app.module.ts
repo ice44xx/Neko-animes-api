@@ -11,11 +11,13 @@ import { JwtAuthGuard } from './@core/infra/auth/guards/jwt-auth.guard';
 import { BackgroundsModule } from './@core/app/modules/backgrounds/backgrounds.module';
 import { LikesEpisodesModule } from './@core/app/modules/likes/likes-episodes.module';
 import { LikesAnimeModule } from './@core/app/modules/likes/likes-animes.module';
+import { FavoritesModule } from './@core/app/modules/favorites/favorites.module';
 
 @Module({
   imports: [
     AuthModule,
     BackgroundsModule,
+    FavoritesModule,
     LikesAnimeModule,
     LikesEpisodesModule,
     EpisodesModule,
