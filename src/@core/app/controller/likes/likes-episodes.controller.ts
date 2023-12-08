@@ -1,10 +1,10 @@
 import { Controller, Delete, Request, Param, Post, Res } from '@nestjs/common';
-import { LikesService } from '../../services/likes-episodes/likes.service';
+import { LikesEpisodesService } from '../../services/likes/likes-episodes.service';
 import { AuthRequest } from 'src/@core/infra/auth/models/auth-request';
 
-@Controller('likes')
-export class LikesController {
-  constructor(private readonly likesService: LikesService) {}
+@Controller('likes-episodes')
+export class LikesEpisodesController {
+  constructor(private readonly likesService: LikesEpisodesService) {}
 
   @Post(':id')
   async create(@Request() req: AuthRequest, @Res() res, @Param('id') id: number) {

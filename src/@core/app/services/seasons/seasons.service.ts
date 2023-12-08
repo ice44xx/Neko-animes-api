@@ -85,6 +85,8 @@ export class SeasonsService {
 
   async update(id: number, updateSeasonsDto: UpdateSeasonsDto) {
     try {
+      const { name, animeId } = updateSeasonsDto;
+
       const season = await this.seasonsRepository.findOne({
         where: { id },
       });
@@ -93,7 +95,15 @@ export class SeasonsService {
         throw new NotFoundException(`Temporada ${id} não encontrada`);
       }
 
+      const anime = await this.animesRepository.findOne({ where: { id: animeId } });
+
+      if (!anime) {
+        throw new NotFoundException(`Anime ${animeId} não encontrado`);
+      }
+
+      season.anime = anime;
       season.name = updateSeasonsDto.name.toLocaleLowerCase().trim();
+
       const update = await this.seasonsRepository.save(season);
       return update;
     } catch (error) {

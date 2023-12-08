@@ -1,17 +1,17 @@
 import { Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
-import { Episodes } from '../episodes/episodes.entity';
 import { Users } from '../users/users.entity';
+import { Animes } from '../animes/animes.entity';
 
-@Entity('likes')
-export class Likes {
+@Entity('likes-animes')
+export class LikesAnimes {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @ManyToOne(() => Episodes, (episode) => episode.likes, {
+  @ManyToOne(() => Animes, (anime) => anime.likes, {
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
   })
-  episodes: Episodes;
+  animes: Animes;
 
   @ManyToOne(() => Users, (user) => user.likes, {
     onDelete: 'CASCADE',

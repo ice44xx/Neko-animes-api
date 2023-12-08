@@ -7,7 +7,8 @@ import { Animes } from 'src/@core/domain/entities/animes/animes.entity';
 import { Seasons } from 'src/@core/domain/entities/seasons/seasons.entity';
 import { Episodes } from 'src/@core/domain/entities/episodes/episodes.entity';
 import { Backgrounds } from 'src/@core/domain/entities/backgrounds/backgrounds.entity';
-import { Likes } from 'src/@core/domain/entities/likes/likes.entity';
+import { LikesEpisodes } from 'src/@core/domain/entities/likes-episodes/likes-episodes.entity';
+import { LikesAnimes } from 'src/@core/domain/entities/likes-animes/likes-animes.entity';
 
 export const dataSourceOptions: DataSourceOptions = {
   type: 'postgres',
@@ -16,7 +17,16 @@ export const dataSourceOptions: DataSourceOptions = {
   username: 'postgres',
   password: '020619',
   database: 'nekoanimes',
-  entities: [Users, Backgrounds, Categories, Animes, Likes, Seasons, Episodes],
+  entities: [
+    Users,
+    Backgrounds,
+    Categories,
+    Animes,
+    LikesAnimes,
+    LikesEpisodes,
+    Seasons,
+    Episodes,
+  ],
   synchronize: true,
 };
 

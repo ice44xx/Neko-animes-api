@@ -8,7 +8,7 @@ import {
   OneToMany,
 } from 'typeorm';
 import { Seasons } from '../seasons/seasons.entity';
-import { Likes } from '../likes/likes.entity';
+import { LikesEpisodes } from '../likes-episodes/likes-episodes.entity';
 
 @Entity('episodes')
 export class Episodes {
@@ -33,6 +33,6 @@ export class Episodes {
   @ManyToOne(() => Seasons, (season) => season.episodes)
   season: Seasons;
 
-  @OneToMany(() => Likes, (like) => like.episodes)
-  likes: Likes[];
+  @OneToMany(() => LikesEpisodes, (like) => like.episodes)
+  likes: LikesEpisodes[];
 }
