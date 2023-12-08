@@ -5,6 +5,7 @@ import { Repository, In, Like } from 'typeorm';
 import { CreateAnimesDto } from '../../dto/requests/animes/create-animes-dto';
 import { UpdateAnimesDto } from '../../dto/requests/animes/update-animes-dto';
 import { Categories } from 'src/@core/domain/entities/categories/categories.entity';
+import { LikesAnimes } from 'src/@core/domain/entities/likes-animes/likes-animes.entity';
 
 @Injectable()
 export class AnimesService {
@@ -13,14 +14,24 @@ export class AnimesService {
     private readonly animesRepository: Repository<Animes>,
     @InjectRepository(Categories)
     private readonly categoriesRepository: Repository<Categories>,
+    @InjectRepository(LikesAnimes)
+    private readonly likesRepository: Repository<LikesAnimes>,
   ) {}
 
   async findAll() {
     try {
-      const anime = await this.animesRepository.find({
-        relations: ['categories', 'season'],
+      const animes = await this.animesRepository.find({
+        relations: ['categories', 'season', 'likes'],
       });
-      return anime;
+      const animesWithLikes = await Promise.all(
+        animes.map(async (anime) => {
+          const likesCount = await this.likesRepository.count({
+            where: { animes: { id: anime.id } },
+          });
+          return { ...anime, likes: likesCount };
+        }),
+      );
+      return animesWithLikes;
     } catch (error) {
       throw new Error('Ocorreu um erro ao encontrar os animes') + error.message;
     }
@@ -35,7 +46,12 @@ export class AnimesService {
       if (!anime) {
         throw new NotFoundException(`Anime ${name} não encontrado.`);
       }
-      return anime;
+
+      const likesCount = await this.likesRepository.count({
+        where: { animes: { id: anime.id } },
+      });
+
+      return { ...anime, likes: likesCount };
     } catch (error) {
       throw new Error(`Ocorreu um erro ao encontrar o anime ${name}`) + error.message;
     }
@@ -50,7 +66,12 @@ export class AnimesService {
       if (!anime) {
         throw new NotFoundException(`Anime ${id} não encontrado.`);
       }
-      return anime;
+
+      const likesCount = await this.likesRepository.count({
+        where: { animes: { id: anime.id } },
+      });
+
+      return { ...anime, likes: likesCount };
     } catch (error) {
       throw new Error('Ocorreu um erro ao encontrar o id do anime') + error.message;
     }

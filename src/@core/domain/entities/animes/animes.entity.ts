@@ -11,6 +11,7 @@ import {
 } from 'typeorm';
 import { Categories } from '../categories/categories.entity';
 import { Seasons } from '../seasons/seasons.entity';
+import { LikesAnimes } from '../likes-animes/likes-animes.entity';
 
 @Entity('animes')
 export class Animes {
@@ -42,4 +43,7 @@ export class Animes {
 
   @OneToMany(() => Seasons, (season) => season.anime, { eager: true })
   season: Seasons[];
+
+  @OneToMany(() => LikesAnimes, (like) => like.animes)
+  likes: LikesAnimes[];
 }

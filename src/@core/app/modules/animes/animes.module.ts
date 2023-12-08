@@ -5,9 +5,10 @@ import { AnimesController } from '../../controller/animes/animes.controller';
 import { AnimesService } from '../../services/animes/animes.service';
 import { Categories } from '../../../domain/entities/categories/categories.entity';
 import { Seasons } from 'src/@core/domain/entities/seasons/seasons.entity';
+import { LikesAnimes } from 'src/@core/domain/entities/likes-animes/likes-animes.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Animes, Categories, Seasons])],
+  imports: [TypeOrmModule.forFeature([Animes, Categories, Seasons, LikesAnimes])],
   controllers: [AnimesController],
   providers: [AnimesService],
 })

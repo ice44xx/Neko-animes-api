@@ -6,7 +6,7 @@ import {
   UpdateDateColumn,
   OneToMany,
 } from 'typeorm';
-import { Likes } from '../likes/likes.entity';
+import { LikesEpisodes } from '../likes-episodes/likes-episodes.entity';
 
 @Entity('users')
 export class Users {
@@ -34,6 +34,6 @@ export class Users {
   @UpdateDateColumn()
   updatedAt: Date;
 
-  @OneToMany(() => Likes, (like) => like.user)
-  likes: Likes[];
+  @OneToMany(() => LikesEpisodes, (like) => like.user)
+  likes: LikesEpisodes[];
 }
