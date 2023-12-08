@@ -6,6 +6,8 @@ import {
   JoinTable,
   ManyToOne,
   OneToMany,
+  CreateDateColumn,
+  UpdateDateColumn,
 } from 'typeorm';
 import { Categories } from '../categories/categories.entity';
 import { Seasons } from '../seasons/seasons.entity';
@@ -26,6 +28,12 @@ export class Animes {
 
   @Column()
   feature: boolean;
+
+  @CreateDateColumn()
+  createdAt: Date;
+
+  @UpdateDateColumn()
+  updatedAt: Date;
 
   @ManyToMany(() => Categories, (category) => category.animes, {
     cascade: true,

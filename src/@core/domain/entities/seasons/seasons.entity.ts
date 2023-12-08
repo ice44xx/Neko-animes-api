@@ -1,16 +1,8 @@
-import {
-  Entity,
-  Column,
-  PrimaryGeneratedColumn,
-  OneToMany,
-  ManyToMany,
-  ManyToOne,
-  JoinTable,
-} from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany, ManyToOne } from 'typeorm';
 import { Episodes } from '../episodes/episodes.entity';
 import { Animes } from '../animes/animes.entity';
 
-@Entity('Seasons')
+@Entity('seasons')
 export class Seasons {
   @PrimaryGeneratedColumn()
   id: number;

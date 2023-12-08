@@ -32,6 +32,7 @@ export class EpisodesController {
     return res.status(201).send(episode);
   }
 
+  @Public()
   @Post('create')
   create(@Body() createEpisodesDto: CreateEpisodesDto) {
     const episode = this.episodesService.create(createEpisodesDto);

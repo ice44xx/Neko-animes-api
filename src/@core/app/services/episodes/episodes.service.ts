@@ -5,6 +5,7 @@ import { Episodes } from '../../../domain/entities/episodes/episodes.entity';
 import { CreateEpisodesDto } from '../../dto/requests/episodes/create-episodes-dto';
 import { Seasons } from 'src/@core/domain/entities/seasons/seasons.entity';
 import { UpdateEpisodesDto } from '../../dto/requests/episodes/update-episodes-dto';
+import { Likes } from 'src/@core/domain/entities/likes/likes.entity';
 
 @Injectable()
 export class EpisodesService {
@@ -13,6 +14,8 @@ export class EpisodesService {
     private readonly episodesRepository: Repository<Episodes>,
     @InjectRepository(Seasons)
     private readonly seasonsRepository: Repository<Seasons>,
+    @InjectRepository(Likes)
+    private readonly likesRepository: Repository<Likes>,
   ) {}
 
   async findAll() {
@@ -27,8 +30,18 @@ export class EpisodesService {
           'season.name AS season',
         ])
         .leftJoin('episode.season', 'season')
+        .orderBy('episode.episodeOrder', 'ASC')
         .getRawMany();
-      return episodes;
+
+      const episodesWithLikes = await Promise.all(
+        episodes.map(async (episode) => {
+          const likesCount = await this.likesRepository.count({
+            where: { episodes: { id: episode.id } },
+          });
+          return { ...episode, likes: likesCount };
+        }),
+      );
+      return episodesWithLikes;
     } catch (error) {
       throw new Error('Ocorreu um erro ao encontrar todos episódios') + error.message;
     }
