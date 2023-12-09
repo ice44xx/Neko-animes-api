@@ -7,10 +7,18 @@ import { Categories } from '../../../domain/entities/categories/categories.entit
 import { Seasons } from 'src/@core/domain/entities/seasons/seasons.entity';
 import { LikesAnimes } from 'src/@core/domain/entities/likes-animes/likes-animes.entity';
 import { Favorites } from 'src/@core/domain/entities/favorites/favorites.entity';
+import { Classifications } from 'src/@core/domain/entities/classifications/classifications.entity';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([Animes, Categories, Seasons, LikesAnimes, Favorites]),
+    TypeOrmModule.forFeature([
+      Animes,
+      Classifications,
+      Categories,
+      Seasons,
+      LikesAnimes,
+      Favorites,
+    ]),
   ],
   controllers: [AnimesController],
   providers: [AnimesService],

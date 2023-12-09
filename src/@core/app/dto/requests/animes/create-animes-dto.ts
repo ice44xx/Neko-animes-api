@@ -19,6 +19,9 @@ export class CreateAnimesDto {
   @IsString({ each: true })
   readonly categoryName: string[];
 
+  @IsString()
+  classificationName: string;
+
   @ValidateNested({ each: true })
   @Type(() => CreateCategoriesDto)
   readonly category: CreateCategoriesDto[];

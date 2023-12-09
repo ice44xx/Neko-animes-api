@@ -57,6 +57,7 @@ export class AnimesController {
     return anime;
   }
 
+  @Public()
   @HttpCode(204)
   @Delete(':id')
   async delete(@Param('id') id: number) {

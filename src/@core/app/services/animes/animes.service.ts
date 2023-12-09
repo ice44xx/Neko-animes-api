@@ -6,6 +6,7 @@ import { CreateAnimesDto } from '../../dto/requests/animes/create-animes-dto';
 import { UpdateAnimesDto } from '../../dto/requests/animes/update-animes-dto';
 import { Categories } from 'src/@core/domain/entities/categories/categories.entity';
 import { LikesAnimes } from 'src/@core/domain/entities/likes-animes/likes-animes.entity';
+import { Classifications } from 'src/@core/domain/entities/classifications/classifications.entity';
 
 @Injectable()
 export class AnimesService {
@@ -14,6 +15,8 @@ export class AnimesService {
     private readonly animesRepository: Repository<Animes>,
     @InjectRepository(Categories)
     private readonly categoriesRepository: Repository<Categories>,
+    @InjectRepository(Classifications)
+    private readonly classificationsRepository: Repository<Classifications>,
     @InjectRepository(LikesAnimes)
     private readonly likesRepository: Repository<LikesAnimes>,
   ) {}
@@ -21,7 +24,7 @@ export class AnimesService {
   async findAll() {
     try {
       const animes = await this.animesRepository.find({
-        relations: ['categories', 'season', 'likes'],
+        relations: ['classifications', 'categories', 'season', 'likes'],
       });
       const animesWithLikes = await Promise.all(
         animes.map(async (anime) => {
@@ -91,21 +94,33 @@ export class AnimesService {
 
   async create(createAnimesDto: CreateAnimesDto) {
     try {
-      let { categoryName, name, ...otherData } = createAnimesDto;
+      let { categoryName, classificationName, name, ...animeData } = createAnimesDto;
 
       categoryName = categoryName.map((name) => name.toLocaleLowerCase());
+      const nameLowerCase = name.toLocaleLowerCase().trim();
+      const classificationNameLowerCase = classificationName.toLowerCase();
 
       const categories = await this.categoriesRepository.find({
         where: { name: In(categoryName) },
       });
 
+      const classification = await this.classificationsRepository.findOne({
+        where: { name: classificationNameLowerCase },
+      });
+
+      if (!classification) {
+        throw new BadRequestException('Esta classificação não existe');
+      }
+
       if (categories.length !== categoryName.length) {
         throw new BadRequestException('Algumas categorias fornecidas não existem.');
       }
 
-      const nameLowerCase = name.toLocaleLowerCase().trim();
-
-      const anime = this.animesRepository.create({ name: nameLowerCase, ...otherData });
+      const anime = this.animesRepository.create({
+        name: nameLowerCase,
+        classifications: classification,
+        ...animeData,
+      });
 
       anime.categories = categories;
 
@@ -117,16 +132,27 @@ export class AnimesService {
 
   async update(id: number, updateAnimesDto: UpdateAnimesDto) {
     try {
-      let { categoryName, name, ...otherData } = updateAnimesDto;
+      let { categoryName, classificationName, name, ...animeData } = updateAnimesDto;
+
+      categoryName = categoryName.map((name) => name.toLocaleLowerCase());
+      const nameLowerCase = name.toLocaleLowerCase().trim();
+      const classificationNameLowerCase = classificationName.toLowerCase();
 
       const anime = await this.animesRepository.findOne({
         where: { id },
       });
+
       if (!anime) {
         throw new NotFoundException(`Anime ${id} não encontrado.`);
       }
 
-      categoryName = categoryName.map((name) => name.toLocaleLowerCase());
+      const classification = await this.classificationsRepository.findOne({
+        where: { name: classificationNameLowerCase },
+      });
+
+      if (!classification) {
+        throw new BadRequestException('Esta classificação não existe');
+      }
 
       const categories = await this.categoriesRepository.find({
         where: { name: In(categoryName) },
@@ -136,13 +162,14 @@ export class AnimesService {
         throw new BadRequestException('Algumas categorias fornecidas não existem.');
       }
 
-      const nameLowerCase = name.toLocaleLowerCase().trim();
+      const animeUpdate = await this.animesRepository.merge(anime, {
+        name: nameLowerCase,
+        classifications: classification,
+        categories: categories,
+        ...animeData,
+      });
 
-      anime.categories = categories;
-      anime.name = nameLowerCase;
-      Object.assign(anime, otherData);
-
-      return this.animesRepository.save(anime);
+      return this.animesRepository.save(animeUpdate);
     } catch (error) {
       throw new Error('Ocorreu um erro ao atualizar o anime') + error.message;
     }
