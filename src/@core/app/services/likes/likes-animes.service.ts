@@ -17,51 +17,81 @@ export class LikesAnimesService {
     private readonly usersRepository: Repository<Users>,
   ) {}
 
+  async getTopLikedAnimes() {
+    try {
+      const topAnimes = await this.animesRepository
+        .createQueryBuilder('animes')
+        .leftJoin('animes.likes', 'like')
+        .select([
+          'animes.id as id',
+          'animes.name as name',
+          'animes.thumbnailUrl as thumbnail',
+          'COUNT(like.id) as likes',
+        ])
+        .groupBy('animes.id')
+        .orderBy('likes', 'DESC')
+        .limit(10)
+        .getRawMany();
+
+      return topAnimes;
+    } catch (error) {
+      throw new Error('Ocorreu um erro ao buscar os animes') + error.message;
+    }
+  }
+
   async createLike(userId: number, animeId: number) {
-    const user = await this.usersRepository.findOne({ where: { id: userId } });
-    if (!user) {
-      throw new UnauthorizedError('Usuário não encontrado');
+    try {
+      const user = await this.usersRepository.findOne({ where: { id: userId } });
+      if (!user) {
+        throw new UnauthorizedError('Usuário não encontrado');
+      }
+
+      const anime = await this.animesRepository.findOne({ where: { id: animeId } });
+      if (!anime) {
+        throw new NotFoundException('Anime não encontrado');
+      }
+
+      const existingLike = await this.likesRepository.findOne({
+        where: { user: { id: userId }, animes: { id: animeId } },
+      });
+      if (existingLike) {
+        throw new ConflictException('Usuário já curtiu este anime');
+      }
+
+      const newLike = this.likesRepository.create({
+        user: { id: userId },
+        animes: { id: animeId },
+      });
+
+      return await this.likesRepository.save(newLike);
+    } catch (error) {
+      throw new Error('Ocorreu um erro ao criar o like') + error.message;
     }
-
-    const anime = await this.animesRepository.findOne({ where: { id: animeId } });
-    if (!anime) {
-      throw new NotFoundException('Anime não encontrado');
-    }
-
-    const existingLike = await this.likesRepository.findOne({
-      where: { user: { id: userId }, animes: { id: animeId } },
-    });
-    if (existingLike) {
-      throw new ConflictException('Usuário já curtiu este anime');
-    }
-
-    const newLike = this.likesRepository.create({
-      user: { id: userId },
-      animes: { id: animeId },
-    });
-
-    return await this.likesRepository.save(newLike);
   }
 
   async deleteLike(userId: number, animeId: number) {
-    const user = await this.usersRepository.findOne({ where: { id: userId } });
-    if (!user) {
-      throw new UnauthorizedError('Usuário não encontrado');
+    try {
+      const user = await this.usersRepository.findOne({ where: { id: userId } });
+      if (!user) {
+        throw new UnauthorizedError('Usuário não encontrado');
+      }
+
+      const anime = await this.animesRepository.findOne({ where: { id: animeId } });
+      if (!anime) {
+        throw new NotFoundException('Anime não encontrado');
+      }
+
+      const like = await this.likesRepository.findOne({
+        where: { user: { id: userId }, animes: { id: animeId } },
+      });
+
+      if (!like) {
+        throw new NotFoundException('Like não encontrado');
+      }
+
+      await this.likesRepository.remove(like);
+    } catch (error) {
+      throw new Error('Ocorreu um erro ao remover o like') + error.message;
     }
-
-    const anime = await this.animesRepository.findOne({ where: { id: animeId } });
-    if (!anime) {
-      throw new NotFoundException('Anime não encontrado');
-    }
-
-    const like = await this.likesRepository.findOne({
-      where: { user: { id: userId }, animes: { id: animeId } },
-    });
-
-    if (!like) {
-      throw new NotFoundException('Like não encontrado');
-    }
-
-    await this.likesRepository.remove(like);
   }
 }

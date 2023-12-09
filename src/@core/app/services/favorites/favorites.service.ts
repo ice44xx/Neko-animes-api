@@ -22,55 +22,63 @@ export class FavoritesService {
   ) {}
 
   async createFavorite(userId: number, animeId: number) {
-    const user = await this.usersRepository.findOne({
-      where: { id: userId },
-    });
+    try {
+      const user = await this.usersRepository.findOne({
+        where: { id: userId },
+      });
 
-    if (!user) {
-      throw new UnauthorizedException('Credenciais inválidas');
+      if (!user) {
+        throw new UnauthorizedException('Credenciais inválidas');
+      }
+
+      const existingFavorite = await this.favoritesRepository.findOne({
+        where: { users: { id: userId }, animes: { id: animeId } },
+      });
+      if (existingFavorite) {
+        throw new ConflictException('Usuário já curtiu este anime');
+      }
+
+      const anime = await this.animesRepository.findOne({
+        where: { id: animeId },
+      });
+
+      if (!anime) {
+        throw new NotFoundException(`Anime id ${animeId} não encontrado`);
+      }
+
+      const favorite = await this.favoritesRepository.create({
+        users: { id: userId },
+        animes: { id: animeId },
+      });
+
+      return await this.favoritesRepository.save(favorite);
+    } catch (error) {
+      throw new Error('Ocorreu um erro ao adicionar aos favoritos') + error.message;
     }
-
-    const existingFavorite = await this.favoritesRepository.findOne({
-      where: { users: { id: userId }, animes: { id: animeId } },
-    });
-    if (existingFavorite) {
-      throw new ConflictException('Usuário já curtiu este anime');
-    }
-
-    const anime = await this.animesRepository.findOne({
-      where: { id: animeId },
-    });
-
-    if (!anime) {
-      throw new NotFoundException(`Anime id ${animeId} não encontrado`);
-    }
-
-    const favorite = await this.favoritesRepository.create({
-      users: { id: userId },
-      animes: { id: animeId },
-    });
-
-    return await this.favoritesRepository.save(favorite);
   }
 
   async removeFavorite(userId: number, animeId: number) {
-    const user = await this.usersRepository.findOne({
-      where: { id: userId },
-      relations: ['favorites', 'favorites.animes'],
-    });
+    try {
+      const user = await this.usersRepository.findOne({
+        where: { id: userId },
+        relations: ['favorites', 'favorites.animes'],
+      });
 
-    if (!user) {
-      throw new UnauthorizedException('Credenciais inválidas');
+      if (!user) {
+        throw new UnauthorizedException('Credenciais inválidas');
+      }
+
+      const favoriteRemove = user.favorites.find(
+        (favorite) => favorite.animes.id === animeId,
+      );
+
+      if (!favoriteRemove) {
+        throw new NotFoundException('Anime favorito não encontrado');
+      }
+
+      await this.favoritesRepository.remove(favoriteRemove);
+    } catch (error) {
+      throw new Error('Ocorreu um erro ao remover dos favoritos') + error.message;
     }
-
-    const favoriteRemove = user.favorites.find(
-      (favorite) => favorite.animes.id === animeId,
-    );
-
-    if (!favoriteRemove) {
-      throw new NotFoundException('Anime favorito não encontrado');
-    }
-
-    await this.favoritesRepository.remove(favoriteRemove);
   }
 }

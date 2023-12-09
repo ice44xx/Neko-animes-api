@@ -6,11 +6,13 @@ import {
   OneToMany,
   CreateDateColumn,
   UpdateDateColumn,
+  ManyToOne,
 } from 'typeorm';
 import { Categories } from '../categories/categories.entity';
 import { Seasons } from '../seasons/seasons.entity';
 import { LikesAnimes } from '../likes-animes/likes-animes.entity';
 import { Favorites } from '../favorites/favorites.entity';
+import { Classifications } from '../classifications/classifications.entity';
 
 @Entity('animes')
 export class Animes {
@@ -40,12 +42,17 @@ export class Animes {
   })
   categories: Categories[];
 
-  @OneToMany(() => Seasons, (season) => season.anime, { eager: true })
+  @OneToMany(() => Seasons, (season) => season.anime, { eager: true, cascade: true })
   season: Seasons[];
 
-  @OneToMany(() => LikesAnimes, (like) => like.animes)
+  @OneToMany(() => LikesAnimes, (like) => like.animes, { cascade: true })
   likes: LikesAnimes[];
 
-  @OneToMany(() => Favorites, (favorites) => favorites.animes)
+  @OneToMany(() => Favorites, (favorites) => favorites.animes, { cascade: true })
   favorites: Favorites[];
+
+  @ManyToOne(() => Classifications, (classification) => classification.animes, {
+    cascade: true,
+  })
+  classifications: Classifications;
 }

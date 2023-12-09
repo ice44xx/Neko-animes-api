@@ -12,6 +12,7 @@ import { BackgroundsModule } from './@core/app/modules/backgrounds/backgrounds.m
 import { LikesEpisodesModule } from './@core/app/modules/likes/likes-episodes.module';
 import { LikesAnimeModule } from './@core/app/modules/likes/likes-animes.module';
 import { FavoritesModule } from './@core/app/modules/favorites/favorites.module';
+import { ClassificationsModule } from './@core/app/modules/classifications/classifications.module';
 
 @Module({
   imports: [
@@ -23,6 +24,7 @@ import { FavoritesModule } from './@core/app/modules/favorites/favorites.module'
     EpisodesModule,
     SeasonsModule,
     AnimeModule,
+    ClassificationsModule,
     CategoryModule,
     UsersModule,
     DatabaseModule,

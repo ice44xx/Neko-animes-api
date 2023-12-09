@@ -1,10 +1,18 @@
-import { Controller, Delete, Request, Param, Post, Res } from '@nestjs/common';
+import { Controller, Delete, Request, Param, Post, Res, Get } from '@nestjs/common';
 import { AuthRequest } from 'src/@core/infra/auth/models/auth-request';
 import { LikesAnimesService } from '../../services/likes/likes-animes.service';
+import { Public } from 'src/@core/infra/decorators/public-route.decorator';
 
 @Controller('likes-animes')
 export class LikesAnimesController {
   constructor(private readonly likesService: LikesAnimesService) {}
+
+  @Public()
+  @Get()
+  async getTopAnimes(@Res() res) {
+    const animes = await this.likesService.getTopLikedAnimes();
+    return res.status(201).send(animes);
+  }
 
   @Post(':id')
   async create(@Request() req: AuthRequest, @Res() res, @Param('id') id: number) {
