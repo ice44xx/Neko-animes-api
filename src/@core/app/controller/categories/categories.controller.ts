@@ -21,25 +21,51 @@ export class CategoriesController {
   @Public()
   @Get()
   async findAll(@Res() res) {
-    const categories = await this.categoriesService.findAll();
-    return res.status(201).json(categories);
+    try {
+      const categories = await this.categoriesService.findAll();
+      return res.status(201).json(categories);
+    } catch (error) {
+      return res.status(500).send({ message: 'Ocorreu um erro ao buscar as categorias' });
+    }
   }
 
   @Public()
   @Get(':name')
-  async findByName(@Param('name') name: string) {
-    const category = await this.categoriesService.findByName(name);
-    return category;
+  async findByName(@Res() res, @Param('name') name: string) {
+    try {
+      const category = await this.categoriesService.findByName(name);
+      return category;
+    } catch (error) {
+      return res
+        .status(500)
+        .send({ message: `Ocorreu um erro ao buscar o background ${name}` });
+    }
   }
 
   @Post('create')
-  create(@Body() createCategoriesDto: CreateCategoriesDto) {
-    return this.categoriesService.create(createCategoriesDto);
+  create(@Res() res, @Body() createCategoriesDto: CreateCategoriesDto) {
+    try {
+      const category = this.categoriesService.create(createCategoriesDto);
+      return res.status(201).json(category);
+    } catch (error) {
+      return res.status(500).send({ message: 'Ocorreu um erro ao criar a categoria' });
+    }
   }
 
   @Put(':id')
-  update(@Param('id') id: number, @Body() updateCategoriesDto: UpdateCategoryDto) {
-    return this.categoriesService.update(id, updateCategoriesDto);
+  update(
+    @Res() res,
+    @Param('id') id: number,
+    @Body() updateCategoriesDto: UpdateCategoryDto,
+  ) {
+    try {
+      const category = this.categoriesService.update(id, updateCategoriesDto);
+      return res.status(201).json(category);
+    } catch (error) {
+      return res
+        .status(500)
+        .send({ message: 'Ocorreu um erro ao atualizar a categoria' });
+    }
   }
 
   @HttpCode(204)

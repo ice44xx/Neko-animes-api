@@ -7,15 +7,23 @@ export class FavoritesController {
 
   @Post(':id')
   async create(@Res() res, @Request() req: AuthRequest, @Param('id') animeId: number) {
-    const currentUser = req.user.id;
-    await this.favoritesService.createFavorite(currentUser, animeId);
-    return res.status(201).json({ message: 'Adicionado aos favoritos!' });
+    try {
+      const currentUser = req.user.id;
+      await this.favoritesService.createFavorite(currentUser, animeId);
+      return res.status(201).json({ message: 'Adicionado aos favoritos!' });
+    } catch (error) {
+      return res.status(500).send({ message: 'Erro ao adicionar aos favoritos' });
+    }
   }
 
   @Delete(':id')
   async remove(@Res() res, @Request() req: AuthRequest, @Param('id') favoriteId: number) {
-    const currentUser = req.user.id;
-    await this.favoritesService.removeFavorite(currentUser, favoriteId);
-    return res.status(201).json({ message: 'Removido dos favoritos!' });
+    try {
+      const currentUser = req.user.id;
+      await this.favoritesService.removeFavorite(currentUser, favoriteId);
+      return res.status(201).json({ message: 'Removido dos favoritos!' });
+    } catch (error) {
+      return res.status(500).send({ message: 'Erro ao remover dos favoritos' });
+    }
   }
 }

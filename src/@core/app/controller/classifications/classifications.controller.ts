@@ -11,16 +11,28 @@ export class ClassificationsController {
   @Public()
   @Get()
   async findAll(@Res() res) {
-    const classifications = await this.classificationsService.findAll();
-    return res.status(201).send(classifications);
+    try {
+      const classifications = await this.classificationsService.findAll();
+      return res.status(201).send(classifications);
+    } catch (error) {
+      return res
+        .status(500)
+        .send({ message: 'Ocorreu um erro ao buscar as classificações' });
+    }
   }
 
   @Post()
   async create(@Res() res, @Body() createClassifcationsDto: CreateClassificationsDto) {
-    const classifications = await this.classificationsService.create(
-      createClassifcationsDto,
-    );
-    return res.status(201).send(classifications);
+    try {
+      const classifications = await this.classificationsService.create(
+        createClassifcationsDto,
+      );
+      return res.status(201).send(classifications);
+    } catch (error) {
+      return res
+        .status(500)
+        .send({ message: 'Ocorreu um erro ao criar a classificação' });
+    }
   }
 
   @Put(':id')
@@ -30,11 +42,19 @@ export class ClassificationsController {
     @Body()
     updateClassifcationsDto: UpdateClassificationsDto,
   ) {
-    const classifications = await this.classificationsService.update(
-      id,
-      updateClassifcationsDto,
-    );
-    return res.status(201).send({ message: 'Classificação atualizada', classifications });
+    try {
+      const classifications = await this.classificationsService.update(
+        id,
+        updateClassifcationsDto,
+      );
+      return res
+        .status(201)
+        .send({ message: 'Classificação atualizada', classifications });
+    } catch (error) {
+      return res
+        .status(500)
+        .send({ message: 'Ocorreu um erro ao atualizar a classificação' });
+    }
   }
 
   @Delete(':id')

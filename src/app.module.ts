@@ -13,6 +13,8 @@ import { LikesEpisodesModule } from './@core/app/modules/likes/likes-episodes.mo
 import { LikesAnimeModule } from './@core/app/modules/likes/likes-animes.module';
 import { FavoritesModule } from './@core/app/modules/favorites/favorites.module';
 import { ClassificationsModule } from './@core/app/modules/classifications/classifications.module';
+import { CommentsModule } from './@core/app/modules/comments/comments.module';
+import { LikesCommentsModule } from './@core/app/modules/likes/likes-comments.module';
 
 @Module({
   imports: [
@@ -21,6 +23,8 @@ import { ClassificationsModule } from './@core/app/modules/classifications/class
     FavoritesModule,
     LikesAnimeModule,
     LikesEpisodesModule,
+    LikesCommentsModule,
+    CommentsModule,
     EpisodesModule,
     SeasonsModule,
     AnimeModule,

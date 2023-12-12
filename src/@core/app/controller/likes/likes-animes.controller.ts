@@ -10,23 +10,35 @@ export class LikesAnimesController {
   @Public()
   @Get()
   async getTopAnimes(@Res() res) {
-    const animes = await this.likesService.getTopLikedAnimes();
-    return res.status(201).send(animes);
+    try {
+      const animes = await this.likesService.getTopLikedAnimes();
+      return res.status(201).send(animes);
+    } catch (error) {
+      return res.status(500).send({ message: 'Erro ao buscar os top 10 animes' });
+    }
   }
 
   @Post(':id')
   async create(@Request() req: AuthRequest, @Res() res, @Param('id') id: number) {
-    const currentUser = req.user;
+    try {
+      const currentUser = req.user;
 
-    await this.likesService.createLike(currentUser.id, id);
-    return res.status(201).send({ message: 'Like adicionado com sucesso!' });
+      await this.likesService.createLike(currentUser.id, id);
+      return res.status(201).send({ message: 'Like adicionado com sucesso!' });
+    } catch (error) {
+      return res.status(500).send({ message: 'Erro ao adicionar o like' });
+    }
   }
 
   @Delete(':id')
   async remove(@Request() req: AuthRequest, @Res() res, @Param('id') id: number) {
-    const currentUser = req.user;
+    try {
+      const currentUser = req.user;
 
-    await this.likesService.deleteLike(currentUser.id, id);
-    return res.status(201).send({ message: 'Like removido com sucesso!' });
+      await this.likesService.deleteLike(currentUser.id, id);
+      return res.status(201).send({ message: 'Like removido com sucesso!' });
+    } catch (error) {
+      return res.status(500).send({ message: 'Erro ao remover o like' });
+    }
   }
 }

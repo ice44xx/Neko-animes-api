@@ -24,21 +24,34 @@ export class UsersController {
   @Public()
   @Get()
   async findAll(@Res() res) {
-    const users = await this.usersService.findAll();
-    return res.status(201).send(users);
+    try {
+      const users = await this.usersService.findAll();
+      return res.status(201).send(users);
+    } catch (error) {
+      return res.status(500).send({ message: 'Erro ao buscar todos usuários' });
+    }
   }
 
   @Public()
   @Get(':id')
-  findUserId(@Param('id') id: number) {
-    this.usersService.findOne(id);
-    return `Usuário com id: ${id} encontrado`;
+  findUserId(@Res() res, @Param('id') id: number) {
+    try {
+      const user = this.usersService.findOne(id);
+      return res.status(201).json(user);
+    } catch (error) {
+      return res.status(500).send({ message: `Erro ao buscar o usuário ${id}` });
+    }
   }
 
   @Public()
   @Post('create')
-  create(@Body() createUsersDto: CreateUsersDto) {
-    return this.usersService.create(createUsersDto);
+  create(@Res() res, @Body() createUsersDto: CreateUsersDto) {
+    try {
+      const user = this.usersService.create(createUsersDto);
+      return res.status(201).json(user);
+    } catch (error) {
+      return res.status(500).send({ message: 'Erro ao criar usuário' });
+    }
   }
 
   @Put()
@@ -47,9 +60,13 @@ export class UsersController {
     @Body() updateUsersDto: UpdateUsersDto,
     @Res() res,
   ) {
-    const currentUser = req.user;
-    const user = await this.usersService.update(currentUser.id, updateUsersDto);
-    return res.status(201).json({ message: 'Usuário atualizado!', user: user });
+    try {
+      const currentUser = req.user;
+      const user = await this.usersService.update(currentUser.id, updateUsersDto);
+      return res.status(201).json({ message: 'Usuário atualizado!', user: user });
+    } catch (error) {
+      return res.status(500).send({ message: 'Erro ao atualizar o usuário' });
+    }
   }
 
   @Put('password')
@@ -58,12 +75,18 @@ export class UsersController {
     @Body() updateUsersPasswordDto: UpdateUsersPasswordDto,
     @Res() res,
   ) {
-    const currentUser = req.user;
-    const user = await this.usersService.updatePassword(
-      currentUser.id,
-      updateUsersPasswordDto,
-    );
-    return res.status(201).json({ message: 'Senha atualizada com sucesso!', user: user });
+    try {
+      const currentUser = req.user;
+      const user = await this.usersService.updatePassword(
+        currentUser.id,
+        updateUsersPasswordDto,
+      );
+      return res
+        .status(201)
+        .json({ message: 'Senha atualizada com sucesso!', user: user });
+    } catch (error) {
+      return res.status(500).send({ message: 'Erro ao atualizar a senha do usuário' });
+    }
   }
 
   @HttpCode(204)
