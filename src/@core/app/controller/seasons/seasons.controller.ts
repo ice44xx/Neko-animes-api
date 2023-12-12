@@ -20,22 +20,34 @@ export class SeasonsController {
 
   @Public()
   @Get()
-  findAll() {
-    const season = this.seasonsService.findAll();
-    return season;
+  findAll(@Res() res) {
+    try {
+      const season = this.seasonsService.findAll();
+      return res.status(201).json(season);
+    } catch (error) {
+      return res.status(500).send({ message: 'Erro ao buscar todas temporadas' });
+    }
   }
 
   @Public()
   @Get(':name')
   async findByName(@Res() res, @Param('name') name: string) {
-    const season = await this.seasonsService.findByName(name);
-    return res.status(201).send(season);
+    try {
+      const season = await this.seasonsService.findByName(name);
+      return res.status(201).send(season);
+    } catch (error) {
+      return res.status(500).send({ message: `Erro ao buscar a  temporada ${name}` });
+    }
   }
 
   @Post('create')
-  create(@Body() createSeasonDto: CreateSeasonsDto) {
-    const season = this.seasonsService.create(createSeasonDto);
-    return season;
+  create(@Res() res, @Body() createSeasonDto: CreateSeasonsDto) {
+    try {
+      const season = this.seasonsService.create(createSeasonDto);
+      return season;
+    } catch (error) {
+      return res.status(500).send({ message: 'Erro ao criar temporada' });
+    }
   }
 
   @Put(':id')
@@ -44,8 +56,12 @@ export class SeasonsController {
     @Body() updateSeasonsDto: UpdateSeasonsDto,
     @Param('id') id: number,
   ) {
-    this.seasonsService.update(id, updateSeasonsDto);
-    return res.status(201).json({ message: 'Temporada atualizada' });
+    try {
+      this.seasonsService.update(id, updateSeasonsDto);
+      return res.status(201).json({ message: 'Temporada atualizada' });
+    } catch (error) {
+      return res.status(500).send({ message: 'Erro ao atualizar temporada' });
+    }
   }
 
   @Delete(':id')

@@ -8,6 +8,7 @@ import {
   Param,
   Post,
   Put,
+  Res,
 } from '@nestjs/common';
 import { Public } from 'src/@core/infra/decorators/public-route.decorator';
 import { BackgroundsService } from '../../services/backgrounds/backgrounds.service';
@@ -21,25 +22,41 @@ export class BackgroundsController {
   @Public()
   @HttpCode(HttpStatus.OK)
   @Get()
-  async findAll() {
-    const background = await this.backgroundsService.findAll();
-    return background;
+  async findAll(@Res() res) {
+    try {
+      const background = await this.backgroundsService.findAll();
+      return background;
+    } catch (error) {
+      return res.status(500).send({ message: 'Ocorreu um erro ao buscar os background' });
+    }
   }
 
   @Public()
   @Post('create')
-  @HttpCode(HttpStatus.OK)
-  async create(@Body() createBackgroundsDto: CreateBackgroundsDto) {
-    const background = await this.backgroundsService.create(createBackgroundsDto);
-    return background;
+  async create(@Res() res, @Body() createBackgroundsDto: CreateBackgroundsDto) {
+    try {
+      const background = await this.backgroundsService.create(createBackgroundsDto);
+      return res.status(201).json(background);
+    } catch (error) {
+      return res.status(500).send({ message: 'Ocorreu um erro ao criar o background' });
+    }
   }
 
   @Public()
   @Put(':id')
-  @HttpCode(HttpStatus.OK)
-  async update(@Param('id') id: number, @Body() updateBackgrounds: UpdateBackgroundsDto) {
-    const background = await this.backgroundsService.update(id, updateBackgrounds);
-    return background;
+  async update(
+    @Res() res,
+    @Param('id') id: number,
+    @Body() updateBackgrounds: UpdateBackgroundsDto,
+  ) {
+    try {
+      const background = await this.backgroundsService.update(id, updateBackgrounds);
+      return background;
+    } catch (error) {
+      return res
+        .status(500)
+        .send({ message: 'Ocorreu um erro ao atualizar o background' });
+    }
   }
 
   @Public()

@@ -20,23 +20,39 @@ export class EpisodesController {
 
   @Public()
   @Get()
-  async findAll() {
-    const episodes = await this.episodesService.findAll();
-    return episodes;
+  async findAll(@Res() res) {
+    try {
+      const episodes = await this.episodesService.findAll();
+      return res.status(201).json(episodes);
+    } catch (error) {
+      return res
+        .status(500)
+        .send({ message: 'Ocorreu um erro ao buscar todos episódios' });
+    }
   }
 
   @Public()
   @Get(':name')
   async findByName(@Res() res, @Param('name') name: string) {
-    const episode = await this.episodesService.findByName(name);
-    return res.status(201).send(episode);
+    try {
+      const episode = await this.episodesService.findByName(name);
+      return res.status(201).send(episode);
+    } catch (error) {
+      return res
+        .status(500)
+        .send({ message: `Ocorreu um erro ao buscar o episódio ${name}` });
+    }
   }
 
   @Public()
   @Post('create')
-  create(@Body() createEpisodesDto: CreateEpisodesDto) {
-    const episode = this.episodesService.create(createEpisodesDto);
-    return episode;
+  create(@Res() res, @Body() createEpisodesDto: CreateEpisodesDto) {
+    try {
+      const episode = this.episodesService.create(createEpisodesDto);
+      return res.status(201).json(episode);
+    } catch (error) {
+      return res.status(500).send({ message: 'Ocorreu um erro ao criar o episódio' });
+    }
   }
 
   @Put(':id')
@@ -45,8 +61,12 @@ export class EpisodesController {
     @Res() res,
     @Body() updateEpisodesDto: UpdateEpisodesDto,
   ) {
-    const episode = await this.episodesService.update(id, updateEpisodesDto);
-    return res.status(201).json(episode);
+    try {
+      const episode = await this.episodesService.update(id, updateEpisodesDto);
+      return res.status(201).json(episode);
+    } catch (error) {
+      return res.status(500).send({ message: 'Ocorreu um erro ao atualizar o episódio' });
+    }
   }
 
   @HttpCode(204)

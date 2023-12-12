@@ -21,7 +21,7 @@ export class CommentsService {
   async findByUser(userId: number) {
     try {
       const user = await this.usersRepository.findOne({
-        relations: ['comments', 'comments.episodes'],
+        relations: ['comments', 'comments.episodes', 'comments.likes'],
         where: { id: userId },
       });
 
@@ -32,6 +32,7 @@ export class CommentsService {
       const commentsWithEpisodeDetails = user.comments.map((comment) => ({
         id: comment.id,
         text: comment.text,
+        likes: comment.likes.length,
         episode: {
           id: comment.episodes.id,
           name: comment.episodes.name,
@@ -49,7 +50,7 @@ export class CommentsService {
   async findAllByEpisode(episodeId: number) {
     try {
       const episode = await this.episodesRepository.findOne({
-        relations: ['comments'],
+        relations: ['comments', 'comments.likes'],
         where: { id: episodeId },
       });
 
@@ -57,7 +58,15 @@ export class CommentsService {
         throw new NotFoundException('Episódio não encontrado');
       }
 
-      return episode.comments;
+      const commentsWithEpisodeDetails = episode.comments.map((comment) => ({
+        id: comment.id,
+        text: comment.text,
+        likes: comment.likes.length,
+        createdAt: comment.createdAt,
+        updateAt: comment.updatedAt,
+      }));
+
+      return commentsWithEpisodeDetails;
     } catch (error) {
       new Error('Ocorreu um erro ao encontrar o comentário do episódio') + error.message;
     }

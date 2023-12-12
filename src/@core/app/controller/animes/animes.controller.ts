@@ -21,40 +21,73 @@ export class AnimesController {
   @Public()
   @Get()
   async findAll(@Res() res) {
-    const anime = await this.animesService.findAll();
-    return res.status(201).send(anime);
+    try {
+      const anime = await this.animesService.findAll();
+      return res.status(201).send(anime);
+    } catch (error) {
+      return res
+        .status(500)
+        .send({ message: 'Ocorreu um erro ao buscar todos os animes' });
+    }
   }
 
   @Public()
   @Get(':id')
   async findById(@Param('id') id: number, @Res() res) {
-    const anime = await this.animesService.findById(id);
-    return res.status(201).send(anime);
+    try {
+      const anime = await this.animesService.findById(id);
+      return res.status(201).send(anime);
+    } catch (error) {
+      return res.status(500).send({ message: `Ocorreu um erro ao buscar o anime ${id}` });
+    }
   }
 
   @Public()
   @Get('name/:name')
   async findByName(@Param('name') name: string, @Res() res) {
-    const anime = await this.animesService.findByName(name);
-    return res.status(201).send(anime);
+    try {
+      const anime = await this.animesService.findByName(name);
+      return res.status(201).send(anime);
+    } catch (error) {
+      return res
+        .status(500)
+        .send({ message: `Ocorreu um erro ao buscar o anime ${name}` });
+    }
   }
 
   @Public()
   @Get()
   async findLastsReleases(@Res() res) {
-    const anime = await this.animesService.findLastReleases();
-    return res.status(201).send(anime);
+    try {
+      const anime = await this.animesService.findLastReleases();
+      return res.status(201).send(anime);
+    } catch (error) {
+      return res.status(500).send({ message: 'Ocorreu um erro ao buscar os animes' });
+    }
   }
 
   @Post('create')
-  async create(@Body() createAnimesDto: CreateAnimesDto) {
-    return await this.animesService.create(createAnimesDto);
+  async create(@Res() res, @Body() createAnimesDto: CreateAnimesDto) {
+    try {
+      const anime = await this.animesService.create(createAnimesDto);
+      return res.status(201).json(anime);
+    } catch (error) {
+      return res.status(500).send({ message: 'Ocorreu um erro ao criar o anime' });
+    }
   }
 
   @Put(':id')
-  async update(@Param('id') id: number, @Body() updateAnimesDto: UpdateAnimesDto) {
-    const anime = await this.animesService.update(id, updateAnimesDto);
-    return anime;
+  async update(
+    @Res() res,
+    @Param('id') id: number,
+    @Body() updateAnimesDto: UpdateAnimesDto,
+  ) {
+    try {
+      const anime = await this.animesService.update(id, updateAnimesDto);
+      return res.status(201).json(anime);
+    } catch (error) {
+      return res.status(500).send({ message: 'Ocorreu um erro ao atualizar o anime' });
+    }
   }
 
   @Public()

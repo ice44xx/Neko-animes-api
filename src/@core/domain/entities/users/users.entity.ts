@@ -9,6 +9,7 @@ import {
 import { LikesEpisodes } from '../likes-episodes/likes-episodes.entity';
 import { Favorites } from '../favorites/favorites.entity';
 import { Comments } from '../comments/comments.entity';
+import { LikesComments } from '../likes-comments/likes-comments';
 
 @Entity('users')
 export class Users {
@@ -38,6 +39,9 @@ export class Users {
 
   @OneToMany(() => LikesEpisodes, (like) => like.user)
   likes: LikesEpisodes[];
+
+  @OneToMany(() => LikesComments, (like) => like.user)
+  likesComments: LikesComments[];
 
   @OneToMany(() => Favorites, (favorites) => favorites.users)
   favorites: Favorites[];

@@ -3,11 +3,13 @@ import {
   CreateDateColumn,
   Entity,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 import { Users } from '../users/users.entity';
 import { Episodes } from '../episodes/episodes.entity';
+import { LikesComments } from '../likes-comments/likes-comments';
 
 @Entity('comments')
 export class Comments {
@@ -28,4 +30,7 @@ export class Comments {
 
   @ManyToOne(() => Episodes, (episodes) => episodes.comments)
   episodes: Episodes;
+
+  @OneToMany(() => LikesComments, (like) => like.comments, { cascade: true })
+  likes: LikesComments[];
 }
