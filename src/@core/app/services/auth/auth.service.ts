@@ -20,7 +20,6 @@ export class AuthServices {
       firstName: user.firstName,
       email: user.email,
       userName: user.userName,
-      role: user.role,
     };
 
     const jwtToken = this.jwtService.sign(payload);

@@ -8,6 +8,7 @@ import {
   Post,
   Put,
   Res,
+  UseGuards,
 } from '@nestjs/common';
 import { AnimesService } from '../../services/animes/animes.service';
 import { CreateAnimesDto } from '../../dto/requests/animes/create-animes-dto';

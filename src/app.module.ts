@@ -15,6 +15,7 @@ import { FavoritesModule } from './@core/app/modules/favorites/favorites.module'
 import { ClassificationsModule } from './@core/app/modules/classifications/classifications.module';
 import { CommentsModule } from './@core/app/modules/comments/comments.module';
 import { LikesCommentsModule } from './@core/app/modules/likes/likes-comments.module';
+import { RolesModule } from './@core/app/modules/users/roles.module';
 
 @Module({
   imports: [
@@ -31,6 +32,7 @@ import { LikesCommentsModule } from './@core/app/modules/likes/likes-comments.mo
     ClassificationsModule,
     CategoryModule,
     UsersModule,
+    RolesModule,
     DatabaseModule,
   ],
   controllers: [],

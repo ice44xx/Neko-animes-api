@@ -5,11 +5,13 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   OneToMany,
+  ManyToOne,
 } from 'typeorm';
 import { LikesEpisodes } from '../likes-episodes/likes-episodes.entity';
 import { Favorites } from '../favorites/favorites.entity';
 import { Comments } from '../comments/comments.entity';
 import { LikesComments } from '../likes-comments/likes-comments';
+import { Roles } from './roles.entity';
 
 @Entity('users')
 export class Users {
@@ -28,24 +30,24 @@ export class Users {
   @Column()
   password: string;
 
-  @Column()
-  role: string;
-
   @CreateDateColumn()
   createdAt: Date;
 
   @UpdateDateColumn()
   updatedAt: Date;
 
-  @OneToMany(() => LikesEpisodes, (like) => like.user)
+  @ManyToOne(() => Roles, (role) => role.users, { cascade: true })
+  role: Roles;
+
+  @OneToMany(() => LikesEpisodes, (like) => like.user, { cascade: true })
   likes: LikesEpisodes[];
 
-  @OneToMany(() => LikesComments, (like) => like.user)
+  @OneToMany(() => LikesComments, (like) => like.user, { cascade: true })
   likesComments: LikesComments[];
 
-  @OneToMany(() => Favorites, (favorites) => favorites.users)
+  @OneToMany(() => Favorites, (favorites) => favorites.users, { cascade: true })
   favorites: Favorites[];
 
-  @OneToMany(() => Comments, (comments) => comments.users)
+  @OneToMany(() => Comments, (comments) => comments.users, { cascade: true })
   comments: Comments[];
 }

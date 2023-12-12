@@ -9,6 +9,7 @@ import {
   Put,
   Res,
   Request,
+  UseGuards,
 } from '@nestjs/common';
 import { UsersService } from '../../services/users/users.service';
 import { CreateUsersDto } from '../../dto/requests/users/create-users-dto';
@@ -21,7 +22,6 @@ import { UpdateUsersPasswordDto } from '../../dto/requests/users/update-users-pa
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
-  @Public()
   @Get()
   async findAll(@Res() res) {
     try {
@@ -34,9 +34,9 @@ export class UsersController {
 
   @Public()
   @Get(':id')
-  findUserId(@Res() res, @Param('id') id: number) {
+  async findUserId(@Res() res, @Param('id') id: number) {
     try {
-      const user = this.usersService.findOne(id);
+      const user = await this.usersService.findById(id);
       return res.status(201).json(user);
     } catch (error) {
       return res.status(500).send({ message: `Erro ao buscar o usuário ${id}` });
@@ -45,9 +45,9 @@ export class UsersController {
 
   @Public()
   @Post('create')
-  create(@Res() res, @Body() createUsersDto: CreateUsersDto) {
+  async create(@Res() res, @Body() createUsersDto: CreateUsersDto) {
     try {
-      const user = this.usersService.create(createUsersDto);
+      const user = await this.usersService.create(createUsersDto);
       return res.status(201).json(user);
     } catch (error) {
       return res.status(500).send({ message: 'Erro ao criar usuário' });
