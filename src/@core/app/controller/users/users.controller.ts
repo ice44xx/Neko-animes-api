@@ -16,12 +16,13 @@ import { UpdateUsersDto } from '../../dto/requests/users/update-users-dto';
 import { AuthRequest } from 'src/@core/infra/auth/models/auth-request';
 import { Public } from 'src/@core/infra/decorators/public-route.decorator';
 import { UpdateUsersPasswordDto } from '../../dto/requests/users/update-users-password-dto';
+import { Roles, UserType } from 'src/@core/common/decorators/roles.decorator';
 
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
-  @Public()
+  @Roles(UserType.Admin)
   @Get()
   async findAll(@Res() res) {
     try {
@@ -32,11 +33,11 @@ export class UsersController {
     }
   }
 
-  @Public()
+  @Roles(UserType.Admin)
   @Get(':id')
-  findUserId(@Res() res, @Param('id') id: number) {
+  async findUserId(@Res() res, @Param('id') id: number) {
     try {
-      const user = this.usersService.findOne(id);
+      const user = await this.usersService.findById(id);
       return res.status(201).json(user);
     } catch (error) {
       return res.status(500).send({ message: `Erro ao buscar o usuário ${id}` });
@@ -45,9 +46,9 @@ export class UsersController {
 
   @Public()
   @Post('create')
-  create(@Res() res, @Body() createUsersDto: CreateUsersDto) {
+  async create(@Res() res, @Body() createUsersDto: CreateUsersDto) {
     try {
-      const user = this.usersService.create(createUsersDto);
+      const user = await this.usersService.create(createUsersDto);
       return res.status(201).json(user);
     } catch (error) {
       return res.status(500).send({ message: 'Erro ao criar usuário' });

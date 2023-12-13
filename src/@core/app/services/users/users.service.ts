@@ -6,17 +6,28 @@ import { CreateUsersDto } from '../../dto/requests/users/create-users-dto';
 import * as bcrypt from 'bcrypt';
 import { UpdateUsersDto } from '../../dto/requests/users/update-users-dto';
 import { UpdateUsersPasswordDto } from '../../dto/requests/users/update-users-password-dto';
+import { Roles } from 'src/@core/domain/entities/users/roles.entity';
 
 @Injectable()
 export class UsersService {
   constructor(
     @InjectRepository(Users)
     private readonly usersRepository: Repository<Users>,
+    @InjectRepository(Roles)
+    private readonly rolesRepository: Repository<Roles>,
   ) {}
 
   async findAll() {
     try {
-      return this.usersRepository.find({ relations: ['favorites.animes'] });
+      const findUsers = await this.usersRepository.find({
+        relations: ['favorites.animes', 'role'],
+      });
+      const users = findUsers.map((user) => ({
+        ...user,
+        role: user.role.role,
+      }));
+
+      return users;
     } catch (error) {
       throw (
         new Error('Ocorreu um erro ao tentar encontrar todos usuários') + error.message
@@ -24,14 +35,23 @@ export class UsersService {
     }
   }
 
-  async findOne(id: number) {
+  async findById(id: number) {
     try {
-      const user = await this.usersRepository.findOne({
+      const findUser = await this.usersRepository.findOne({
+        relations: ['role'],
         where: { id },
       });
-      if (user) {
+
+      if (!findUser) {
         throw new NotFoundException(`O usuário ${id} não foi encontrado`);
       }
+
+      const { role, ...userData } = findUser;
+      const user = {
+        ...userData,
+        role: findUser.role.role,
+      };
+
       return user;
     } catch (error) {
       throw new Error('Ocorreu um erro ao tentar encontrar o usuário') + error.message;
@@ -58,26 +78,28 @@ export class UsersService {
 
   async create(createUsersDto: CreateUsersDto) {
     try {
-      const { password, role: incomingRole, ...userData } = createUsersDto;
+      const { password, ...userData } = createUsersDto;
       const saltRounds = 10;
       const hashedPassword = await bcrypt.hash(password, saltRounds);
 
-      const validRoles = ['user', 'admin'];
-      const role =
-        typeof incomingRole === 'string' && validRoles.includes(incomingRole)
-          ? incomingRole
-          : 'user';
-
-      const user = this.usersRepository.create({
-        ...userData,
-        password: hashedPassword,
-        role,
+      const user = await this.usersRepository.findOne({
+        where: { email: createUsersDto.email },
       });
 
-      const save = await this.usersRepository.save(user);
-      const { role: userRole, ...userWithoutRole } = save;
+      if (user) {
+        throw new Error('Usuário já existe');
+      }
 
-      return userWithoutRole;
+      const defaultRole = await this.rolesRepository.findOne({ where: { role: 'user' } });
+
+      const newUser = this.usersRepository.create({
+        ...userData,
+        password: hashedPassword,
+        role: defaultRole,
+      });
+
+      const save = await this.usersRepository.save(newUser);
+      return save;
     } catch (error) {
       throw new Error('Ocorreu um erro ao criar o usuário') + error.message;
     }
@@ -93,7 +115,7 @@ export class UsersService {
         throw new UnauthorizedException('Credenciais inválidas');
       }
 
-      const updateUser = await this.usersRepository.merge(user, updateUsersDto);
+      const updateUser = this.usersRepository.merge(user, updateUsersDto);
 
       return this.usersRepository.save(updateUser);
     } catch (error) {

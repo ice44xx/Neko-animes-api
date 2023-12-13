@@ -12,6 +12,4 @@ export class CreateUsersDto {
 
   @IsString()
   readonly password: string;
-
-  readonly role: string;
 }

@@ -14,10 +14,11 @@ export class UsersPayloadDto {
   readonly userName: string;
 
   @IsString()
+  readonly role: string;
+
+  @IsString()
   readonly iat?: string;
 
   @IsNumber()
   readonly exp?: number;
-
-  readonly role: string;
 }

@@ -13,6 +13,7 @@ import { Favorites } from 'src/@core/domain/entities/favorites/favorites.entity'
 import { Classifications } from 'src/@core/domain/entities/classifications/classifications.entity';
 import { Comments } from 'src/@core/domain/entities/comments/comments.entity';
 import { LikesComments } from 'src/@core/domain/entities/likes-comments/likes-comments';
+import { Roles } from 'src/@core/domain/entities/users/roles.entity';
 
 export const dataSourceOptions: DataSourceOptions = {
   type: 'postgres',
@@ -22,6 +23,7 @@ export const dataSourceOptions: DataSourceOptions = {
   password: '020619',
   database: 'nekoanimes',
   entities: [
+    Roles,
     Users,
     Backgrounds,
     Classifications,

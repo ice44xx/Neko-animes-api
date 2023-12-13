@@ -15,6 +15,9 @@ import { FavoritesModule } from './@core/app/modules/favorites/favorites.module'
 import { ClassificationsModule } from './@core/app/modules/classifications/classifications.module';
 import { CommentsModule } from './@core/app/modules/comments/comments.module';
 import { LikesCommentsModule } from './@core/app/modules/likes/likes-comments.module';
+import { RolesModule } from './@core/app/modules/users/roles.module';
+import { RolesGuard } from './@core/infra/auth/guards/roles-auth.guard';
+import { JwtModule } from '@nestjs/jwt';
 
 @Module({
   imports: [
@@ -31,13 +34,19 @@ import { LikesCommentsModule } from './@core/app/modules/likes/likes-comments.mo
     ClassificationsModule,
     CategoryModule,
     UsersModule,
+    RolesModule,
     DatabaseModule,
+    JwtModule,
   ],
   controllers: [],
   providers: [
     {
       provide: APP_GUARD,
       useClass: JwtAuthGuard,
+    },
+    {
+      provide: APP_GUARD,
+      useClass: RolesGuard,
     },
   ],
 })
