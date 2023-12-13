@@ -13,6 +13,7 @@ import { CategoriesService } from '../../services/categories/categories.service'
 import { CreateCategoriesDto } from '../../dto/requests/categories/create-categories-dto';
 import { UpdateCategoryDto } from '../../dto/requests/categories/update-categories-dto';
 import { Public } from 'src/@core/infra/decorators/public-route.decorator';
+import { Roles, UserType } from 'src/@core/common/decorators/roles.decorator';
 
 @Controller('categories')
 export class CategoriesController {
@@ -42,16 +43,18 @@ export class CategoriesController {
     }
   }
 
+  @Roles(UserType.Admin)
   @Post('create')
-  create(@Res() res, @Body() createCategoriesDto: CreateCategoriesDto) {
+  async create(@Res() res, @Body() createCategoriesDto: CreateCategoriesDto) {
     try {
-      const category = this.categoriesService.create(createCategoriesDto);
+      const category = await this.categoriesService.create(createCategoriesDto);
       return res.status(201).json(category);
     } catch (error) {
       return res.status(500).send({ message: 'Ocorreu um erro ao criar a categoria' });
     }
   }
 
+  @Roles(UserType.Admin)
   @Put(':id')
   update(
     @Res() res,
@@ -68,6 +71,7 @@ export class CategoriesController {
     }
   }
 
+  @Roles(UserType.Admin)
   @HttpCode(204)
   @Delete(':id')
   remove(@Param('id') name: string) {

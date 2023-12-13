@@ -13,6 +13,7 @@ import { EpisodesService } from '../../services/episodes/episodes.service';
 import { CreateEpisodesDto } from '../../dto/requests/episodes/create-episodes-dto';
 import { UpdateEpisodesDto } from '../../dto/requests/episodes/update-episodes-dto';
 import { Public } from 'src/@core/infra/decorators/public-route.decorator';
+import { Roles, UserType } from 'src/@core/common/decorators/roles.decorator';
 
 @Controller('episodes')
 export class EpisodesController {
@@ -44,17 +45,18 @@ export class EpisodesController {
     }
   }
 
-  @Public()
+  @Roles(UserType.Admin)
   @Post('create')
-  create(@Res() res, @Body() createEpisodesDto: CreateEpisodesDto) {
+  async create(@Res() res, @Body() createEpisodesDto: CreateEpisodesDto) {
     try {
-      const episode = this.episodesService.create(createEpisodesDto);
+      const episode = await this.episodesService.create(createEpisodesDto);
       return res.status(201).json(episode);
     } catch (error) {
       return res.status(500).send({ message: 'Ocorreu um erro ao criar o episódio' });
     }
   }
 
+  @Roles(UserType.Admin)
   @Put(':id')
   async update(
     @Param('id') id: number,
@@ -69,6 +71,7 @@ export class EpisodesController {
     }
   }
 
+  @Roles(UserType.Admin)
   @HttpCode(204)
   @Delete(':id')
   async delete(@Param('id') id: number) {

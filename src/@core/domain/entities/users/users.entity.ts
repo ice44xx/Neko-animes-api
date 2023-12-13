@@ -36,7 +36,7 @@ export class Users {
   @UpdateDateColumn()
   updatedAt: Date;
 
-  @ManyToOne(() => Roles, (role) => role.users, { cascade: true })
+  @ManyToOne(() => Roles, (role) => role.users, { cascade: true, eager: true })
   role: Roles;
 
   @OneToMany(() => LikesEpisodes, (like) => like.user, { cascade: true })

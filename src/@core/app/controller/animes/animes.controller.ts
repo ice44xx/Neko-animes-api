@@ -14,6 +14,7 @@ import { AnimesService } from '../../services/animes/animes.service';
 import { CreateAnimesDto } from '../../dto/requests/animes/create-animes-dto';
 import { UpdateAnimesDto } from '../../dto/requests/animes/update-animes-dto';
 import { Public } from 'src/@core/infra/decorators/public-route.decorator';
+import { Roles, UserType } from 'src/@core/common/decorators/roles.decorator';
 
 @Controller('animes')
 export class AnimesController {
@@ -67,6 +68,7 @@ export class AnimesController {
     }
   }
 
+  @Roles(UserType.Admin)
   @Post('create')
   async create(@Res() res, @Body() createAnimesDto: CreateAnimesDto) {
     try {
@@ -77,6 +79,7 @@ export class AnimesController {
     }
   }
 
+  @Roles(UserType.Admin)
   @Put(':id')
   async update(
     @Res() res,
@@ -91,6 +94,7 @@ export class AnimesController {
     }
   }
 
+  @Roles(UserType.Admin)
   @Public()
   @HttpCode(204)
   @Delete(':id')

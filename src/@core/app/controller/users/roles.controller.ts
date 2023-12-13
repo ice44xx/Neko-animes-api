@@ -11,13 +11,13 @@ import {
 } from '@nestjs/common';
 import { RolesService } from '../../services/users/roles.service';
 import { CreateRolesDto } from '../../dto/requests/users/create-roles-dto';
-import { Public } from 'src/@core/infra/decorators/public-route.decorator';
+import { Roles, UserType } from 'src/@core/common/decorators/roles.decorator';
 
 @Controller('roles')
 export class RolesController {
   constructor(private readonly rolesService: RolesService) {}
 
-  @Public()
+  @Roles(UserType.Admin)
   @Get()
   async findAll(@Res() res) {
     try {
@@ -28,7 +28,7 @@ export class RolesController {
     }
   }
 
-  @Public()
+  @Roles(UserType.Admin)
   @Post('create')
   async create(@Res() res, @Body() createRolesDto: CreateRolesDto) {
     try {
@@ -39,7 +39,7 @@ export class RolesController {
     }
   }
 
-  @Public()
+  @Roles(UserType.Admin)
   @Delete()
   @HttpCode(204)
   async delete(@Param('id') id: number) {

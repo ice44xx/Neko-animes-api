@@ -9,7 +9,6 @@ import {
   Put,
   Res,
   Request,
-  UseGuards,
 } from '@nestjs/common';
 import { UsersService } from '../../services/users/users.service';
 import { CreateUsersDto } from '../../dto/requests/users/create-users-dto';
@@ -17,11 +16,13 @@ import { UpdateUsersDto } from '../../dto/requests/users/update-users-dto';
 import { AuthRequest } from 'src/@core/infra/auth/models/auth-request';
 import { Public } from 'src/@core/infra/decorators/public-route.decorator';
 import { UpdateUsersPasswordDto } from '../../dto/requests/users/update-users-password-dto';
+import { Roles, UserType } from 'src/@core/common/decorators/roles.decorator';
 
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
+  @Roles(UserType.Admin)
   @Get()
   async findAll(@Res() res) {
     try {
@@ -32,7 +33,7 @@ export class UsersController {
     }
   }
 
-  @Public()
+  @Roles(UserType.Admin)
   @Get(':id')
   async findUserId(@Res() res, @Param('id') id: number) {
     try {

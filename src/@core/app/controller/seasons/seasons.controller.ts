@@ -13,6 +13,7 @@ import { SeasonsService } from '../../services/seasons/seasons.service';
 import { CreateSeasonsDto } from '../../dto/requests/seasons/create-seasons-dto';
 import { UpdateSeasonsDto } from '../../dto/requests/seasons/update-seasons-dto';
 import { Public } from 'src/@core/infra/decorators/public-route.decorator';
+import { Roles, UserType } from 'src/@core/common/decorators/roles.decorator';
 
 @Controller('seasons')
 export class SeasonsController {
@@ -40,16 +41,18 @@ export class SeasonsController {
     }
   }
 
+  @Roles(UserType.Admin)
   @Post('create')
-  create(@Res() res, @Body() createSeasonDto: CreateSeasonsDto) {
+  async create(@Res() res, @Body() createSeasonDto: CreateSeasonsDto) {
     try {
-      const season = this.seasonsService.create(createSeasonDto);
+      const season = await this.seasonsService.create(createSeasonDto);
       return season;
     } catch (error) {
       return res.status(500).send({ message: 'Erro ao criar temporada' });
     }
   }
 
+  @Roles(UserType.Admin)
   @Put(':id')
   async update(
     @Res() res,
@@ -64,6 +67,8 @@ export class SeasonsController {
     }
   }
 
+  @Roles(UserType.Admin)
+  @HttpCode(204)
   @Delete(':id')
   async remove(@Res() res, @Param('id') id: number) {
     await this.seasonsService.delete(id);
