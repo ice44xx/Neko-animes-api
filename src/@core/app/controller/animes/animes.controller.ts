@@ -8,14 +8,15 @@ import {
   Post,
   Put,
   Res,
-  UseGuards,
 } from '@nestjs/common';
 import { AnimesService } from '../../services/animes/animes.service';
 import { CreateAnimesDto } from '../../dto/requests/animes/create-animes-dto';
 import { UpdateAnimesDto } from '../../dto/requests/animes/update-animes-dto';
 import { Public } from 'src/@core/infra/decorators/public-route.decorator';
 import { Roles, UserType } from 'src/@core/infra/decorators/roles.decorator';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Animes')
 @Controller('animes')
 export class AnimesController {
   constructor(private readonly animesService: AnimesService) {}

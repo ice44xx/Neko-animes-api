@@ -1,6 +1,9 @@
 import { Controller, Delete, Param, Post, Res, Request } from '@nestjs/common';
 import { FavoritesService } from '../../services/favorites/favorites.service';
 import { AuthRequest } from 'src/@core/infra/auth/models/auth-request';
+import { ApiTags } from '@nestjs/swagger';
+
+@ApiTags('Favoritos')
 @Controller('favorites')
 export class FavoritesController {
   constructor(private readonly favoritesService: FavoritesService) {}

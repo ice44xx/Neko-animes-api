@@ -2,7 +2,9 @@ import { Controller, Delete, Request, Param, Post, Res, Get } from '@nestjs/comm
 import { AuthRequest } from 'src/@core/infra/auth/models/auth-request';
 import { LikesAnimesService } from '../../services/likes/likes-animes.service';
 import { Public } from 'src/@core/infra/decorators/public-route.decorator';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Curtidas dos animes')
 @Controller('likes-animes')
 export class LikesAnimesController {
   constructor(private readonly likesService: LikesAnimesService) {}

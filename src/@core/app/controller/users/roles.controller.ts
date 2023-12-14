@@ -12,7 +12,9 @@ import {
 import { RolesService } from '../../services/users/roles.service';
 import { CreateRolesDto } from '../../dto/requests/users/create-roles-dto';
 import { Roles, UserType } from 'src/@core/infra/decorators/roles.decorator';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Roles')
 @Controller('roles')
 export class RolesController {
   constructor(private readonly rolesService: RolesService) {}

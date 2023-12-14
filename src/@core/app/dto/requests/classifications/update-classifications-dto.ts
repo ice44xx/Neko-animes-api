@@ -1,4 +1,4 @@
-import { PartialType } from '@nestjs/mapped-types';
+import { PartialType } from '@nestjs/swagger';
 import { CreateClassificationsDto } from './create-classifications-dto';
 
 export class UpdateClassificationsDto extends PartialType(CreateClassificationsDto) {}
