@@ -15,7 +15,9 @@ import { BackgroundsService } from '../../services/backgrounds/backgrounds.servi
 import { UpdateBackgroundsDto } from '../../dto/requests/backgrounds/update-backgrounds-dto';
 import { CreateBackgroundsDto } from '../../dto/requests/backgrounds/create-backgrounds-dto';
 import { Roles, UserType } from 'src/@core/infra/decorators/roles.decorator';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Planos de fundo')
 @Controller('backgrounds')
 export class BackgroundsController {
   constructor(private readonly backgroundsService: BackgroundsService) {}

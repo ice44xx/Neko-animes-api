@@ -4,7 +4,9 @@ import { Public } from 'src/@core/infra/decorators/public-route.decorator';
 import { CreateClassificationsDto } from '../../dto/requests/classifications/create-classifications-dto';
 import { UpdateClassificationsDto } from '../../dto/requests/classifications/update-classifications-dto';
 import { Roles, UserType } from 'src/@core/infra/decorators/roles.decorator';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Classificações')
 @Controller('classifications')
 export class ClassificationsController {
   constructor(private readonly classificationsService: ClassificationsService) {}

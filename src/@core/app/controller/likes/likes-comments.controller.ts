@@ -1,7 +1,9 @@
 import { Controller, Delete, Param, Post, Request, Res } from '@nestjs/common';
 import { LikesCommentsService } from '../../services/likes/likes-comments.service';
 import { AuthRequest } from 'src/@core/infra/auth/models/auth-request';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Curtidas dos comentários')
 @Controller('likes-comments')
 export class LikesCommentsController {
   constructor(private readonly likesService: LikesCommentsService) {}

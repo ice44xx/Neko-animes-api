@@ -14,7 +14,9 @@ import { WatchlistService } from '../../services/watchlist/watchlist.service';
 import { AuthRequest } from 'src/@core/infra/auth/models/auth-request';
 import { CreateWatchListDto } from '../../dto/requests/watchlist/create-watchlist.dto';
 import { Roles, UserType } from 'src/@core/infra/decorators/roles.decorator';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Lista de assistidos')
 @Controller('watchlist')
 export class WatchlistController {
   constructor(private readonly watchlistService: WatchlistService) {}
