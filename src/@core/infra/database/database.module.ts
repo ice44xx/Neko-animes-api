@@ -14,6 +14,7 @@ import { Classifications } from 'src/@core/domain/entities/classifications/class
 import { Comments } from 'src/@core/domain/entities/comments/comments.entity';
 import { LikesComments } from 'src/@core/domain/entities/likes-comments/likes-comments';
 import { Roles } from 'src/@core/domain/entities/users/roles.entity';
+import { Watchlist } from 'src/@core/domain/entities/watchlist/watchlist.entity';
 
 export const dataSourceOptions: DataSourceOptions = {
   type: 'postgres',
@@ -35,6 +36,7 @@ export const dataSourceOptions: DataSourceOptions = {
     LikesComments,
     Seasons,
     Episodes,
+    Watchlist,
     Comments,
   ],
   synchronize: true,

@@ -18,6 +18,7 @@ import { LikesCommentsModule } from './@core/app/modules/likes/likes-comments.mo
 import { RolesModule } from './@core/app/modules/users/roles.module';
 import { RolesGuard } from './@core/infra/auth/guards/roles-auth.guard';
 import { JwtModule } from '@nestjs/jwt';
+import { WatchlistModule } from './@core/app/modules/watchlist/watchlist.module';
 
 @Module({
   imports: [
@@ -28,6 +29,7 @@ import { JwtModule } from '@nestjs/jwt';
     LikesEpisodesModule,
     LikesCommentsModule,
     CommentsModule,
+    WatchlistModule,
     EpisodesModule,
     SeasonsModule,
     AnimeModule,

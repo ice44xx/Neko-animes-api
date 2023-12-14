@@ -12,6 +12,7 @@ import { Favorites } from '../favorites/favorites.entity';
 import { Comments } from '../comments/comments.entity';
 import { LikesComments } from '../likes-comments/likes-comments';
 import { Roles } from './roles.entity';
+import { Watchlist } from '../watchlist/watchlist.entity';
 
 @Entity('users')
 export class Users {
@@ -50,4 +51,7 @@ export class Users {
 
   @OneToMany(() => Comments, (comments) => comments.users, { cascade: true })
   comments: Comments[];
+
+  @OneToMany(() => Watchlist, (wathlist) => wathlist.users, { cascade: true })
+  watchlist: Watchlist[];
 }

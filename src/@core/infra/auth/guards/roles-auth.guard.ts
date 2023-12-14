@@ -35,6 +35,10 @@ export class RolesGuard implements CanActivate {
 
     const userRole: UserType = this.mapToUserRole(loginPayload.role);
 
+    if (userRole === UserType.Admin) {
+      return true;
+    }
+
     return requiredRoles.includes(userRole);
   }
 
