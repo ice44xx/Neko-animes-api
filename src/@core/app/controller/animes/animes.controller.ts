@@ -14,7 +14,7 @@ import { AnimesService } from '../../services/animes/animes.service';
 import { CreateAnimesDto } from '../../dto/requests/animes/create-animes-dto';
 import { UpdateAnimesDto } from '../../dto/requests/animes/update-animes-dto';
 import { Public } from 'src/@core/infra/decorators/public-route.decorator';
-import { Roles, UserType } from 'src/@core/common/decorators/roles.decorator';
+import { Roles, UserType } from 'src/@core/infra/decorators/roles.decorator';
 
 @Controller('animes')
 export class AnimesController {
@@ -98,7 +98,7 @@ export class AnimesController {
   @Public()
   @HttpCode(204)
   @Delete(':id')
-  async delete(@Param('id') id: number) {
+  async remove(@Param('id') id: number) {
     await this.animesService.delete(id);
   }
 }

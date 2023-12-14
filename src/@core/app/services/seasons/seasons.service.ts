@@ -32,7 +32,7 @@ export class SeasonsService {
         .getMany();
       return seasons;
     } catch (error) {
-      throw new Error('Ocorreu um erro ao encontrar todas temporadas') + error.message;
+      throw new Error('Ocorreu um erro ao encontrar todas temporadas, ') + error.message;
     }
   }
 
@@ -60,7 +60,9 @@ export class SeasonsService {
 
       return seasons;
     } catch (error) {
-      throw new Error(`Ocorreu um erro ao encontrar a temporada ${name}`);
+      throw new Error(
+        `Ocorreu um erro ao encontrar a temporada ${name}, ` + error.message,
+      );
     }
   }
 
@@ -79,7 +81,7 @@ export class SeasonsService {
 
       return await this.seasonsRepository.save(newSeason);
     } catch (error) {
-      throw new Error('Ocorreu um erro ao criar a temporada') + error.message;
+      throw new Error('Ocorreu um erro ao criar a temporada, ') + error.message;
     }
   }
 
@@ -107,7 +109,7 @@ export class SeasonsService {
       const update = await this.seasonsRepository.save(season);
       return update;
     } catch (error) {
-      throw new Error('Ocorreu um erro ao atualizar a temporada') + error.message;
+      throw new Error('Ocorreu um erro ao atualizar a temporada, ') + error.message;
     }
   }
 
@@ -116,7 +118,7 @@ export class SeasonsService {
       const season = await this.seasonsRepository.delete(id);
       return season;
     } catch (error) {
-      throw new Error('Ocorreu um erro ao deletar a temporada') + error.message;
+      throw new Error('Ocorreu um erro ao deletar a temporada, ') + error.message;
     }
   }
 }

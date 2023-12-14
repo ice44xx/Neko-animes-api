@@ -30,7 +30,7 @@ export class UsersService {
       return users;
     } catch (error) {
       throw (
-        new Error('Ocorreu um erro ao tentar encontrar todos usuários') + error.message
+        new Error('Ocorreu um erro ao tentar encontrar todos usuários, ') + error.message
       );
     }
   }
@@ -54,7 +54,7 @@ export class UsersService {
 
       return user;
     } catch (error) {
-      throw new Error('Ocorreu um erro ao tentar encontrar o usuário') + error.message;
+      throw new Error('Ocorreu um erro ao tentar encontrar o usuário, ') + error.message;
     }
   }
 
@@ -70,7 +70,7 @@ export class UsersService {
       return user;
     } catch (error) {
       throw (
-        new Error('Ocorreu um erro ao tentar encontrar o email do usuário') +
+        new Error('Ocorreu um erro ao tentar encontrar o email do usuário, ') +
         error.message
       );
     }
@@ -101,7 +101,7 @@ export class UsersService {
       const save = await this.usersRepository.save(newUser);
       return save;
     } catch (error) {
-      throw new Error('Ocorreu um erro ao criar o usuário') + error.message;
+      throw new Error('Ocorreu um erro ao criar o usuário, ') + error.message;
     }
   }
 
@@ -119,7 +119,7 @@ export class UsersService {
 
       return this.usersRepository.save(updateUser);
     } catch (error) {
-      throw new Error('Ocorreu um erro ao atualizar o usuário') + error.message;
+      throw new Error('Ocorreu um erro ao atualizar o usuário, ') + error.message;
     }
   }
 
@@ -152,11 +152,11 @@ export class UsersService {
       const updateUser = await this.usersRepository.save(user);
       return updateUser;
     } catch (error) {
-      throw new Error('Ocorreu um erro ao atualizar a senha') + error.message;
+      throw new Error('Ocorreu um erro ao atualizar a senha, ') + error.message;
     }
   }
 
-  async remove(id: number) {
+  async delete(id: number) {
     try {
       const user = await this.usersRepository.findOne({
         where: { id },
@@ -166,7 +166,7 @@ export class UsersService {
       }
       return this.usersRepository.remove(user);
     } catch (error) {
-      throw new Error('Ocorreu um erro ao deletar o usuário') + error.message;
+      throw new Error('Ocorreu um erro ao deletar o usuário, ') + error.message;
     }
   }
 }

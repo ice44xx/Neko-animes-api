@@ -47,7 +47,7 @@ export class LikesCommentsService {
 
       return await this.likesRepository.save(newLike);
     } catch (error) {
-      throw new Error('Ocorreu um erro ao criar o like') + error.message;
+      throw new Error('Ocorreu um erro ao criar o like, ') + error.message;
     }
   }
 
@@ -73,7 +73,7 @@ export class LikesCommentsService {
 
       await this.likesRepository.remove(like);
     } catch (error) {
-      throw new Error('Ocorreu um erro ao remover o like' + error.message);
+      throw new Error('Ocorreu um erro ao remover o like, ' + error.message);
     }
   }
 }

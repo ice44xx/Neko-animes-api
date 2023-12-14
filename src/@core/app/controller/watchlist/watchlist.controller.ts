@@ -13,7 +13,7 @@ import {
 import { WatchlistService } from '../../services/watchlist/watchlist.service';
 import { AuthRequest } from 'src/@core/infra/auth/models/auth-request';
 import { CreateWatchListDto } from '../../dto/requests/watchlist/create-watchlist.dto';
-import { Roles, UserType } from 'src/@core/common/decorators/roles.decorator';
+import { Roles, UserType } from 'src/@core/infra/decorators/roles.decorator';
 
 @Controller('watchlist')
 export class WatchlistController {
@@ -58,7 +58,7 @@ export class WatchlistController {
   @Roles(UserType.User)
   @HttpCode(204)
   @Delete(':watchlistId')
-  async delete(@Param('watchlistId') watchlistId: number, @Request() req: AuthRequest) {
+  async remove(@Param('watchlistId') watchlistId: number, @Request() req: AuthRequest) {
     try {
       const currentUser = req.user.id;
       return await this.watchlistService.delete(currentUser, watchlistId);

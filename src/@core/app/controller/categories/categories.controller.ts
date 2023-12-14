@@ -13,7 +13,7 @@ import { CategoriesService } from '../../services/categories/categories.service'
 import { CreateCategoriesDto } from '../../dto/requests/categories/create-categories-dto';
 import { UpdateCategoryDto } from '../../dto/requests/categories/update-categories-dto';
 import { Public } from 'src/@core/infra/decorators/public-route.decorator';
-import { Roles, UserType } from 'src/@core/common/decorators/roles.decorator';
+import { Roles, UserType } from 'src/@core/infra/decorators/roles.decorator';
 
 @Controller('categories')
 export class CategoriesController {
@@ -74,7 +74,7 @@ export class CategoriesController {
   @Roles(UserType.Admin)
   @HttpCode(204)
   @Delete(':id')
-  remove(@Param('id') name: string) {
+  async remove(@Param('id') name: string) {
     return this.categoriesService.delete(name);
   }
 }

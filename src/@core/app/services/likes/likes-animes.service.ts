@@ -35,7 +35,7 @@ export class LikesAnimesService {
 
       return topAnimes;
     } catch (error) {
-      throw new Error('Ocorreu um erro ao buscar os animes') + error.message;
+      throw new Error('Ocorreu um erro ao buscar os animes, ') + error.message;
     }
   }
 
@@ -65,7 +65,7 @@ export class LikesAnimesService {
 
       return await this.likesRepository.save(newLike);
     } catch (error) {
-      throw new Error('Ocorreu um erro ao criar o like') + error.message;
+      throw new Error('Ocorreu um erro ao criar o like, ') + error.message;
     }
   }
 
@@ -91,7 +91,7 @@ export class LikesAnimesService {
 
       await this.likesRepository.remove(like);
     } catch (error) {
-      throw new Error('Ocorreu um erro ao remover o like') + error.message;
+      throw new Error('Ocorreu um erro ao remover o like, ') + error.message;
     }
   }
 }

@@ -16,7 +16,7 @@ export class CategoriesService {
     try {
       return this.categoriesRepository.find({ relations: ['animes'] });
     } catch (error) {
-      throw new Error('Ocorreu um erro ao encontrar todas categorias') + error.message;
+      throw new Error('Ocorreu um erro ao encontrar todas categorias, ') + error.message;
     }
   }
 
@@ -30,7 +30,9 @@ export class CategoriesService {
       }
       return category;
     } catch (error) {
-      throw new Error(`Ocorreu um erro ao procurar a categoria ${name} `) + error.message;
+      throw (
+        new Error(`Ocorreu um erro ao procurar a categoria ${name}, `) + error.message
+      );
     }
   }
 
@@ -43,7 +45,7 @@ export class CategoriesService {
       });
       return this.categoriesRepository.save(newCategory);
     } catch (error) {
-      throw new Error('Ocorreu um erro ao criar a categoria') + error.message;
+      throw new Error('Ocorreu um erro ao criar a categoria, ') + error.message;
     }
   }
 
@@ -60,7 +62,7 @@ export class CategoriesService {
       const category = await this.categoriesRepository.save(categoryUpdate);
       return category;
     } catch (error) {
-      throw new Error('Ocorreu um erro ao atualizar a categoria') + error.message;
+      throw new Error('Ocorreu um erro ao atualizar a categoria, ') + error.message;
     }
   }
 
@@ -74,7 +76,7 @@ export class CategoriesService {
       }
       this.categoriesRepository.remove(category);
     } catch (error) {
-      throw new Error('Ocorreu um erro ao deletar a categoria') + error.message;
+      throw new Error('Ocorreu um erro ao deletar a categoria, ') + error.message;
     }
   }
 }

@@ -3,7 +3,7 @@ import { ClassificationsService } from '../../services/classifications/classific
 import { Public } from 'src/@core/infra/decorators/public-route.decorator';
 import { CreateClassificationsDto } from '../../dto/requests/classifications/create-classifications-dto';
 import { UpdateClassificationsDto } from '../../dto/requests/classifications/update-classifications-dto';
-import { Roles, UserType } from 'src/@core/common/decorators/roles.decorator';
+import { Roles, UserType } from 'src/@core/infra/decorators/roles.decorator';
 
 @Controller('classifications')
 export class ClassificationsController {
@@ -62,7 +62,7 @@ export class ClassificationsController {
 
   @Roles(UserType.Admin)
   @Delete(':id')
-  async delete(@Param('id') id: number, @Res() res) {
+  async remove(@Param('id') id: number, @Res() res) {
     await this.classificationsService.delete(id);
     return res.status(201).send({ message: 'Classificação deletada com sucesso!' });
   }
