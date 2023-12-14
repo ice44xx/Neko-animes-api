@@ -14,7 +14,7 @@ import { Public } from 'src/@core/infra/decorators/public-route.decorator';
 import { BackgroundsService } from '../../services/backgrounds/backgrounds.service';
 import { UpdateBackgroundsDto } from '../../dto/requests/backgrounds/update-backgrounds-dto';
 import { CreateBackgroundsDto } from '../../dto/requests/backgrounds/create-backgrounds-dto';
-import { Roles, UserType } from 'src/@core/common/decorators/roles.decorator';
+import { Roles, UserType } from 'src/@core/infra/decorators/roles.decorator';
 
 @Controller('backgrounds')
 export class BackgroundsController {
@@ -63,7 +63,7 @@ export class BackgroundsController {
   @Roles(UserType.Admin)
   @Delete(':id')
   @HttpCode(204)
-  async delete(@Param('id') id: number) {
+  async remove(@Param('id') id: number) {
     await this.backgroundsService.delete(id);
   }
 }

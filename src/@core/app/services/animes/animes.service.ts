@@ -36,7 +36,7 @@ export class AnimesService {
       );
       return animesWithLikes;
     } catch (error) {
-      throw new Error('Ocorreu um erro ao encontrar os animes') + error.message;
+      throw new Error('Ocorreu um erro ao encontrar os animes, ') + error.message;
     }
   }
 
@@ -56,7 +56,7 @@ export class AnimesService {
 
       return { ...anime, likes: likesCount };
     } catch (error) {
-      throw new Error(`Ocorreu um erro ao encontrar o anime ${name}`) + error.message;
+      throw new Error(`Ocorreu um erro ao encontrar o anime ${name}, `) + error.message;
     }
   }
 
@@ -76,7 +76,7 @@ export class AnimesService {
 
       return { ...anime, likes: likesCount };
     } catch (error) {
-      throw new Error('Ocorreu um erro ao encontrar o id do anime') + error.message;
+      throw new Error('Ocorreu um erro ao encontrar o id do anime, ') + error.message;
     }
   }
 
@@ -88,7 +88,9 @@ export class AnimesService {
       });
       return animes;
     } catch (error) {
-      throw new Error('Ocorreu um erro ao buscar os últimos lançamentos de animes');
+      throw new Error(
+        'Ocorreu um erro ao buscar os últimos lançamentos de animes, ' + error.message,
+      );
     }
   }
 
@@ -126,7 +128,7 @@ export class AnimesService {
 
       return await this.animesRepository.save(anime);
     } catch (error) {
-      throw new Error('Ocorreu um erro ao criar o anime') + error.message;
+      throw new Error('Ocorreu um erro ao criar o anime, ') + error.message;
     }
   }
 
@@ -171,7 +173,7 @@ export class AnimesService {
 
       return this.animesRepository.save(animeUpdate);
     } catch (error) {
-      throw new Error('Ocorreu um erro ao atualizar o anime') + error.message;
+      throw new Error('Ocorreu um erro ao atualizar o anime, ') + error.message;
     }
   }
 
@@ -185,7 +187,7 @@ export class AnimesService {
       }
       await this.animesRepository.remove(anime);
     } catch (error) {
-      throw new Error('Ocorreu um erro ao deletar o anime') + error.message;
+      throw new Error('Ocorreu um erro ao deletar o anime, ') + error.message;
     }
   }
 }

@@ -29,7 +29,7 @@ export class ClassificationsService {
       }));
     } catch (error) {
       throw (
-        new Error('Ocorreu um erro ao buscar todas as classificações') + error.message
+        new Error('Ocorreu um erro ao buscar todas as classificações, ') + error.message
       );
     }
   }
@@ -47,7 +47,7 @@ export class ClassificationsService {
       const save = await this.classificationsRepository.save(classification);
       return save;
     } catch (error) {
-      throw new Error('Ocorreu um erro ao criar a classificação') + error.message;
+      throw new Error('Ocorreu um erro ao criar a classificação, ') + error.message;
     }
   }
 
@@ -61,7 +61,7 @@ export class ClassificationsService {
       });
 
       if (!classification) {
-        throw new NotFoundException('Classificação não encontrada');
+        throw new NotFoundException('Classificação não encontrada, ');
       }
 
       this.classificationsRepository.merge(classification, {
@@ -88,7 +88,7 @@ export class ClassificationsService {
 
       await this.classificationsRepository.delete(classification);
     } catch (error) {
-      throw new Error('Ocorreu um erro ao excluir classificação') + error.message;
+      throw new Error('Ocorreu um erro ao excluir classificação, ') + error.message;
     }
   }
 }

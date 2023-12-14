@@ -17,7 +17,7 @@ export class BackgroundsService {
       const background = this.backgroundsRepository.find();
       return background;
     } catch (error) {
-      throw new Error('Ocorreu um erro ao encontrar todos backgrounds') + error.message;
+      throw new Error('Ocorreu um erro ao encontrar todos backgrounds, ') + error.message;
     }
   }
 
@@ -26,7 +26,7 @@ export class BackgroundsService {
       const background = this.backgroundsRepository.create(createBackgroundsDto);
       return this.backgroundsRepository.save(background);
     } catch (error) {
-      throw new Error('Ocorreu um erro ao criar o background') + error.message;
+      throw new Error('Ocorreu um erro ao criar o background, ') + error.message;
     }
   }
 
@@ -42,7 +42,7 @@ export class BackgroundsService {
       Object.assign(background, updateBackgroundsDto);
       return this.backgroundsRepository.save(background);
     } catch (error) {
-      throw new Error('Ocorreu um erro ao atualizar o background') + error.message;
+      throw new Error('Ocorreu um erro ao atualizar o background, ') + error.message;
     }
   }
 
@@ -51,7 +51,7 @@ export class BackgroundsService {
       const background = this.backgroundsRepository.delete(id);
       return background;
     } catch (error) {
-      throw new Error('Ocorreu um erro ao deletar o background') + error.message;
+      throw new Error('Ocorreu um erro ao deletar o background, ') + error.message;
     }
   }
 }

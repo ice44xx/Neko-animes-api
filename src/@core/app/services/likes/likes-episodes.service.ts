@@ -43,7 +43,7 @@ export class LikesEpisodesService {
 
       return await this.likesRepository.save(newLike);
     } catch (error) {
-      throw new Error('Ocorreu um erro ao adicionar o like' + error.message);
+      throw new Error('Ocorreu um erro ao adicionar o like, ' + error.message);
     }
   }
 
@@ -69,7 +69,7 @@ export class LikesEpisodesService {
 
       await this.likesRepository.remove(like);
     } catch (error) {
-      throw new Error('Ocorreu um erro ao remover o like' + error.message);
+      throw new Error('Ocorreu um erro ao remover o like, ' + error.message);
     }
   }
 }

@@ -53,7 +53,7 @@ export class FavoritesService {
 
       return await this.favoritesRepository.save(favorite);
     } catch (error) {
-      throw new Error('Ocorreu um erro ao adicionar aos favoritos') + error.message;
+      throw new Error('Ocorreu um erro ao adicionar aos favoritos, ') + error.message;
     }
   }
 
@@ -78,7 +78,7 @@ export class FavoritesService {
 
       await this.favoritesRepository.remove(favoriteRemove);
     } catch (error) {
-      throw new Error('Ocorreu um erro ao remover dos favoritos') + error.message;
+      throw new Error('Ocorreu um erro ao remover dos favoritos, ') + error.message;
     }
   }
 }

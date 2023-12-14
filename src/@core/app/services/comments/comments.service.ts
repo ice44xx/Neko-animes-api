@@ -42,7 +42,8 @@ export class CommentsService {
       return commentsWithEpisodeDetails;
     } catch (error) {
       throw (
-        new Error('Ocorreu um erro ao encontrar o comentário do usuário') + error.message
+        new Error('Ocorreu um erro ao encontrar o comentário do usuário, ') +
+        error.message
       );
     }
   }
@@ -68,7 +69,8 @@ export class CommentsService {
 
       return commentsWithEpisodeDetails;
     } catch (error) {
-      new Error('Ocorreu um erro ao encontrar o comentário do episódio') + error.message;
+      new Error('Ocorreu um erro ao encontrar o comentário do episódio, ') +
+        error.message;
     }
   }
 
@@ -98,7 +100,7 @@ export class CommentsService {
 
       return await this.commentsRepository.save(comment);
     } catch (error) {
-      throw new Error('Ocorreu um erro ao criar o comentário') + error.message;
+      throw new Error('Ocorreu um erro ao criar o comentário, ') + error.message;
     }
   }
 

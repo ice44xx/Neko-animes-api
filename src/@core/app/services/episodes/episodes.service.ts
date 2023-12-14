@@ -43,7 +43,7 @@ export class EpisodesService {
       );
       return episodesWithLikes;
     } catch (error) {
-      throw new Error('Ocorreu um erro ao encontrar todos episódios') + error.message;
+      throw new Error('Ocorreu um erro ao encontrar todos episódios, ') + error.message;
     }
   }
 
@@ -57,7 +57,7 @@ export class EpisodesService {
       }
       return episode;
     } catch (error) {
-      throw new Error(`Ocorreu um erro ao procurar o episódio ${name}`) + error.message;
+      throw new Error(`Ocorreu um erro ao procurar o episódio ${name}, `) + error.message;
     }
   }
 
@@ -85,7 +85,7 @@ export class EpisodesService {
       const create = await this.episodesRepository.save(newEpisode);
       return create;
     } catch (error) {
-      throw new Error('Ocorreu um erro ao criar o episódio') + error.message;
+      throw new Error('Ocorreu um erro ao criar o episódio, ') + error.message;
     }
   }
 
@@ -123,7 +123,7 @@ export class EpisodesService {
       const updateEpisode = await this.episodesRepository.save(episode);
       return updateEpisode;
     } catch (error) {
-      throw new Error('Ocorreu um erro ao atualizar o episódio') + error.message;
+      throw new Error('Ocorreu um erro ao atualizar o episódio, ') + error.message;
     }
   }
 
@@ -135,7 +135,7 @@ export class EpisodesService {
       }
       await this.episodesRepository.delete(episode);
     } catch (error) {
-      throw new Error('Ocorreu um erro ao deletar o episódio') + error.message;
+      throw new Error('Ocorreu um erro ao deletar o episódio, ') + error.message;
     }
   }
 }

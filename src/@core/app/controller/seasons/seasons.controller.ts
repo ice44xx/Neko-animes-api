@@ -13,7 +13,7 @@ import { SeasonsService } from '../../services/seasons/seasons.service';
 import { CreateSeasonsDto } from '../../dto/requests/seasons/create-seasons-dto';
 import { UpdateSeasonsDto } from '../../dto/requests/seasons/update-seasons-dto';
 import { Public } from 'src/@core/infra/decorators/public-route.decorator';
-import { Roles, UserType } from 'src/@core/common/decorators/roles.decorator';
+import { Roles, UserType } from 'src/@core/infra/decorators/roles.decorator';
 
 @Controller('seasons')
 export class SeasonsController {

@@ -16,7 +16,7 @@ import { UpdateUsersDto } from '../../dto/requests/users/update-users-dto';
 import { AuthRequest } from 'src/@core/infra/auth/models/auth-request';
 import { Public } from 'src/@core/infra/decorators/public-route.decorator';
 import { UpdateUsersPasswordDto } from '../../dto/requests/users/update-users-password-dto';
-import { Roles, UserType } from 'src/@core/common/decorators/roles.decorator';
+import { Roles, UserType } from 'src/@core/infra/decorators/roles.decorator';
 
 @Controller('users')
 export class UsersController {
@@ -92,8 +92,8 @@ export class UsersController {
 
   @HttpCode(204)
   @Delete()
-  remove(@Request() req: AuthRequest) {
+  async remove(@Request() req: AuthRequest) {
     const currentUser = req.user;
-    return this.usersService.remove(currentUser.id);
+    return this.usersService.delete(currentUser.id);
   }
 }
