@@ -90,7 +90,9 @@ export class UsersService {
         throw new Error('Usuário já existe');
       }
 
-      const defaultRole = await this.rolesRepository.findOne({ where: { role: 'user' } });
+      const defaultRole = await this.rolesRepository.findOne({
+        where: { role: 'user' },
+      });
 
       const newUser = this.usersRepository.create({
         ...userData,
@@ -99,7 +101,14 @@ export class UsersService {
       });
 
       const save = await this.usersRepository.save(newUser);
-      return save;
+      return {
+        id: save.id,
+        firstName: save.firstName,
+        userName: save.userName,
+        email: save.email,
+        createdAt: save.createdAt,
+        updatedAt: save.updatedAt,
+      };
     } catch (error) {
       throw new Error('Ocorreu um erro ao criar o usuário, ') + error.message;
     }

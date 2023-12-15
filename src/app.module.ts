@@ -4,7 +4,7 @@ import { CategoryModule } from './@core/app/modules/categories/category.module';
 import { AnimeModule } from './@core/app/modules/animes/animes.module';
 import { SeasonsModule } from './@core/app/modules/seasons/seasons.module';
 import { EpisodesModule } from './@core/app/modules/episodes/episodes.module';
-import { DatabaseModule } from './@core/infra/database/database.module';
+import { DatabaseModule } from './@core/infra/prisma/database/database.module';
 import { AuthModule } from './@core/app/modules/auth/auth.module';
 import { APP_GUARD } from '@nestjs/core';
 import { JwtAuthGuard } from './@core/infra/auth/guards/jwt-auth.guard';
