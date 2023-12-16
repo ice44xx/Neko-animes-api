@@ -6,7 +6,7 @@ import { JwtModule } from '@nestjs/jwt';
 import { APP_GUARD } from '@nestjs/core';
 
 @Module({
-  imports: [DatabaseModule, JwtModule, DatabaseModule],
+  imports: [DatabaseModule, JwtModule],
   providers: [
     {
       provide: APP_GUARD,
