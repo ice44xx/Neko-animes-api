@@ -49,7 +49,7 @@ model Animes {
 
 model Categories {
   id     Int      @id @default(autoincrement())
-  name   String
+  name   String   @unique
   Animes Animes[]
 }
 

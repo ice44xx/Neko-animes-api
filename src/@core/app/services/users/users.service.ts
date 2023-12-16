@@ -1,89 +1,38 @@
-import * as bcrypt from 'bcrypt';
-import { Injectable, NotFoundException } from '@nestjs/common';
-import { UsersRepository } from 'src/@core/infra/database/repositories/users/users.repository';
+import { Injectable } from '@nestjs/common';
 import { CreateUsersDto } from '../../dto/users/create-users-dto';
-import { RolesRepository } from 'src/@core/infra/database/repositories/users/roles.repository';
+import { UsersUseCase } from 'src/@core/domain/usecases/users/users.usecase';
+import { UpdateUsersDto } from '../../dto/users/update-users-dto';
+import { UpdateUsersPasswordDto } from '../../dto/users/update-users-password-dto';
 
 @Injectable()
 export class UsersService {
-  constructor(
-    private readonly rolesRepository: RolesRepository,
-    private readonly usersRepository: UsersRepository,
-  ) {}
+  constructor(private readonly usersUseCase: UsersUseCase) {}
 
   async findAll() {
-    try {
-      return this.usersRepository.findAll();
-    } catch (error) {
-      throw new Error('Ocorreu um erro ao buscar todos usuários, ' + error.message);
-    }
+    return await this.usersUseCase.findAll();
   }
 
   async findById(id: number) {
-    try {
-      const user = await this.usersRepository.findById(id);
-
-      if (!user) {
-        throw new NotFoundException('Usuário não encontrado');
-      }
-
-      return user;
-    } catch (error) {
-      throw new Error('Ocorreu um erro ao buscar o usuário, ' + error.message);
-    }
+    return await this.usersUseCase.findById(id);
   }
 
   async findByEmail(email: string) {
-    try {
-      const user = await this.usersRepository.findByEmail(email);
-
-      if (!user) {
-        throw new NotFoundException('Email não encontrado');
-      }
-
-      return user;
-    } catch (error) {
-      throw new Error('Ocorreu um erro ao buscar o email, ' + error.message);
-    }
+    return await this.usersUseCase.findByEmail(email);
   }
 
   async create(createUsersDto: CreateUsersDto) {
-    try {
-      const { password, ...userData } = createUsersDto;
-      const saltRounds = 10;
-      const hashedPassword = await bcrypt.hash(password, saltRounds);
-
-      const existingUser = await this.usersRepository.findByEmail(createUsersDto.email);
-
-      if (existingUser) throw new Error('Usuário já existe');
-
-      const defaultRole = await this.rolesRepository.findOneByName('user');
-
-      const user = await this.usersRepository.create({
-        ...userData,
-        password: hashedPassword,
-        role: { connect: { id: defaultRole.id } },
-      });
-
-      return {
-        id: user.id,
-        firstName: user.firstName,
-        userName: user.userName,
-        email: user.email,
-        role: defaultRole.name,
-        createdAt: user.createdAt,
-        updatedAt: user.updatedAt,
-      };
-    } catch (error) {
-      throw new Error('Ocorreu um erro ao criar o usuário, ' + error.message);
-    }
+    return await this.usersUseCase.create(createUsersDto);
   }
 
-  async update(id: number, data: any) {
-    return this.usersRepository.update(id, data);
+  async update(userId: number, updateUsersDto: UpdateUsersDto) {
+    return await this.usersUseCase.update(userId, updateUsersDto);
   }
 
-  async delete(id: number) {
-    return this.usersRepository.delete(id);
+  async updatePassword(userId: number, updateUsersPasswordDto: UpdateUsersPasswordDto) {
+    return await this.usersUseCase.updatePassword(userId, updateUsersPasswordDto);
+  }
+
+  async remove(userId: number) {
+    return await this.usersUseCase.remove(userId);
   }
 }

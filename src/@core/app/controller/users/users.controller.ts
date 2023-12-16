@@ -1,8 +1,23 @@
-import { Controller, Post, Body, Get, Res, Param, HttpCode, Put } from '@nestjs/common';
+import {
+  Controller,
+  Post,
+  Body,
+  Get,
+  Res,
+  Param,
+  HttpCode,
+  Put,
+  Request,
+  Delete,
+} from '@nestjs/common';
 import { UsersService } from '../../services/users/users.service';
 import { CreateUsersDto } from '../../dto/users/create-users-dto';
 import { ApiTags } from '@nestjs/swagger';
 import { Roles, UserType } from 'src/@core/infra/decorators/roles.decorator';
+import { Public } from 'src/@core/infra/decorators/public-route.decorator';
+import { UpdateUsersDto } from '../../dto/users/update-users-dto';
+import { AuthRequest } from 'src/@core/infra/auth/models/auth-request';
+import { UpdateUsersPasswordDto } from '../../dto/users/update-users-password-dto';
 
 @ApiTags('Usuários')
 @Controller('users')
@@ -31,6 +46,7 @@ export class UsersController {
     }
   }
 
+  @Public()
   @Post('create')
   async create(@Res() res, @Body() createUsersDto: CreateUsersDto) {
     try {
@@ -43,9 +59,49 @@ export class UsersController {
 
   @Roles(UserType.User)
   @Put()
-  async update() {}
+  async update(
+    @Request() req: AuthRequest,
+    @Res() res,
+    @Body() updateUsersDto: UpdateUsersDto,
+  ) {
+    try {
+      const currentUser = req.user.id;
+      const user = await this.usersService.update(currentUser, updateUsersDto);
+      return res.status(200).json(user);
+    } catch (error) {
+      throw new Error('Ocorreu um erro ao atualizar o usuário, ' + error.message);
+    }
+  }
+
+  @Roles(UserType.User)
+  @Put('password')
+  async updatePassword(
+    @Request() req: AuthRequest,
+    @Res() res,
+    @Body() updateUsersPassswordDto: UpdateUsersPasswordDto,
+  ) {
+    try {
+      const currentUser = req.user.id;
+      const user = await this.usersService.updatePassword(
+        currentUser,
+        updateUsersPassswordDto,
+      );
+      return res.status(200).json(user);
+    } catch (error) {
+      throw new Error(
+        'Ocorreu um erro ao atualizar a senha do usuário, ' + error.message,
+      );
+    }
+  }
 
   @Roles(UserType.Admin)
   @HttpCode(204)
-  async delete() {}
+  @Delete(':id')
+  async delete(@Param('id') id: number) {
+    try {
+      await this.usersService.remove(id);
+    } catch (error) {
+      throw new Error('Ocorreu um erro ao deletar o usuário, ' + error.message);
+    }
+  }
 }
