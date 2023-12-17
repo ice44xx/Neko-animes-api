@@ -32,7 +32,6 @@ CREATE TABLE "classifications" (
 -- CreateTable
 CREATE TABLE "favorites" (
     "id" SERIAL NOT NULL,
-    "name" TEXT NOT NULL,
     "userId" INTEGER NOT NULL,
     "animesId" INTEGER NOT NULL,
 

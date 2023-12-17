@@ -66,7 +66,15 @@ export class AnimesUseCase {
       },
     });
 
-    return anime;
+    return {
+      id: anime.id,
+      name: anime.name,
+      thumbnailUrl: anime.thumbnailUrl,
+      feature: anime.feature,
+      classification: classificationName,
+      categories: categoryNames,
+      createdAt: anime.createdAt,
+    };
   }
 
   async update(id: number, updateAnimesDto: UpdateAnimesDto) {

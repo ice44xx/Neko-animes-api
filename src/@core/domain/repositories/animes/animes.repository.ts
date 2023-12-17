@@ -7,7 +7,7 @@ export class AnimesRepository {
   constructor(private readonly prisma: PrismaService) {}
 
   async findAll() {
-    return this.prisma.animes.findMany({
+    const animes = await this.prisma.animes.findMany({
       select: {
         id: true,
         name: true,
@@ -24,14 +24,22 @@ export class AnimesRepository {
             name: true,
           },
         },
+        likes: true,
         createdAt: true,
         updatedAt: true,
       },
     });
+
+    const formattedLikes = animes.map((anime) => ({
+      ...anime,
+      likes: anime.likes.length,
+    }));
+
+    return formattedLikes;
   }
 
   async findByName(name: string) {
-    return this.prisma.animes.findFirst({
+    const anime = await this.prisma.animes.findFirst({
       where: {
         name: { contains: name, mode: 'insensitive' },
       },
@@ -51,14 +59,51 @@ export class AnimesRepository {
             name: true,
           },
         },
+        likes: true,
         createdAt: true,
         updatedAt: true,
       },
     });
+
+    const formattedLikes = {
+      ...anime,
+      likes: anime.likes.length,
+    };
+
+    return formattedLikes;
   }
 
   async findById(id: number) {
-    return this.prisma.animes.findUnique({ where: { id } });
+    const anime = await this.prisma.animes.findUnique({
+      where: { id },
+      select: {
+        id: true,
+        name: true,
+        synopsis: true,
+        thumbnailUrl: true,
+        feature: true,
+        classifications: {
+          select: {
+            name: true,
+          },
+        },
+        categories: {
+          select: {
+            name: true,
+          },
+        },
+        likes: true,
+        createdAt: true,
+        updatedAt: true,
+      },
+    });
+
+    const formattedLikes = {
+      ...anime,
+      likes: anime.likes.length,
+    };
+
+    return formattedLikes;
   }
 
   async create(data: Prisma.AnimesCreateInput) {

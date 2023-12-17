@@ -70,7 +70,6 @@ model Classifications {
 
 model Favorites {
   id       Int    @id @default(autoincrement())
-  name     String
   user     Users  @relation(fields: [userId], references: [id])
   animes   Animes @relation(fields: [animesId], references: [id])
   userId   Int

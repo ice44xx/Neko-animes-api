@@ -6,10 +6,6 @@ import { Prisma } from '@prisma/client';
 export class UsersRepository {
   constructor(private readonly prisma: PrismaService) {}
 
-  async create(data: Prisma.UsersCreateInput) {
-    return this.prisma.users.create({ data });
-  }
-
   async findAll() {
     const users = await this.prisma.users.findMany({
       select: {
@@ -32,6 +28,10 @@ export class UsersRepository {
     }));
 
     return formattedUsers;
+  }
+
+  async create(data: Prisma.UsersCreateInput) {
+    return this.prisma.users.create({ data });
   }
 
   async findById(id: number) {
