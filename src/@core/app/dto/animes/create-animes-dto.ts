@@ -1,4 +1,4 @@
-import { IsString, IsBoolean, IsArray } from 'class-validator';
+import { IsString, IsBoolean, IsArray, IsNumber } from 'class-validator';
 
 export class CreateAnimesDto {
   @IsString()

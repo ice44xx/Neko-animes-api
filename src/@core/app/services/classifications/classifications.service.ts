@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { ClassificationsUseCase } from 'src/@core/domain/usecases/classifications/classifications.usecase';
 import { CreateClassificationsDto } from '../../dto/classifications/create-classifications-dto';
 import { UpdateClassificationsDto } from '../../dto/classifications/update-classifications-dto';
+import { ClassificationsDto } from '../../dto/classifications/classifications-dto';
 
 @Injectable()
 export class ClassificationsService {
@@ -19,7 +20,7 @@ export class ClassificationsService {
     return await this.classificationsUseCase.update(id, updateClassificationsDto);
   }
 
-  async remove(id: number) {
-    return await this.classificationsUseCase.remove(id);
+  async remove({ id }: ClassificationsDto) {
+    return await this.classificationsUseCase.remove({ id });
   }
 }

@@ -1,6 +1,8 @@
 import { ConflictException, Injectable, NotFoundException } from '@nestjs/common';
 import { CategoriesRepository } from '../../repositories/categories/categories.repository';
 import { CreateCategoriesDto } from 'src/@core/app/dto/categories/create-categories-dto';
+import { UpdateCategoriesDto } from 'src/@core/app/dto/categories/update-categories-dto';
+import { CategoriesDto } from 'src/@core/app/dto/categories/categories-dto';
 
 @Injectable()
 export class CategoriesUseCase {
@@ -27,7 +29,7 @@ export class CategoriesUseCase {
     return newCategory;
   }
 
-  async update(id: number, { name }: CreateCategoriesDto) {
+  async update(id: number, { name }: UpdateCategoriesDto) {
     const categories = await this.categoriesRepository.findById(id);
     const nameLower = name.toLocaleLowerCase();
 
@@ -48,7 +50,7 @@ export class CategoriesUseCase {
     return updateCategory;
   }
 
-  async remove(id: number) {
+  async remove({ id }: CategoriesDto) {
     const categories = await this.categoriesRepository.findById(id);
 
     if (!categories) {

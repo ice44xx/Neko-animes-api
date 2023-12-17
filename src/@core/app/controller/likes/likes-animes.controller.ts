@@ -15,6 +15,7 @@ import { LikesAnimesService } from '../../services/likes/likes-animes.service';
 import { AuthRequest } from 'src/@core/infra/auth/models/auth-request';
 import { Roles, UserType } from 'src/@core/infra/decorators/roles.decorator';
 import { Public } from 'src/@core/infra/decorators/public-route.decorator';
+import { LikesAnimesDto } from '../../dto/likes/create-likes-dto';
 
 @ApiTags('Likes animes')
 @Controller('likes-animes')
@@ -38,8 +39,8 @@ export class LikesAnimesController {
   @Post(':animeId')
   async create(@Request() req: AuthRequest, @Res() res, @Param('animeId') animeId: number) {
     try {
-      const currentUser = req.user.id;
-      await this.likesAnimesService.create(currentUser, animeId);
+      const createLike: LikesAnimesDto = { userId: req.user.id, animeId: animeId };
+      await this.likesAnimesService.create(createLike);
       return res.status(201).send({ message: 'Like adicionado ao anime!' });
     } catch (error) {
       if (error instanceof UnauthorizedException) {
@@ -57,8 +58,8 @@ export class LikesAnimesController {
   @Delete(':animeId')
   async remove(@Request() req: AuthRequest, @Res() res, @Param('animeId') animeId: number) {
     try {
-      const currentUser = req.user.id;
-      await this.likesAnimesService.remove(currentUser, animeId);
+      const removeLike: LikesAnimesDto = { userId: req.user.id, animeId: animeId };
+      await this.likesAnimesService.remove(removeLike);
       return res.status(201).send({ message: 'Like removido' });
     } catch (error) {
       if (error instanceof UnauthorizedException) {

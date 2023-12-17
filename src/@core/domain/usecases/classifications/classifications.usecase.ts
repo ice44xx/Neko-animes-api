@@ -2,6 +2,7 @@ import { ConflictException, Injectable, NotFoundException } from '@nestjs/common
 import { ClassificationsRepository } from '../../repositories/classifications/classifications.repository';
 import { CreateClassificationsDto } from 'src/@core/app/dto/classifications/create-classifications-dto';
 import { UpdateClassificationsDto } from 'src/@core/app/dto/classifications/update-classifications-dto';
+import { ClassificationsDto } from 'src/@core/app/dto/classifications/classifications-dto';
 
 @Injectable()
 export class ClassificationsUseCase {
@@ -51,7 +52,7 @@ export class ClassificationsUseCase {
     return updateClassification;
   }
 
-  async remove(id: number) {
+  async remove({ id }: ClassificationsDto) {
     const classification = await this.classificationsRepository.findById(id);
 
     if (!classification) {

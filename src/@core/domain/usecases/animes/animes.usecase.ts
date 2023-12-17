@@ -4,6 +4,7 @@ import { UpdateAnimesDto } from 'src/@core/app/dto/animes/update-animes-dto';
 import { AnimesRepository } from 'src/@core/domain/repositories/animes/animes.repository';
 import { CategoriesRepository } from '../../repositories/categories/categories.repository';
 import { ClassificationsRepository } from '../../repositories/classifications/classifications.repository';
+import { AnimesDto } from 'src/@core/app/dto/animes/animes-dto';
 
 @Injectable()
 export class AnimesUseCase {
@@ -22,7 +23,7 @@ export class AnimesUseCase {
     }
   }
 
-  async findByName(name: string) {
+  async findByName({ name }: AnimesDto) {
     const anime = await this.animesRepository.findByName(name);
 
     if (!anime) {
@@ -32,7 +33,7 @@ export class AnimesUseCase {
     return anime;
   }
 
-  async findById(id: number) {
+  async findById({ id }: AnimesDto) {
     const anime = await this.animesRepository.findById(id);
 
     if (!anime) {
@@ -77,13 +78,13 @@ export class AnimesUseCase {
     };
   }
 
-  async update(id: number, updateAnimesDto: UpdateAnimesDto) {
+  async update(animeId: number, updateAnimesDto: UpdateAnimesDto) {
     const { classificationName, categoryNames, ...animeData } = updateAnimesDto;
 
-    const existingAnime = await this.animesRepository.findById(id);
+    const existingAnime = await this.animesRepository.findById(animeId);
 
     if (!existingAnime) {
-      throw new NotFoundException(`O anime com ID ${id} não foi encontrado`);
+      throw new NotFoundException(`O anime com ID ${animeId} não foi encontrado`);
     }
 
     const classification = await this.classificationsRepository.findByName(classificationName);
@@ -98,7 +99,7 @@ export class AnimesUseCase {
       throw new Error('Uma ou mais categorias não foram encontradas');
     }
 
-    const animeUpdate = await this.animesRepository.update(id, {
+    const animeUpdate = await this.animesRepository.update(animeId, {
       ...animeData,
       classifications: {
         connect: { name: classificationName },
@@ -119,7 +120,7 @@ export class AnimesUseCase {
     };
   }
 
-  async remove(id: number) {
+  async remove({ id }: AnimesDto) {
     const anime = await this.animesRepository.findById(id);
 
     if (!anime) {

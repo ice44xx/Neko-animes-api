@@ -10,6 +10,7 @@ import { RolesRepository } from '../../repositories/users/roles.repository';
 import { CreateUsersDto } from 'src/@core/app/dto/users/create-users-dto';
 import { UpdateUsersDto } from 'src/@core/app/dto/users/update-users-dto';
 import { UpdateUsersPasswordDto } from 'src/@core/app/dto/users/update-users-password-dto';
+import { UsersDto } from 'src/@core/app/dto/users/users-dtos';
 
 @Injectable()
 export class UsersUseCase {
@@ -22,7 +23,7 @@ export class UsersUseCase {
     return this.usersRepository.findAll();
   }
 
-  async findById(id: number) {
+  async findById({ id }: UsersDto) {
     const user = await this.usersRepository.findById(id);
 
     if (!user) {
@@ -32,7 +33,7 @@ export class UsersUseCase {
     return user;
   }
 
-  async findByEmail(email: string) {
+  async findByEmail({ email }: UsersDto) {
     const user = await this.usersRepository.findByEmail(email);
 
     if (!user) {
@@ -114,13 +115,13 @@ export class UsersUseCase {
     await this.usersRepository.update(userId, { password: hashedNewPassword });
   }
 
-  async remove(userId: number) {
-    const user = await this.usersRepository.findById(userId);
+  async remove({ id }: UsersDto) {
+    const user = await this.usersRepository.findById(id);
 
     if (!user) {
       throw new UnauthorizedException('Credenciais inválidas');
     }
 
-    return await this.usersRepository.delete(userId);
+    return await this.usersRepository.delete(id);
   }
 }

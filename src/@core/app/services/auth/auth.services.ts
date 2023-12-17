@@ -5,7 +5,7 @@ import { UsersService } from '../users/users.service';
 import { UnauthorizedError } from 'src/@core/infra/auth/errors/errors';
 import { Users } from '@prisma/client';
 import { UsersPayloadDto } from '../../dto/auth/users-payload-dto';
-import { ValidateUsersDto } from '../../dto/auth/validate-users-dto';
+import { UsersDto } from '../../dto/users/users-dtos';
 
 @Injectable()
 export class AuthServices {
@@ -14,8 +14,8 @@ export class AuthServices {
     private readonly user: UsersService,
   ) {}
 
-  async login(users: Users) {
-    const user = await this.user.findById(users.id);
+  async login({ id }: Users) {
+    const user = await this.user.findById({ id });
 
     const payload: UsersPayloadDto = {
       id: user.id,
@@ -32,15 +32,14 @@ export class AuthServices {
     };
   }
 
-  async validateUser(validateUsersDto: ValidateUsersDto) {
-    const user = await this.user.findByEmail(validateUsersDto.email);
+  async validateUser({ email, password }: UsersDto) {
+    const user = await this.user.findByEmail({ email });
+
     if (!user) {
       throw new UnauthorizedError('Email ou senha incorreto');
     }
-    const isPasswordValid = await bcrypt.compare(
-      validateUsersDto.password,
-      user.password,
-    );
+
+    const isPasswordValid = await bcrypt.compare(password, user.password);
     if (isPasswordValid) {
       return {
         ...user,

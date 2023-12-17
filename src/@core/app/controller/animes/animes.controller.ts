@@ -36,13 +36,12 @@ export class AnimesController {
   @Get(':name')
   async findByName(@Res() res, @Param('name') name: string) {
     try {
-      const anime = await this.animesService.findByName(name);
+      const anime = await this.animesService.findByName({ name });
       return res.status(200).json(anime);
     } catch (error) {
       if (error instanceof NotFoundException) {
         return res.status(404).send({ message: error.message });
       }
-
       return res.status(500).send({ message: `Ocorreu um erro ao buscar o anime ${name}` });
     }
   }
@@ -51,13 +50,12 @@ export class AnimesController {
   @Get('/id/:id')
   async findById(@Res() res, @Param('id') id: number) {
     try {
-      const anime = await this.animesService.findById(id);
+      const anime = await this.animesService.findById({ id });
       return res.status(200).json(anime);
     } catch (error) {
       if (error instanceof NotFoundException) {
         return res.status(404).send({ message: error.message });
       }
-
       return res.status(500).send({ message: `Ocorreu um erro ao buscar o anime ${id}` });
     }
   }
@@ -72,22 +70,24 @@ export class AnimesController {
       if (error instanceof NotFoundException) {
         return res.status(404).send({ message: error.message });
       }
-
       return res.status(500).send({ message: 'Ocorreu um erro ao criar o anime}' });
     }
   }
 
   @Roles(UserType.Admin)
-  @Put(':id')
-  async update(@Res() res, @Param('id') id: number, @Body() updateAnimesDto: UpdateAnimesDto) {
+  @Put(':animeId')
+  async update(
+    @Res() res,
+    @Param('animeId') animeId: number,
+    @Body() updateAnimesDto: UpdateAnimesDto,
+  ) {
     try {
-      const anime = await this.animesService.update(id, updateAnimesDto);
+      const anime = await this.animesService.update(animeId, updateAnimesDto);
       return res.status(200).json(anime);
     } catch (error) {
       if (error instanceof NotFoundException) {
         return res.status(404).send({ message: error.message });
       }
-
       return res.status(500).send({ message: 'Ocorreu um erro ao atualizar o anime}' });
     }
   }
@@ -96,9 +96,12 @@ export class AnimesController {
   @Delete(':id')
   async remove(@Res() res, @Param('id') id: number) {
     try {
-      await this.animesService.remove(id);
+      await this.animesService.remove({ id });
       return res.status(200).send({ message: 'Anime deletado com sucesso' });
     } catch (error) {
+      if (error instanceof NotFoundException) {
+        return res.status(404).send({ message: error.message });
+      }
       return res.status(500).send({ message: 'Ocorreu um erro ao deletar o anime' });
     }
   }

@@ -7,6 +7,7 @@ import {
 import { LikesAnimesRepository } from '../../repositories/likes/likes-animes.repository';
 import { UsersRepository } from '../../repositories/users/users.repository';
 import { AnimesRepository } from '../../repositories/animes/animes.repository';
+import { LikesAnimesDto } from 'src/@core/app/dto/likes/create-likes-dto';
 
 @Injectable()
 export class LikesAnimesUseCase {
@@ -21,7 +22,7 @@ export class LikesAnimesUseCase {
     return animes;
   }
 
-  async create(userId: number, animeId: number) {
+  async create({ userId, animeId }: LikesAnimesDto) {
     const user = await this.usersRepository.findById(userId);
 
     if (!user) {
@@ -48,7 +49,7 @@ export class LikesAnimesUseCase {
     return newLike;
   }
 
-  async remove(userId: number, animeId: number) {
+  async remove({ userId, animeId }: LikesAnimesDto) {
     const user = await this.usersRepository.findById(userId);
 
     if (!user) {

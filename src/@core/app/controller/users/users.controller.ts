@@ -41,7 +41,7 @@ export class UsersController {
   @Get(':id')
   async findById(@Res() res, @Param('id') id: number) {
     try {
-      const user = await this.usersService.findById(id);
+      const user = await this.usersService.findById({ id });
       return res.status(200).json(user);
     } catch (error) {
       if (error instanceof NotFoundException) {
@@ -107,7 +107,7 @@ export class UsersController {
   @Delete(':id')
   async delete(@Res() res, @Param('id') id: number) {
     try {
-      await this.usersService.remove(id);
+      await this.usersService.remove({ id });
       return res.status(200).send({ message: 'Usuário deletado com sucesso' });
     } catch (error) {
       if (error instanceof UnauthorizedException) {

@@ -71,7 +71,7 @@ export class CategoriesController {
   @Delete(':id')
   async remove(@Res() res, @Param('id') id: number) {
     try {
-      await this.categoriesService.remove(id);
+      await this.categoriesService.remove({ id });
       return res.status(200).send({ message: 'Categoria deletada com sucesso' });
     } catch (error) {
       if (error instanceof NotFoundException) {

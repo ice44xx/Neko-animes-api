@@ -71,7 +71,7 @@ export class ClassificationsController {
   @Delete(':id')
   async remove(@Res() res, @Param('id') id: number) {
     try {
-      await this.classificationsService.remove(id);
+      await this.classificationsService.remove({ id });
       return res.status(200).send({ message: 'Classificação deletada com sucesso' });
     } catch (error) {
       if (error instanceof NotFoundException) {

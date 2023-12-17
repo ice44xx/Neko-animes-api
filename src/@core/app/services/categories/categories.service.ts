@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { CategoriesUseCase } from 'src/@core/domain/usecases/categories/categories.usecase';
 import { CreateCategoriesDto } from '../../dto/categories/create-categories-dto';
 import { UpdateCategoriesDto } from '../../dto/categories/update-categories-dto';
+import { CategoriesDto } from '../../dto/categories/categories-dto';
 
 @Injectable()
 export class CategoriesService {
@@ -19,7 +20,7 @@ export class CategoriesService {
     return await this.categoriesUseCase.update(id, updateCategoriesDto);
   }
 
-  async remove(id: number) {
-    return await this.categoriesUseCase.remove(id);
+  async remove({ id }: CategoriesDto) {
+    return await this.categoriesUseCase.remove({ id });
   }
 }

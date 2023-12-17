@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { CreateAnimesDto } from '../../dto/animes/create-animes-dto';
 import { AnimesUseCase } from 'src/@core/domain/usecases/animes/animes.usecase';
 import { UpdateAnimesDto } from '../../dto/animes/update-animes-dto';
+import { AnimesDto } from '../../dto/animes/animes-dto';
 
 @Injectable()
 export class AnimesService {
@@ -11,23 +12,23 @@ export class AnimesService {
     return await this.animesUseCase.findAll();
   }
 
-  async findByName(name: string) {
-    return await this.animesUseCase.findByName(name);
+  async findByName({ name }: AnimesDto) {
+    return await this.animesUseCase.findByName({ name });
   }
 
-  async findById(id: number) {
-    return await this.animesUseCase.findById(id);
+  async findById({ id }: AnimesDto) {
+    return await this.animesUseCase.findById({ id });
   }
 
   async create(createAnimesDto: CreateAnimesDto) {
     return await this.animesUseCase.create(createAnimesDto);
   }
 
-  async update(id: number, updateAnimesDto: UpdateAnimesDto) {
-    return await this.animesUseCase.update(id, updateAnimesDto);
+  async update(animeId: number, updateAnimesDto: UpdateAnimesDto) {
+    return await this.animesUseCase.update(animeId, updateAnimesDto);
   }
 
-  async remove(id: number) {
-    return await this.animesUseCase.remove(id);
+  async remove({ id }: AnimesDto) {
+    return await this.animesUseCase.remove({ id });
   }
 }
