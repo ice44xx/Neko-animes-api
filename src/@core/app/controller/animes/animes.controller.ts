@@ -1,4 +1,14 @@
-import { Controller, Post, Body, Get, Res, Param, Delete, HttpCode, Put } from '@nestjs/common';
+import {
+  Controller,
+  Post,
+  Body,
+  Get,
+  Res,
+  Param,
+  Delete,
+  Put,
+  NotFoundException,
+} from '@nestjs/common';
 import { Roles, UserType } from 'src/@core/infra/decorators/roles.decorator';
 import { ApiTags } from '@nestjs/swagger';
 import { CreateAnimesDto } from '../../dto/animes/create-animes-dto';
@@ -29,17 +39,25 @@ export class AnimesController {
       const anime = await this.animesService.findByName(name);
       return res.status(200).json(anime);
     } catch (error) {
+      if (error instanceof NotFoundException) {
+        return res.status(404).send({ message: error.message });
+      }
+
       return res.status(500).send({ message: `Ocorreu um erro ao buscar o anime ${name}` });
     }
   }
 
   @Public()
-  @Get(':id')
+  @Get('/id/:id')
   async findById(@Res() res, @Param('id') id: number) {
     try {
       const anime = await this.animesService.findById(id);
       return res.status(200).json(anime);
     } catch (error) {
+      if (error instanceof NotFoundException) {
+        return res.status(404).send({ message: error.message });
+      }
+
       return res.status(500).send({ message: `Ocorreu um erro ao buscar o anime ${id}` });
     }
   }
@@ -51,7 +69,11 @@ export class AnimesController {
       const anime = await this.animesService.create(createAnimesDto);
       return res.status(201).json(anime);
     } catch (error) {
-      return res.status(500).send({ message: 'Ocorreu um erro ao criar o anime' });
+      if (error instanceof NotFoundException) {
+        return res.status(404).send({ message: error.message });
+      }
+
+      return res.status(500).send({ message: 'Ocorreu um erro ao criar o anime}' });
     }
   }
 
@@ -62,12 +84,15 @@ export class AnimesController {
       const anime = await this.animesService.update(id, updateAnimesDto);
       return res.status(200).json(anime);
     } catch (error) {
-      return res.status(500).send({ message: 'Ocorreu um erro ao atualizar o anime' });
+      if (error instanceof NotFoundException) {
+        return res.status(404).send({ message: error.message });
+      }
+
+      return res.status(500).send({ message: 'Ocorreu um erro ao atualizar o anime}' });
     }
   }
 
   @Roles(UserType.Admin)
-  @HttpCode(204)
   @Delete(':id')
   async remove(@Res() res, @Param('id') id: number) {
     try {

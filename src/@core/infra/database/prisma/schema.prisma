@@ -11,15 +11,17 @@ datasource db {
 }
 
 model Users {
-  id        Int      @id @default(autoincrement())
-  firstName String
-  userName  String
-  email     String   @unique
-  password  String
-  role      Roles    @relation(fields: [roleId], references: [id])
-  roleId    Int
-  createdAt DateTime @default(now())
-  updatedAt DateTime @default(now())
+  id          Int           @id @default(autoincrement())
+  firstName   String
+  userName    String
+  email       String        @unique
+  password    String
+  role        Roles         @relation(fields: [roleId], references: [id])
+  roleId      Int
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @default(now())
+  Favorites   Favorites[]
+  LikesAnimes LikesAnimes[]
 
   @@map("users")
 }
@@ -52,7 +54,7 @@ model Animes {
 model Categories {
   id     Int      @id @default(autoincrement())
   name   String   @unique
-  Animes Animes[]
+  animes Animes[]
 
   @@map("categories")
 }
@@ -61,22 +63,28 @@ model Classifications {
   id     Int      @id @default(autoincrement())
   name   String   @unique
   desc   String
-  Animes Animes[]
+  animes Animes[]
 
   @@map("classifications")
 }
 
 model Favorites {
-  id     Int      @id @default(autoincrement())
-  name   String
-  Animes Animes[]
+  id       Int    @id @default(autoincrement())
+  name     String
+  user     Users  @relation(fields: [userId], references: [id])
+  animes   Animes @relation(fields: [animesId], references: [id])
+  userId   Int
+  animesId Int
 
   @@map("favorites")
 }
 
 model LikesAnimes {
-  id     Int      @id @default(autoincrement())
-  Animes Animes[]
+  id       Int    @id @default(autoincrement())
+  anime    Animes @relation(fields: [animesId], references: [id])
+  user     Users  @relation(fields: [userId], references: [id])
+  userId   Int
+  animesId Int
 
   @@map("likes-animes")
 }

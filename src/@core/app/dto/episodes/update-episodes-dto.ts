@@ -1,4 +1,15 @@
-import { PartialType } from '@nestjs/swagger';
-import { CreateEpisodesDto } from './create-episodes-dto';
+import { IsString, IsNumber } from 'class-validator';
 
-export class UpdateEpisodesDto extends PartialType(CreateEpisodesDto) {}
+export class UpdateEpisodesDto {
+  @IsString()
+  readonly name: string;
+
+  @IsString()
+  readonly url: string;
+
+  @IsNumber()
+  readonly episodeOrder: number;
+
+  @IsNumber()
+  readonly seasonId: number;
+}

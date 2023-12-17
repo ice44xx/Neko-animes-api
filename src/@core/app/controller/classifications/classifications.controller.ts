@@ -1,4 +1,15 @@
-import { Body, Controller, Delete, Get, HttpCode, Param, Post, Put, Res } from '@nestjs/common';
+import {
+  Body,
+  ConflictException,
+  Controller,
+  Delete,
+  Get,
+  NotFoundException,
+  Param,
+  Post,
+  Put,
+  Res,
+} from '@nestjs/common';
 import { Public } from 'src/@core/infra/decorators/public-route.decorator';
 import { Roles, UserType } from 'src/@core/infra/decorators/roles.decorator';
 import { ApiTags } from '@nestjs/swagger';
@@ -29,6 +40,9 @@ export class ClassificationsController {
       const classification = await this.classificationsService.create(createClassificationsDto);
       return res.status(201).json(classification);
     } catch (error) {
+      if (error instanceof ConflictException) {
+        return res.status(409).send({ message: error.message });
+      }
       return res.status(500).send({ message: 'Ocorreu um erro ao criar a classificação' });
     }
   }
@@ -44,14 +58,26 @@ export class ClassificationsController {
       const classification = await this.classificationsService.update(id, updateClassificationsDto);
       return res.status(200).json(classification);
     } catch (error) {
+      if (error instanceof NotFoundException) {
+        return res.status(404).send({ message: error.message });
+      } else if (error instanceof ConflictException) {
+        return res.status(409).send({ message: error.message });
+      }
       return res.status(500).send({ message: 'Ocorreu um erro ao atualizar a classificação' });
     }
   }
 
   @Roles(UserType.Admin)
-  @HttpCode(204)
   @Delete(':id')
-  async remove(@Param('id') id: number) {
-    return await this.classificationsService.remove(id);
+  async remove(@Res() res, @Param('id') id: number) {
+    try {
+      await this.classificationsService.remove(id);
+      return res.status(200).send({ message: 'Classificação deletada com sucesso' });
+    } catch (error) {
+      if (error instanceof NotFoundException) {
+        return res.status(404).send({ message: error.message });
+      }
+      return res.status(500).send({ message: 'Ocorreu um erro ao deletar a classificação' });
+    }
   }
 }

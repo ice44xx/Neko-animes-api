@@ -1,9 +1,10 @@
 import {
   Body,
+  ConflictException,
   Controller,
   Delete,
   Get,
-  HttpCode,
+  NotFoundException,
   Param,
   Post,
   Put,
@@ -39,6 +40,9 @@ export class CategoriesController {
       const category = await this.categoriesService.create(createCategoriesDto);
       return res.status(201).json(category);
     } catch (error) {
+      if (error instanceof ConflictException) {
+        return res.status(409).send({ message: error.message });
+      }
       return res.status(500).send({ message: 'Ocorreu um erro ao criar a categoria' });
     }
   }
@@ -54,16 +58,26 @@ export class CategoriesController {
       const category = await this.categoriesService.update(id, updateCategoriesDto);
       return res.status(200).json(category);
     } catch (error) {
-      return res
-        .status(500)
-        .send({ message: 'Ocorreu um erro ao atualizar a categoria' });
+      if (error instanceof NotFoundException) {
+        return res.status(404).send({ message: error.message });
+      } else if (error instanceof ConflictException) {
+        return res.status(409).send({ message: error.message });
+      }
+      return res.status(500).send({ message: 'Ocorreu um erro ao atualizar a categoria' });
     }
   }
 
   @Roles(UserType.Admin)
-  @HttpCode(204)
   @Delete(':id')
-  async remove(@Param('id') id: number) {
-    return await this.categoriesService.remove(id);
+  async remove(@Res() res, @Param('id') id: number) {
+    try {
+      await this.categoriesService.remove(id);
+      return res.status(200).send({ message: 'Categoria deletada com sucesso' });
+    } catch (error) {
+      if (error instanceof NotFoundException) {
+        return res.status(404).send({ message: error.message });
+      }
+      return res.status(500).send({ message: 'Ocorreu um erro ao deletar a categoria' });
+    }
   }
 }

@@ -33,6 +33,8 @@ CREATE TABLE "classifications" (
 CREATE TABLE "favorites" (
     "id" SERIAL NOT NULL,
     "name" TEXT NOT NULL,
+    "userId" INTEGER NOT NULL,
+    "animesId" INTEGER NOT NULL,
 
     CONSTRAINT "favorites_pkey" PRIMARY KEY ("id")
 );
@@ -40,24 +42,14 @@ CREATE TABLE "favorites" (
 -- CreateTable
 CREATE TABLE "likes-animes" (
     "id" SERIAL NOT NULL,
+    "userId" INTEGER NOT NULL,
+    "animesId" INTEGER NOT NULL,
 
     CONSTRAINT "likes-animes_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
 CREATE TABLE "_AnimesToCategories" (
-    "A" INTEGER NOT NULL,
-    "B" INTEGER NOT NULL
-);
-
--- CreateTable
-CREATE TABLE "_AnimesToLikesAnimes" (
-    "A" INTEGER NOT NULL,
-    "B" INTEGER NOT NULL
-);
-
--- CreateTable
-CREATE TABLE "_AnimesToFavorites" (
     "A" INTEGER NOT NULL,
     "B" INTEGER NOT NULL
 );
@@ -74,35 +66,23 @@ CREATE UNIQUE INDEX "_AnimesToCategories_AB_unique" ON "_AnimesToCategories"("A"
 -- CreateIndex
 CREATE INDEX "_AnimesToCategories_B_index" ON "_AnimesToCategories"("B");
 
--- CreateIndex
-CREATE UNIQUE INDEX "_AnimesToLikesAnimes_AB_unique" ON "_AnimesToLikesAnimes"("A", "B");
-
--- CreateIndex
-CREATE INDEX "_AnimesToLikesAnimes_B_index" ON "_AnimesToLikesAnimes"("B");
-
--- CreateIndex
-CREATE UNIQUE INDEX "_AnimesToFavorites_AB_unique" ON "_AnimesToFavorites"("A", "B");
-
--- CreateIndex
-CREATE INDEX "_AnimesToFavorites_B_index" ON "_AnimesToFavorites"("B");
-
 -- AddForeignKey
 ALTER TABLE "animes" ADD CONSTRAINT "animes_classificationsId_fkey" FOREIGN KEY ("classificationsId") REFERENCES "classifications"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "favorites" ADD CONSTRAINT "favorites_userId_fkey" FOREIGN KEY ("userId") REFERENCES "users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "favorites" ADD CONSTRAINT "favorites_animesId_fkey" FOREIGN KEY ("animesId") REFERENCES "animes"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "likes-animes" ADD CONSTRAINT "likes-animes_animesId_fkey" FOREIGN KEY ("animesId") REFERENCES "animes"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "likes-animes" ADD CONSTRAINT "likes-animes_userId_fkey" FOREIGN KEY ("userId") REFERENCES "users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "_AnimesToCategories" ADD CONSTRAINT "_AnimesToCategories_A_fkey" FOREIGN KEY ("A") REFERENCES "animes"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "_AnimesToCategories" ADD CONSTRAINT "_AnimesToCategories_B_fkey" FOREIGN KEY ("B") REFERENCES "categories"("id") ON DELETE CASCADE ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "_AnimesToLikesAnimes" ADD CONSTRAINT "_AnimesToLikesAnimes_A_fkey" FOREIGN KEY ("A") REFERENCES "animes"("id") ON DELETE CASCADE ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "_AnimesToLikesAnimes" ADD CONSTRAINT "_AnimesToLikesAnimes_B_fkey" FOREIGN KEY ("B") REFERENCES "likes-animes"("id") ON DELETE CASCADE ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "_AnimesToFavorites" ADD CONSTRAINT "_AnimesToFavorites_A_fkey" FOREIGN KEY ("A") REFERENCES "animes"("id") ON DELETE CASCADE ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "_AnimesToFavorites" ADD CONSTRAINT "_AnimesToFavorites_B_fkey" FOREIGN KEY ("B") REFERENCES "favorites"("id") ON DELETE CASCADE ON UPDATE CASCADE;

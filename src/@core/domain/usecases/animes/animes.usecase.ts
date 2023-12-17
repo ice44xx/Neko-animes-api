@@ -23,121 +23,101 @@ export class AnimesUseCase {
   }
 
   async findByName(name: string) {
-    try {
-      const anime = await this.animesRepository.findByName(name);
+    const anime = await this.animesRepository.findByName(name);
 
-      if (!anime) {
-        throw new NotFoundException(`Anime ${name} não encontrado`);
-      }
-
-      return anime;
-    } catch (error) {
-      throw new Error(`Ocorreu um erro ao buscar o anime, ${name},  ` + error.message);
+    if (!anime) {
+      throw new NotFoundException(`Anime ${name} não encontrado`);
     }
+
+    return anime;
   }
 
   async findById(id: number) {
-    try {
-      const anime = await this.animesRepository.findById(id);
+    const anime = await this.animesRepository.findById(id);
 
-      if (!anime) {
-        throw new NotFoundException(`Anime ${id} não encontrado`);
-      }
-
-      return anime;
-    } catch (error) {
-      throw new Error(`Ocorreu um erro ao buscar o anime, ${id},  ` + error.message);
+    if (!anime) {
+      throw new NotFoundException(`Anime ${id} não encontrado`);
     }
+
+    return anime;
   }
 
   async create(createAnimesDto: CreateAnimesDto) {
-    try {
-      const { classificationName, categoryNames, ...animeData } = createAnimesDto;
-      const classification = await this.classificationsRepository.findByName(classificationName);
+    const { classificationName, categoryNames, ...animeData } = createAnimesDto;
+    const classification = await this.classificationsRepository.findByName(classificationName);
 
-      if (!classification) {
-        throw new NotFoundException('Esta classificação não existe');
-      }
-
-      const categories = await this.categoriesRepository.findManyByNames(categoryNames);
-
-      if (categories.length !== categoryNames.length) {
-        throw new Error('Uma ou mais categorias não foram encontradas');
-      }
-
-      const anime = await this.animesRepository.create({
-        ...animeData,
-        classifications: {
-          connect: { name: classificationName },
-        },
-        categories: {
-          connect: categories.map((category) => ({ name: category.name })),
-        },
-      });
-
-      return anime;
-    } catch (error) {
-      throw new Error('Ocorreu um erro ao criar o anime, ' + error.message);
+    if (!classification) {
+      throw new NotFoundException('Esta classificação não existe');
     }
+
+    const categories = await this.categoriesRepository.findManyByNames(categoryNames);
+
+    if (categories.length !== categoryNames.length) {
+      throw new Error('Uma ou mais categorias não foram encontradas');
+    }
+
+    const anime = await this.animesRepository.create({
+      ...animeData,
+      classifications: {
+        connect: { name: classificationName },
+      },
+      categories: {
+        connect: categories.map((category) => ({ name: category.name })),
+      },
+    });
+
+    return anime;
   }
 
   async update(id: number, updateAnimesDto: UpdateAnimesDto) {
-    try {
-      const { classificationName, categoryNames, ...animeData } = updateAnimesDto;
+    const { classificationName, categoryNames, ...animeData } = updateAnimesDto;
 
-      const existingAnime = await this.animesRepository.findById(id);
+    const existingAnime = await this.animesRepository.findById(id);
 
-      if (!existingAnime) {
-        throw new NotFoundException(`O anime com ID ${id} não foi encontrado`);
-      }
-
-      const classification = await this.classificationsRepository.findByName(classificationName);
-
-      if (!classification) {
-        throw new NotFoundException('Esta classificação não existe');
-      }
-
-      const categories = await this.categoriesRepository.findManyByNames(categoryNames);
-
-      if (categories.length !== categoryNames.length) {
-        throw new Error('Uma ou mais categorias não foram encontradas');
-      }
-
-      const animeUpdate = await this.animesRepository.update(id, {
-        ...animeData,
-        classifications: {
-          connect: { name: classificationName },
-        },
-        categories: {
-          set: categories.map((category) => ({ name: category.name })),
-        },
-      });
-
-      return {
-        id: animeUpdate.id,
-        name: animeUpdate.name,
-        synopsis: animeUpdate.synopsis,
-        thumbnailUrl: animeUpdate.thumbnailUrl,
-        feature: animeUpdate.feature,
-        classification: classificationName,
-        categories: categoryNames,
-      };
-    } catch (error) {
-      throw new Error('Ocorreu um erro ao atualizar o anime, ' + error.message);
+    if (!existingAnime) {
+      throw new NotFoundException(`O anime com ID ${id} não foi encontrado`);
     }
+
+    const classification = await this.classificationsRepository.findByName(classificationName);
+
+    if (!classification) {
+      throw new NotFoundException('Esta classificação não existe');
+    }
+
+    const categories = await this.categoriesRepository.findManyByNames(categoryNames);
+
+    if (categories.length !== categoryNames.length) {
+      throw new Error('Uma ou mais categorias não foram encontradas');
+    }
+
+    const animeUpdate = await this.animesRepository.update(id, {
+      ...animeData,
+      classifications: {
+        connect: { name: classificationName },
+      },
+      categories: {
+        set: categories.map((category) => ({ name: category.name })),
+      },
+    });
+
+    return {
+      id: animeUpdate.id,
+      name: animeUpdate.name,
+      synopsis: animeUpdate.synopsis,
+      thumbnailUrl: animeUpdate.thumbnailUrl,
+      feature: animeUpdate.feature,
+      classification: classificationName,
+      categories: categoryNames,
+    };
   }
 
   async remove(id: number) {
-    try {
-      const anime = await this.animesRepository.findById(id);
+    const anime = await this.animesRepository.findById(id);
 
-      if (!anime) {
-        throw new NotFoundException(`Anime ${id} não encontrado`);
-      }
-
-      await this.animesRepository.delete(id);
-    } catch (error) {
-      throw new Error('Ocorreu um erro ao deletar o anime, ' + error.message);
+    if (!anime) {
+      throw new NotFoundException(`Anime ${id} não encontrado`);
     }
+
+    await this.animesRepository.delete(id);
   }
 }

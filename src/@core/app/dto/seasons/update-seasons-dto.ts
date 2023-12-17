@@ -1,4 +1,9 @@
-import { PartialType } from '@nestjs/swagger';
-import { CreateSeasonsDto } from './create-seasons-dto';
+import { IsNumber, IsString } from 'class-validator';
 
-export class UpdateSeasonsDto extends PartialType(CreateSeasonsDto) {}
+export class UpdateSeasonsDto {
+  @IsString()
+  readonly name: string;
+
+  @IsNumber()
+  readonly animeId: number;
+}
