@@ -1,0 +1,25 @@
+import { Injectable } from '@nestjs/common';
+import { ClassificationsUseCase } from 'src/@core/domain/usecases/classifications/classifications.usecase';
+import { CreateClassificationsDto } from '../../dto/classifications/create-classifications-dto';
+import { UpdateClassificationsDto } from '../../dto/classifications/update-classifications-dto';
+
+@Injectable()
+export class ClassificationsService {
+  constructor(private readonly classificationsUseCase: ClassificationsUseCase) {}
+
+  async findAll() {
+    return await this.classificationsUseCase.findAll();
+  }
+
+  async create(createClassificationsDto: CreateClassificationsDto) {
+    return await this.classificationsUseCase.create(createClassificationsDto);
+  }
+
+  async update(id: number, updateClassificationsDto: UpdateClassificationsDto) {
+    return await this.classificationsUseCase.update(id, updateClassificationsDto);
+  }
+
+  async remove(id: number) {
+    return await this.classificationsUseCase.remove(id);
+  }
+}

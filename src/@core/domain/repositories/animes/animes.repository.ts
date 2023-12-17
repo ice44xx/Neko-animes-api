@@ -6,14 +6,63 @@ import { Prisma } from '@prisma/client';
 export class AnimesRepository {
   constructor(private readonly prisma: PrismaService) {}
 
-  async create(data: Prisma.AnimesCreateInput) {
-    return this.prisma.animes.create({ data });
+  async findAll() {
+    return this.prisma.animes.findMany({
+      select: {
+        id: true,
+        name: true,
+        synopsis: true,
+        thumbnailUrl: true,
+        feature: true,
+        classifications: {
+          select: {
+            name: true,
+          },
+        },
+        categories: {
+          select: {
+            name: true,
+          },
+        },
+        createdAt: true,
+        updatedAt: true,
+      },
+    });
   }
 
-  async findAll() {}
-
   async findByName(name: string) {
-    return this.prisma.animes.findFirst({ where: { name } });
+    return this.prisma.animes.findFirst({
+      where: {
+        name: { contains: name, mode: 'insensitive' },
+      },
+      select: {
+        id: true,
+        name: true,
+        synopsis: true,
+        thumbnailUrl: true,
+        feature: true,
+        classifications: {
+          select: {
+            name: true,
+          },
+        },
+        categories: {
+          select: {
+            name: true,
+          },
+        },
+        createdAt: true,
+        updatedAt: true,
+      },
+    });
+  }
+
+  async findById(id: number) {
+    return this.prisma.animes.findUnique({ where: { id } });
+  }
+
+  async create(data: Prisma.AnimesCreateInput) {
+    return this.prisma.animes.create({ data });
   }
 
   async update(id: number, data: Prisma.AnimesUpdateInput) {

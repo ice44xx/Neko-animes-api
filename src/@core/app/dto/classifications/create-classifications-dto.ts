@@ -1,4 +1,4 @@
-import { IsNumber, IsString } from 'class-validator';
+import { IsString } from 'class-validator';
 
 export class CreateClassificationsDto {
   @IsString()
@@ -6,7 +6,4 @@ export class CreateClassificationsDto {
 
   @IsString()
   desc: string;
-
-  @IsNumber()
-  animeId: number;
 }

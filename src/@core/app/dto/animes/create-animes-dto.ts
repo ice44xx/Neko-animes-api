@@ -13,10 +13,9 @@ export class CreateAnimesDto {
   @IsBoolean()
   readonly feature: boolean;
 
-  @IsArray()
-  @IsString({ each: true })
-  readonly categoryName: string[];
-
   @IsString()
-  classificationName: string;
+  readonly classificationName: string;
+
+  @IsArray()
+  readonly categoryNames: string[];
 }

@@ -1,19 +1,80 @@
-import { Controller, Post, Body, Get, Res } from '@nestjs/common';
+import { Controller, Post, Body, Get, Res, Param, Delete, HttpCode, Put } from '@nestjs/common';
 import { Roles, UserType } from 'src/@core/infra/decorators/roles.decorator';
 import { ApiTags } from '@nestjs/swagger';
 import { CreateAnimesDto } from '../../dto/animes/create-animes-dto';
 import { AnimesService } from '../../services/animes/animes.service';
+import { Public } from 'src/@core/infra/decorators/public-route.decorator';
+import { UpdateAnimesDto } from '../../dto/animes/update-animes-dto';
 
 @ApiTags('Animes')
 @Controller('animes')
 export class AnimesController {
   constructor(private readonly animesService: AnimesService) {}
 
-  @Roles(UserType.Admin)
-  @Post('create')
-  async create(@Res() res, @Body() createAnimesDto: CreateAnimesDto) {}
+  @Public()
+  @Get()
+  async findAll(@Res() res) {
+    try {
+      const animes = await this.animesService.findAll();
+      return res.status(200).json(animes);
+    } catch (error) {
+      return res.status(500).send({ message: 'Ocorreu um erro ao buscar os animes' });
+    }
+  }
+
+  @Public()
+  @Get(':name')
+  async findByName(@Res() res, @Param('name') name: string) {
+    try {
+      const anime = await this.animesService.findByName(name);
+      return res.status(200).json(anime);
+    } catch (error) {
+      return res.status(500).send({ message: `Ocorreu um erro ao buscar o anime ${name}` });
+    }
+  }
+
+  @Public()
+  @Get(':id')
+  async findById(@Res() res, @Param('id') id: number) {
+    try {
+      const anime = await this.animesService.findById(id);
+      return res.status(200).json(anime);
+    } catch (error) {
+      return res.status(500).send({ message: `Ocorreu um erro ao buscar o anime ${id}` });
+    }
+  }
 
   @Roles(UserType.Admin)
-  @Get()
-  async findAll() {}
+  @Post('create')
+  async create(@Res() res, @Body() createAnimesDto: CreateAnimesDto) {
+    try {
+      const anime = await this.animesService.create(createAnimesDto);
+      return res.status(201).json(anime);
+    } catch (error) {
+      return res.status(500).send({ message: 'Ocorreu um erro ao criar o anime' });
+    }
+  }
+
+  @Roles(UserType.Admin)
+  @Put(':id')
+  async update(@Res() res, @Param('id') id: number, @Body() updateAnimesDto: UpdateAnimesDto) {
+    try {
+      const anime = await this.animesService.update(id, updateAnimesDto);
+      return res.status(200).json(anime);
+    } catch (error) {
+      return res.status(500).send({ message: 'Ocorreu um erro ao atualizar o anime' });
+    }
+  }
+
+  @Roles(UserType.Admin)
+  @HttpCode(204)
+  @Delete(':id')
+  async remove(@Res() res, @Param('id') id: number) {
+    try {
+      await this.animesService.remove(id);
+      return res.status(200).send({ message: 'Anime deletado com sucesso' });
+    } catch (error) {
+      return res.status(500).send({ message: 'Ocorreu um erro ao deletar o anime' });
+    }
+  }
 }

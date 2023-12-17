@@ -18,6 +18,16 @@ export class CategoriesRepository {
     return this.prisma.categories.findUnique({ where: { name } });
   }
 
+  async findManyByNames(names: string[]) {
+    return this.prisma.categories.findMany({
+      where: {
+        name: {
+          in: names,
+        },
+      },
+    });
+  }
+
   async create(data: Prisma.CategoriesCreateInput) {
     return this.prisma.categories.create({ data });
   }

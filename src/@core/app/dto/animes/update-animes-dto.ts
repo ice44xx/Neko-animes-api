@@ -1,4 +1,21 @@
-import { PartialType } from '@nestjs/swagger';
-import { CreateAnimesDto } from './create-animes-dto';
+import { IsString, IsBoolean, IsArray } from 'class-validator';
 
-export class UpdateAnimesDto extends PartialType(CreateAnimesDto) {}
+export class UpdateAnimesDto {
+  @IsString()
+  readonly name: string;
+
+  @IsString()
+  readonly synopsis: string;
+
+  @IsString()
+  readonly thumbnailUrl: string;
+
+  @IsBoolean()
+  readonly feature: boolean;
+
+  @IsString()
+  readonly classificationName: string;
+
+  @IsArray()
+  readonly categoryNames: string[];
+}

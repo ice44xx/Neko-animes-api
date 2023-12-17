@@ -5,6 +5,7 @@ import { AnimesService } from '../../services/animes/animes.service';
 import { AnimesUseCase } from 'src/@core/domain/usecases/animes/animes.usecase';
 import { AnimesRepository } from 'src/@core/domain/repositories/animes/animes.repository';
 import { CategoriesRepository } from 'src/@core/domain/repositories/categories/categories.repository';
+import { ClassificationsRepository } from 'src/@core/domain/repositories/classifications/classifications.repository';
 
 @Module({
   controllers: [AnimesController],
@@ -14,6 +15,7 @@ import { CategoriesRepository } from 'src/@core/domain/repositories/categories/c
     AnimesUseCase,
     AnimesRepository,
     CategoriesRepository,
+    ClassificationsRepository,
   ],
   exports: [AnimesService],
 })

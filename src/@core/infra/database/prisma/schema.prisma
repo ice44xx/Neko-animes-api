@@ -37,7 +37,7 @@ model Animes {
   name              String
   synopsis          String
   thumbnailUrl      String
-  feature           Boolean
+  feature           Boolean         @default(false)
   categories        Categories[]
   likes             LikesAnimes[]
   favorites         Favorites[]
@@ -45,27 +45,38 @@ model Animes {
   classificationsId Int
   createdAt         DateTime        @default(now())
   updatedAt         DateTime        @default(now())
+
+  @@map("animes")
 }
 
 model Categories {
   id     Int      @id @default(autoincrement())
   name   String   @unique
   Animes Animes[]
+
+  @@map("categories")
 }
 
 model Classifications {
   id     Int      @id @default(autoincrement())
-  name   String
+  name   String   @unique
+  desc   String
   Animes Animes[]
+
+  @@map("classifications")
 }
 
 model Favorites {
   id     Int      @id @default(autoincrement())
   name   String
   Animes Animes[]
+
+  @@map("favorites")
 }
 
 model LikesAnimes {
   id     Int      @id @default(autoincrement())
   Animes Animes[]
+
+  @@map("likes-animes")
 }
