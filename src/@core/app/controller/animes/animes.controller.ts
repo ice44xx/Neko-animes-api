@@ -70,7 +70,7 @@ export class AnimesController {
       if (error instanceof NotFoundException) {
         return res.status(404).send({ message: error.message });
       }
-      return res.status(500).send({ message: 'Ocorreu um erro ao criar o anime}' });
+      return res.status(500).send({ message: 'Ocorreu um erro ao criar o anime' });
     }
   }
 

@@ -12,4 +12,4 @@ CREATE TABLE "seasons" (
 CREATE UNIQUE INDEX "seasons_order_key" ON "seasons"("order");
 
 -- AddForeignKey
-ALTER TABLE "seasons" ADD CONSTRAINT "seasons_animeId_fkey" FOREIGN KEY ("animeId") REFERENCES "animes"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "seasons" ADD CONSTRAINT "seasons_animeId_fkey" FOREIGN KEY ("animeId") REFERENCES "animes"("id") ON DELETE CASCADE ON UPDATE CASCADE;

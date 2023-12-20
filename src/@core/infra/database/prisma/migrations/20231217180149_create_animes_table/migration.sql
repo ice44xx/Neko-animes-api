@@ -66,19 +66,19 @@ CREATE UNIQUE INDEX "_AnimesToCategories_AB_unique" ON "_AnimesToCategories"("A"
 CREATE INDEX "_AnimesToCategories_B_index" ON "_AnimesToCategories"("B");
 
 -- AddForeignKey
-ALTER TABLE "animes" ADD CONSTRAINT "animes_classificationsId_fkey" FOREIGN KEY ("classificationsId") REFERENCES "classifications"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "animes" ADD CONSTRAINT "animes_classificationsId_fkey" FOREIGN KEY ("classificationsId") REFERENCES "classifications"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "favorites" ADD CONSTRAINT "favorites_userId_fkey" FOREIGN KEY ("userId") REFERENCES "users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "favorites" ADD CONSTRAINT "favorites_userId_fkey" FOREIGN KEY ("userId") REFERENCES "users"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "favorites" ADD CONSTRAINT "favorites_animesId_fkey" FOREIGN KEY ("animesId") REFERENCES "animes"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "favorites" ADD CONSTRAINT "favorites_animesId_fkey" FOREIGN KEY ("animesId") REFERENCES "animes"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "likes-animes" ADD CONSTRAINT "likes-animes_animesId_fkey" FOREIGN KEY ("animesId") REFERENCES "animes"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "likes-animes" ADD CONSTRAINT "likes-animes_animesId_fkey" FOREIGN KEY ("animesId") REFERENCES "animes"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "likes-animes" ADD CONSTRAINT "likes-animes_userId_fkey" FOREIGN KEY ("userId") REFERENCES "users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "likes-animes" ADD CONSTRAINT "likes-animes_userId_fkey" FOREIGN KEY ("userId") REFERENCES "users"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "_AnimesToCategories" ADD CONSTRAINT "_AnimesToCategories_A_fkey" FOREIGN KEY ("A") REFERENCES "animes"("id") ON DELETE CASCADE ON UPDATE CASCADE;

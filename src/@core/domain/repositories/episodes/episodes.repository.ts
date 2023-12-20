@@ -7,12 +7,13 @@ export class EpisodesRepository {
   constructor(private readonly prisma: PrismaService) {}
 
   async findAll() {
-    return this.prisma.episodes.findMany({
+    const episodes = await this.prisma.episodes.findMany({
       select: {
         id: true,
         name: true,
         episodeOrder: true,
         url: true,
+        likes: true,
         seasons: {
           select: {
             id: true,
@@ -27,6 +28,13 @@ export class EpisodesRepository {
         },
       },
     });
+
+    const formattedLikes = episodes.map((episode) => ({
+      ...episode,
+      likes: episode.likes.length,
+    }));
+
+    return formattedLikes;
   }
 
   async findById(id: number) {

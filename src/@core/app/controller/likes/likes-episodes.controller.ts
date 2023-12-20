@@ -2,7 +2,6 @@ import {
   ConflictException,
   Controller,
   Delete,
-  Get,
   NotFoundException,
   Param,
   Post,
@@ -11,37 +10,23 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
-import { LikesAnimesService } from '../../services/likes/likes-animes.service';
 import { AuthRequest } from 'src/@core/infra/auth/models/auth-request';
 import { Roles, UserType } from 'src/@core/infra/decorators/roles.decorator';
-import { Public } from 'src/@core/infra/decorators/public-route.decorator';
-import { LikesAnimesDto } from '../../dto/likes/create-likes-dto';
+import { LikesEpisodesService } from '../../services/likes/likes-episodes.service';
+import { LikesEpisodesDto } from '../../dto/likes/create-likes-episodes-dto';
 
-@ApiTags('Likes animes')
-@Controller('likes-animes')
-export class LikesAnimesController {
-  constructor(private readonly likesAnimesService: LikesAnimesService) {}
-
-  @Public()
-  @Get()
-  async getTop10Likeds(@Res() res) {
-    try {
-      const animes = await this.likesAnimesService.getTop10Likeds();
-      return res.status(200).json(animes);
-    } catch (error) {
-      return res
-        .status(500)
-        .send({ message: 'Ocorreu um erro ao buscar o top 10 animes curtidos' });
-    }
-  }
+@ApiTags('Likes Episódios')
+@Controller('likes-episodes')
+export class LikesEpisodesController {
+  constructor(private readonly likesEpisodesService: LikesEpisodesService) {}
 
   @Roles(UserType.User)
-  @Post(':animeId')
-  async create(@Request() req: AuthRequest, @Res() res, @Param('animeId') animeId: number) {
+  @Post(':episodeId')
+  async create(@Request() req: AuthRequest, @Res() res, @Param('episodeId') episodeId: number) {
     try {
-      const createLike: LikesAnimesDto = { userId: req.user.id, animeId: animeId };
-      await this.likesAnimesService.create(createLike);
-      return res.status(201).send({ message: 'Like adicionado ao anime!' });
+      const createLike: LikesEpisodesDto = { userId: req.user.id, episodeId: episodeId };
+      await this.likesEpisodesService.create(createLike);
+      return res.status(201).send({ message: 'Like adicionado ao episódio!' });
     } catch (error) {
       if (error instanceof UnauthorizedException) {
         return res.status(401).send({ message: error.message });
@@ -55,11 +40,11 @@ export class LikesAnimesController {
   }
 
   @Roles(UserType.User)
-  @Delete(':animeId')
-  async remove(@Request() req: AuthRequest, @Res() res, @Param('animeId') animeId: number) {
+  @Delete(':episodeId')
+  async remove(@Request() req: AuthRequest, @Res() res, @Param('episodeId') episodeId: number) {
     try {
-      const removeLike: LikesAnimesDto = { userId: req.user.id, animeId: animeId };
-      await this.likesAnimesService.remove(removeLike);
+      const removeLike: LikesEpisodesDto = { userId: req.user.id, episodeId: episodeId };
+      await this.likesEpisodesService.remove(removeLike);
       return res.status(200).send({ message: 'Like removido' });
     } catch (error) {
       if (error instanceof UnauthorizedException) {

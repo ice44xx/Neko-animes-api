@@ -1,13 +1,25 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../../../infra/database/prisma/prisma.service';
+import { Prisma } from '@prisma/client';
 
 @Injectable()
 export class LikesEpisodesRepository {
   constructor(private readonly prisma: PrismaService) {}
 
-  async create() {}
+  async findOne(userId: number, episodeId: number) {
+    return this.prisma.likesEpisodes.findFirst({
+      where: {
+        usersId: userId,
+        episodesId: episodeId,
+      },
+    });
+  }
 
-  async update() {}
+  async create(data: Prisma.LikesEpisodesCreateInput) {
+    return this.prisma.likesEpisodes.create({ data });
+  }
 
-  async remove() {}
+  async remove(id: number) {
+    return this.prisma.likesEpisodes.delete({ where: { id } });
+  }
 }

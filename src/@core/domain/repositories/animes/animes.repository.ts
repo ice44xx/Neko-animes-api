@@ -24,6 +24,7 @@ export class AnimesRepository {
             name: true,
           },
         },
+        likes: true,
         seasons: {
           select: {
             id: true,
@@ -34,11 +35,11 @@ export class AnimesRepository {
                 name: true,
                 episodeOrder: true,
                 url: true,
+                likes: true,
               },
             },
           },
         },
-        likes: true,
         createdAt: true,
         updatedAt: true,
       },
@@ -47,6 +48,13 @@ export class AnimesRepository {
     const formattedLikes = animes.map((anime) => ({
       ...anime,
       likes: anime.likes.length,
+      seasons: anime.seasons.map((season) => ({
+        ...season,
+        episodes: season.episodes.map((episode) => ({
+          ...episode,
+          likes: episode.likes.length,
+        })),
+      })),
     }));
 
     return formattedLikes;

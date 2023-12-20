@@ -104,10 +104,11 @@ export class UsersController {
   }
 
   @Roles(UserType.Admin)
-  @Delete(':id')
-  async delete(@Res() res, @Param('id') id: number) {
+  @Delete()
+  async delete(@Request() req: AuthRequest, @Res() res) {
     try {
-      await this.usersService.remove({ id });
+      const currentUser = req.user;
+      await this.usersService.remove(currentUser);
       return res.status(200).send({ message: 'Usuário deletado com sucesso' });
     } catch (error) {
       if (error instanceof UnauthorizedException) {
