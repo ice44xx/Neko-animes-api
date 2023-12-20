@@ -24,6 +24,20 @@ export class AnimesRepository {
             name: true,
           },
         },
+        seasons: {
+          select: {
+            id: true,
+            name: true,
+            episodes: {
+              select: {
+                id: true,
+                name: true,
+                episodeOrder: true,
+                url: true,
+              },
+            },
+          },
+        },
         likes: true,
         createdAt: true,
         updatedAt: true,
@@ -59,6 +73,20 @@ export class AnimesRepository {
             name: true,
           },
         },
+        seasons: {
+          select: {
+            id: true,
+            name: true,
+            episodes: {
+              select: {
+                id: true,
+                name: true,
+                episodeOrder: true,
+                url: true,
+              },
+            },
+          },
+        },
         likes: true,
         createdAt: true,
         updatedAt: true,
@@ -90,6 +118,20 @@ export class AnimesRepository {
         categories: {
           select: {
             name: true,
+          },
+        },
+        seasons: {
+          select: {
+            id: true,
+            name: true,
+            episodes: {
+              select: {
+                id: true,
+                name: true,
+                episodeOrder: true,
+                url: true,
+              },
+            },
           },
         },
         likes: true,

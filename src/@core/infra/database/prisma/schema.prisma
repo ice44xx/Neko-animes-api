@@ -45,6 +45,7 @@ model Animes {
   favorites         Favorites[]
   classifications   Classifications @relation(fields: [classificationsId], references: [id])
   classificationsId Int
+  seasons           Seasons[]
   createdAt         DateTime        @default(now())
   updatedAt         DateTime        @default(now())
 
@@ -86,4 +87,26 @@ model LikesAnimes {
   animesId Int
 
   @@map("likes-animes")
+}
+
+model Seasons {
+  id       Int        @id @default(autoincrement())
+  name     String
+  order    Int        @unique
+  anime    Animes     @relation(fields: [animeId], references: [id])
+  animeId  Int
+  episodes Episodes[]
+
+  @@map("seasons")
+}
+
+model Episodes {
+  id           Int     @id @default(autoincrement())
+  name         String
+  url          String
+  episodeOrder Int     @unique
+  seasons      Seasons @relation(fields: [seasonsId], references: [id])
+  seasonsId    Int
+
+  @@map("episodes")
 }

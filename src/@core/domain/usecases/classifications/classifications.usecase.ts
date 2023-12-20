@@ -22,7 +22,7 @@ export class ClassificationsUseCase {
       throw new ConflictException('Já existe uma Classificação com este nome');
     }
 
-    const newClassification = this.classificationsRepository.create({
+    const newClassification = await this.classificationsRepository.create({
       name: nameLower,
       ...classificationData,
     });
