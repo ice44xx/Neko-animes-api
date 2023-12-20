@@ -20,10 +20,10 @@ export class SeasonsUseCase {
     return this.seasonsRepository.findByName(name);
   }
 
-  async create({ name, animeId, order }: CreateSeasonsDto) {
-    const nameLower = name.toLocaleLowerCase();
+  async create({ name, animeId, ...seasonsData }: CreateSeasonsDto) {
+    const nameLower = name.toLocaleLowerCase().trim();
 
-    const existingSeasons = await this.seasonsRepository.findByFirst(animeId, name);
+    const existingSeasons = await this.seasonsRepository.findByFirst(animeId, nameLower);
 
     if (existingSeasons) {
       throw new ConflictException('Já existe uma temporada com este nome');
@@ -37,8 +37,8 @@ export class SeasonsUseCase {
 
     const newSeason = await this.seasonsRepository.create({
       name: nameLower,
-      order: order,
       anime: { connect: { id: animeId } },
+      ...seasonsData,
     });
 
     return newSeason;

@@ -9,7 +9,7 @@ export class LikesEpisodesRepository {
   async findOne(userId: number, episodeId: number) {
     return this.prisma.likesEpisodes.findFirst({
       where: {
-        usersId: userId,
+        userId: userId,
         episodesId: episodeId,
       },
     });

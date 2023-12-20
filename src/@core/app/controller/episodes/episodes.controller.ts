@@ -14,7 +14,9 @@ import { CreateEpisodesDto } from '../../dto/episodes/create-episodes-dto';
 import { UpdateEpisodesDto } from '../../dto/episodes/update-episodes-dto';
 import { Public } from 'src/@core/infra/decorators/public-route.decorator';
 import { Roles, UserType } from 'src/@core/infra/decorators/roles.decorator';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Episódios')
 @Controller('episodes')
 export class EpisodesController {
   constructor(private readonly episodesService: EpisodesService) {}

@@ -5,7 +5,6 @@ import { SeasonsRepository } from 'src/@core/domain/repositories/seasons/seasons
 import { AnimesRepository } from 'src/@core/domain/repositories/animes/animes.repository';
 import { SeasonsController } from '../../controller/seasons/seasons.controller';
 import { SeasonsUseCase } from 'src/@core/domain/usecases/seasons/seasons.usecase';
-import { AnimesUseCase } from 'src/@core/domain/usecases/animes/animes.usecase';
 
 @Module({
   controllers: [SeasonsController],

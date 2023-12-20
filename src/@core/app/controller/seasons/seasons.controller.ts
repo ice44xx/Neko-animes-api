@@ -15,7 +15,9 @@ import { CreateSeasonsDto } from '../../dto/seasons/create-seasons-dto';
 import { Roles, UserType } from 'src/@core/infra/decorators/roles.decorator';
 import { Public } from 'src/@core/infra/decorators/public-route.decorator';
 import { UpdateSeasonsDto } from '../../dto/seasons/update-seasons-dto';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Temporadas')
 @Controller('seasons')
 export class SeasonsController {
   constructor(private readonly seasonsService: SeasonsService) {}

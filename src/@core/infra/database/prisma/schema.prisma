@@ -23,6 +23,7 @@ model Users {
   Favorites     Favorites[]
   LikesAnimes   LikesAnimes[]
   LikesEpisodes LikesEpisodes[]
+  WatchList     WatchList[]
 
   @@map("users")
 }
@@ -73,8 +74,8 @@ model Classifications {
 model Favorites {
   id       Int    @id @default(autoincrement())
   user     Users  @relation(fields: [userId], references: [id], onDelete: Cascade)
-  animes   Animes @relation(fields: [animesId], references: [id], onDelete: Cascade)
   userId   Int
+  animes   Animes @relation(fields: [animesId], references: [id], onDelete: Cascade)
   animesId Int
 
   @@map("favorites")
@@ -83,9 +84,9 @@ model Favorites {
 model LikesAnimes {
   id       Int    @id @default(autoincrement())
   anime    Animes @relation(fields: [animesId], references: [id], onDelete: Cascade)
+  animesId Int
   user     Users  @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId   Int
-  animesId Int
 
   @@map("likes-animes")
 }
@@ -115,10 +116,24 @@ model Episodes {
 
 model LikesEpisodes {
   id         Int      @id @default(autoincrement())
-  users      Users    @relation(fields: [usersId], references: [id], onDelete: Cascade)
-  usersId    Int
+  user       Users    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId     Int
   episodes   Episodes @relation(fields: [episodesId], references: [id], onDelete: Cascade)
   episodesId Int
 
   @@map("likes-episodes")
+}
+
+model WatchList {
+  id           Int      @id @default(autoincrement())
+  anime        String
+  thumbnailUrl String
+  videoUrl     String
+  episodeId    String
+  order        String
+  user         Users    @relation(fields: [userId], references: [id])
+  userId       Int
+  createdAt    DateTime @default(now())
+
+  @@map("watchlist")
 }

@@ -17,7 +17,7 @@ import { Roles, UserType } from 'src/@core/infra/decorators/roles.decorator';
 import { Public } from 'src/@core/infra/decorators/public-route.decorator';
 import { LikesAnimesDto } from '../../dto/likes/create-likes-dto';
 
-@ApiTags('Likes animes')
+@ApiTags('Likes Animes')
 @Controller('likes-animes')
 export class LikesAnimesController {
   constructor(private readonly likesAnimesService: LikesAnimesService) {}

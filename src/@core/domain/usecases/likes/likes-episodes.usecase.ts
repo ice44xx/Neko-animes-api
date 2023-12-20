@@ -37,7 +37,7 @@ export class LikesEpisodesUseCase {
     }
 
     const newLike = await this.likesEpisodesRepository.create({
-      users: { connect: { id: userId } },
+      user: { connect: { id: userId } },
       episodes: { connect: { id: episodeId } },
     });
 
