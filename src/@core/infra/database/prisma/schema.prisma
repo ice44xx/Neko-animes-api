@@ -16,14 +16,15 @@ model Users {
   userName      String
   email         String          @unique
   password      String
-  role          Roles           @relation(fields: [roleId], references: [id], onDelete: Cascade)
+  role          Roles           @relation(fields: [roleId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   roleId        Int
   createdAt     DateTime        @default(now())
   updatedAt     DateTime        @default(now())
-  Favorites     Favorites[]
-  LikesAnimes   LikesAnimes[]
-  LikesEpisodes LikesEpisodes[]
-  WatchList     WatchList[]
+  favorites     Favorites[]
+  likesAnimes   LikesAnimes[]
+  likesEpisodes LikesEpisodes[]
+  watchList     WatchList[]
+  comments      Comments[]
 
   @@map("users")
 }
@@ -45,7 +46,7 @@ model Animes {
   categories        Categories[]
   likes             LikesAnimes[]
   favorites         Favorites[]
-  classifications   Classifications @relation(fields: [classificationsId], references: [id], onDelete: Cascade)
+  classifications   Classifications @relation(fields: [classificationsId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   classificationsId Int
   seasons           Seasons[]
   createdAt         DateTime        @default(now())
@@ -73,9 +74,9 @@ model Classifications {
 
 model Favorites {
   id       Int    @id @default(autoincrement())
-  user     Users  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user     Users  @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   userId   Int
-  animes   Animes @relation(fields: [animesId], references: [id], onDelete: Cascade)
+  animes   Animes @relation(fields: [animesId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   animesId Int
 
   @@map("favorites")
@@ -83,9 +84,9 @@ model Favorites {
 
 model LikesAnimes {
   id       Int    @id @default(autoincrement())
-  anime    Animes @relation(fields: [animesId], references: [id], onDelete: Cascade)
+  anime    Animes @relation(fields: [animesId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   animesId Int
-  user     Users  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user     Users  @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   userId   Int
 
   @@map("likes-animes")
@@ -95,7 +96,7 @@ model Seasons {
   id       Int        @id @default(autoincrement())
   name     String
   order    Int        @unique
-  anime    Animes     @relation(fields: [animeId], references: [id], onDelete: Cascade)
+  anime    Animes     @relation(fields: [animeId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   animeId  Int
   episodes Episodes[]
 
@@ -107,18 +108,19 @@ model Episodes {
   name         String
   url          String
   episodeOrder Int             @unique
-  seasons      Seasons         @relation(fields: [seasonsId], references: [id], onDelete: Cascade)
+  seasons      Seasons         @relation(fields: [seasonsId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   seasonsId    Int
   likes        LikesEpisodes[]
+  comments     Comments[]
 
   @@map("episodes")
 }
 
 model LikesEpisodes {
   id         Int      @id @default(autoincrement())
-  user       Users    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user       Users    @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   userId     Int
-  episodes   Episodes @relation(fields: [episodesId], references: [id], onDelete: Cascade)
+  episodes   Episodes @relation(fields: [episodesId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   episodesId Int
 
   @@map("likes-episodes")
@@ -131,9 +133,22 @@ model WatchList {
   videoUrl     String
   episodeId    Int
   order        Int
-  user         Users    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user         Users    @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   userId       Int
   createdAt    DateTime @default(now())
 
   @@map("watchlist")
+}
+
+model Comments {
+  id         Int      @id @default(autoincrement())
+  text       String
+  users      Users    @relation(fields: [usersId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  usersId    Int
+  episodes   Episodes @relation(fields: [episodesId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  episodesId Int
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @default(now())
+
+  @@map("comments")
 }

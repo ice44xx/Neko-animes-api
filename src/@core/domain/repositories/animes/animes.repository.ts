@@ -36,6 +36,14 @@ export class AnimesRepository {
                 episodeOrder: true,
                 url: true,
                 likes: true,
+                comments: {
+                  select: {
+                    id: true,
+                    usersId: true,
+                    text: true,
+                    createdAt: true,
+                  },
+                },
               },
             },
           },
@@ -209,6 +217,14 @@ export class AnimesRepository {
                 name: true,
                 episodeOrder: true,
                 url: true,
+                comments: {
+                  select: {
+                    id: true,
+                    usersId: true,
+                    text: true,
+                    createdAt: true,
+                  },
+                },
               },
             },
           },
@@ -256,6 +272,14 @@ export class AnimesRepository {
                 name: true,
                 episodeOrder: true,
                 url: true,
+                comments: {
+                  select: {
+                    id: true,
+                    usersId: true,
+                    text: true,
+                    createdAt: true,
+                  },
+                },
               },
             },
           },

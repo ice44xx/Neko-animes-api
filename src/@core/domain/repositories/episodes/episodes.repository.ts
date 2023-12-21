@@ -26,6 +26,20 @@ export class EpisodesRepository {
             },
           },
         },
+        comments: {
+          select: {
+            id: true,
+            episodes: {
+              select: {
+                id: true,
+                name: true,
+              },
+            },
+            usersId: true,
+            text: true,
+            createdAt: true,
+          },
+        },
       },
     });
 
@@ -55,6 +69,20 @@ export class EpisodesRepository {
                 name: true,
               },
             },
+          },
+        },
+        comments: {
+          select: {
+            id: true,
+            episodes: {
+              select: {
+                id: true,
+                name: true,
+              },
+            },
+            usersId: true,
+            text: true,
+            createdAt: true,
           },
         },
       },
