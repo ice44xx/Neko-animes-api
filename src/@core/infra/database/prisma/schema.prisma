@@ -129,9 +129,9 @@ model WatchList {
   anime        String
   thumbnailUrl String
   videoUrl     String
-  episodeId    String
-  order        String
-  user         Users    @relation(fields: [userId], references: [id])
+  episodeId    Int
+  order        Int
+  user         Users    @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId       Int
   createdAt    DateTime @default(now())
 

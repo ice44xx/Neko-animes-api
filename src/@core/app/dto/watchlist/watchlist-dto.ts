@@ -4,6 +4,9 @@ export class WatchListDto {
   @IsNumber()
   readonly id?: number;
 
+  @IsNumber()
+  readonly userId?: number;
+
   @IsString()
   readonly anime?: string;
 
