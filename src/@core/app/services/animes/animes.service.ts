@@ -12,6 +12,14 @@ export class AnimesService {
     return await this.animesUseCase.findAll();
   }
 
+  async findAllFeature() {
+    return await this.animesUseCase.findAllFeature();
+  }
+
+  async findTopLikes() {
+    return await this.animesUseCase.findTopLikes();
+  }
+
   async findByName({ name }: AnimesDto) {
     return await this.animesUseCase.findByName({ name });
   }

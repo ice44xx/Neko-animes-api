@@ -60,6 +60,124 @@ export class AnimesRepository {
     return formattedLikes;
   }
 
+  async findAllFeature() {
+    const animes = await this.prisma.animes.findMany({
+      where: { feature: true },
+      select: {
+        id: true,
+        name: true,
+        synopsis: true,
+        thumbnailUrl: true,
+        feature: true,
+        classifications: {
+          select: {
+            name: true,
+          },
+        },
+        categories: {
+          select: {
+            name: true,
+          },
+        },
+        likes: true,
+        seasons: {
+          select: {
+            id: true,
+            name: true,
+            episodes: {
+              select: {
+                id: true,
+                name: true,
+                episodeOrder: true,
+                url: true,
+                likes: true,
+              },
+            },
+          },
+        },
+        createdAt: true,
+        updatedAt: true,
+      },
+      take: 10,
+      orderBy: {
+        updatedAt: 'desc',
+      },
+    });
+
+    const formattedLikes = animes.map((anime) => ({
+      ...anime,
+      likes: anime.likes.length,
+      seasons: anime.seasons.map((season) => ({
+        ...season,
+        episodes: season.episodes.map((episode) => ({
+          ...episode,
+          likes: episode.likes.length,
+        })),
+      })),
+    }));
+
+    return formattedLikes;
+  }
+
+  async findTopLikes() {
+    const animes = await this.prisma.animes.findMany({
+      select: {
+        id: true,
+        name: true,
+        synopsis: true,
+        thumbnailUrl: true,
+        feature: true,
+        classifications: {
+          select: {
+            name: true,
+          },
+        },
+        categories: {
+          select: {
+            name: true,
+          },
+        },
+        likes: true,
+        seasons: {
+          select: {
+            id: true,
+            name: true,
+            episodes: {
+              select: {
+                id: true,
+                name: true,
+                episodeOrder: true,
+                url: true,
+                likes: true,
+              },
+            },
+          },
+        },
+        createdAt: true,
+        updatedAt: true,
+      },
+      take: 10,
+      orderBy: {
+        likes: {
+          _count: 'desc',
+        },
+      },
+    });
+    const formattedLikes = animes.map((anime) => ({
+      ...anime,
+      likes: anime.likes.length,
+      seasons: anime.seasons.map((season) => ({
+        ...season,
+        episodes: season.episodes.map((episode) => ({
+          ...episode,
+          likes: episode.likes.length,
+        })),
+      })),
+    }));
+
+    return formattedLikes;
+  }
+
   async findByName(name: string) {
     const anime = await this.prisma.animes.findFirst({
       where: {

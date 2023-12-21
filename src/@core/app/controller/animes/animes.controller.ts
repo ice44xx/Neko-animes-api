@@ -33,6 +33,28 @@ export class AnimesController {
   }
 
   @Public()
+  @Get('features')
+  async findAllFeature(@Res() res) {
+    try {
+      const animes = await this.animesService.findAllFeature();
+      return res.status(200).json(animes);
+    } catch (error) {
+      return res.status(500).send({ message: 'Ocorreu um erro ao buscar os animes em destaques' });
+    }
+  }
+
+  @Public()
+  @Get('likes')
+  async findTopLikes(@Res() res) {
+    try {
+      const animes = await this.animesService.findTopLikes();
+      return res.status(200).json(animes);
+    } catch (error) {
+      return res.status(500).send({ message: 'Ocorreu um erro ao buscar os animes em destaques' });
+    }
+  }
+
+  @Public()
   @Get(':name')
   async findByName(@Res() res, @Param('name') name: string) {
     try {

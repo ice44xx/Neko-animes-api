@@ -15,12 +15,15 @@ export class AnimesUseCase {
   ) {}
 
   async findAll() {
-    try {
-      const animes = await this.animesRepository.findAll();
-      return animes;
-    } catch (error) {
-      throw new Error('Ocorreu um erro ao buscar os animes, ' + error.message);
-    }
+    return await this.animesRepository.findAll();
+  }
+
+  async findAllFeature() {
+    return await this.animesRepository.findAllFeature();
+  }
+
+  async findTopLikes() {
+    return await this.animesRepository.findTopLikes();
   }
 
   async findByName({ name }: AnimesDto) {
