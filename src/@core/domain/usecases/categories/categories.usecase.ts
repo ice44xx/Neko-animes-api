@@ -57,6 +57,6 @@ export class CategoriesUseCase {
       throw new NotFoundException('Categoria não encontrada');
     }
 
-    await this.categoriesRepository.delete(id);
+    await this.categoriesRepository.remove(id);
   }
 }

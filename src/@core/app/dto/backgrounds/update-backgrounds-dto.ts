@@ -1,4 +1,9 @@
-import { PartialType } from '@nestjs/swagger';
-import { CreateBackgroundsDto } from './create-backgrounds-dto';
+import { IsNumber, IsString } from 'class-validator';
 
-export class UpdateBackgroundsDto extends PartialType(CreateBackgroundsDto) {}
+export class UpdateBackgroundsDto {
+  @IsString()
+  readonly url: string;
+
+  @IsNumber()
+  readonly order: number;
+}

@@ -161,4 +161,16 @@ model LikesComments {
   commentsId Int
   users      Users    @relation(fields: [usersId], references: [id])
   usersId    Int
+
+  @@map("likes-comments")
+}
+
+model Backgrounds {
+  id        Int      @id @default(autoincrement())
+  url       String
+  order     Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+
+  @@map("backgrounds")
 }
