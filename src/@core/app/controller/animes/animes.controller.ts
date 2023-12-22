@@ -28,7 +28,9 @@ export class AnimesController {
       const animes = await this.animesService.findAll();
       return res.status(200).json(animes);
     } catch (error) {
-      return res.status(500).send({ message: 'Ocorreu um erro ao buscar os animes' });
+      return res
+        .status(500)
+        .send({ message: 'Ocorreu um erro ao buscar os animes, ' + error.message });
     }
   }
 
@@ -39,7 +41,9 @@ export class AnimesController {
       const animes = await this.animesService.findAllFeature();
       return res.status(200).json(animes);
     } catch (error) {
-      return res.status(500).send({ message: 'Ocorreu um erro ao buscar os animes em destaques' });
+      return res
+        .status(500)
+        .send({ message: 'Ocorreu um erro ao buscar os animes em destaques, ' + error.message });
     }
   }
 
@@ -50,7 +54,9 @@ export class AnimesController {
       const animes = await this.animesService.findTopLikes();
       return res.status(200).json(animes);
     } catch (error) {
-      return res.status(500).send({ message: 'Ocorreu um erro ao buscar os animes em destaques' });
+      return res
+        .status(500)
+        .send({ message: 'Ocorreu um erro ao buscar os animes top likes, ' + error.message });
     }
   }
 
@@ -64,7 +70,9 @@ export class AnimesController {
       if (error instanceof NotFoundException) {
         return res.status(404).send({ message: error.message });
       }
-      return res.status(500).send({ message: `Ocorreu um erro ao buscar o anime ${name}` });
+      return res
+        .status(500)
+        .send({ message: `Ocorreu um erro ao buscar o anime ${name}, ` } + error.message);
     }
   }
 
@@ -78,7 +86,9 @@ export class AnimesController {
       if (error instanceof NotFoundException) {
         return res.status(404).send({ message: error.message });
       }
-      return res.status(500).send({ message: `Ocorreu um erro ao buscar o anime ${id}` });
+      return res
+        .status(500)
+        .send({ message: `Ocorreu um erro ao buscar o anime ${id}, ` + error.message });
     }
   }
 
@@ -92,7 +102,9 @@ export class AnimesController {
       if (error instanceof NotFoundException) {
         return res.status(404).send({ message: error.message });
       }
-      return res.status(500).send({ message: 'Ocorreu um erro ao criar o anime' });
+      return res
+        .status(500)
+        .send({ message: 'Ocorreu um erro ao criar o anime, ' + error.message });
     }
   }
 
@@ -110,7 +122,9 @@ export class AnimesController {
       if (error instanceof NotFoundException) {
         return res.status(404).send({ message: error.message });
       }
-      return res.status(500).send({ message: 'Ocorreu um erro ao atualizar o anime}' });
+      return res
+        .status(500)
+        .send({ message: 'Ocorreu um erro ao atualizar o anime, ' + error.message });
     }
   }
 
@@ -124,7 +138,9 @@ export class AnimesController {
       if (error instanceof NotFoundException) {
         return res.status(404).send({ message: error.message });
       }
-      return res.status(500).send({ message: 'Ocorreu um erro ao deletar o anime' });
+      return res
+        .status(500)
+        .send({ message: 'Ocorreu um erro ao deletar o anime, ' + error.message });
     }
   }
 }

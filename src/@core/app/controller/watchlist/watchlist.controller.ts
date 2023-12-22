@@ -14,12 +14,14 @@ import { WatchListService } from '../../services/watchlist/watchlist.service';
 import { ApiTags } from '@nestjs/swagger';
 import { AuthRequest } from 'src/@core/infra/auth/models/auth-request';
 import { CreateWatchListDto } from '../../dto/watchlist/create-watchlist.dto';
+import { Roles, UserType } from 'src/@core/infra/decorators/roles.decorator';
 
 @ApiTags('Lista de Assistidos')
 @Controller('watchlist')
 export class WatchlistController {
   constructor(private readonly watchlistService: WatchListService) {}
 
+  @Roles(UserType.User)
   @Get()
   async findLastTen(@Request() req: AuthRequest, @Res() res) {
     try {
@@ -31,9 +33,13 @@ export class WatchlistController {
       if (error instanceof UnauthorizedException) {
         return res.status(401).send({ message: error.message });
       }
+      return res
+        .status(500)
+        .send({ message: 'Ocorreu um erro ao buscar a lista, ' + error.message });
     }
   }
 
+  @Roles(UserType.User)
   @Post('create')
   async create(
     @Request() req: AuthRequest,
@@ -49,9 +55,13 @@ export class WatchlistController {
       if (error instanceof UnauthorizedException) {
         return res.status(401).send({ message: error.message });
       }
+      return res
+        .status(500)
+        .send({ message: 'Ocorreu um erro ao criar a lista, ' + error.message });
     }
   }
 
+  @Roles(UserType.User)
   @Delete(':id')
   async remove(@Request() req: AuthRequest, @Res() res, @Param('id') id: number) {
     try {
@@ -65,7 +75,9 @@ export class WatchlistController {
       } else if (error instanceof NotFoundException) {
         return res.status(404).send({ message: error.message });
       }
+      return res
+        .status(500)
+        .send({ message: 'Ocorreu um erro ao remover a lista, ' + error.message });
     }
-    return res.status(500).send({ message: 'Ocorreu um erro ao remover a lista.' });
   }
 }

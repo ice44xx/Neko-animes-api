@@ -34,7 +34,9 @@ export class CommentsController {
       if (error instanceof NotFoundException) {
         return res.status(404).send({ message: error.message });
       }
-      return res.status(500).send({ message: 'Ocorreu um erro ao buscar os comentários' });
+      return res
+        .status(500)
+        .send({ message: 'Ocorreu um erro ao buscar os comentários, ' + error.message });
     }
   }
 
@@ -50,7 +52,7 @@ export class CommentsController {
       }
       return res
         .status(500)
-        .send({ message: 'Ocorreu um erro ao buscar os comentários do usuário' });
+        .send({ message: 'Ocorreu um erro ao buscar os comentários do usuário, ' + error.message });
     }
   }
 
@@ -72,7 +74,9 @@ export class CommentsController {
       } else if (error instanceof NotFoundException) {
         return res.status(404).send({ message: error.message });
       }
-      return res.status(500).send({ message: 'Ocorreu um erro ao criar o comentário' });
+      return res
+        .status(500)
+        .send({ message: 'Ocorreu um erro ao criar o comentário, ' + error.message });
     }
   }
 
@@ -95,7 +99,9 @@ export class CommentsController {
       } else if (error instanceof NotFoundException) {
         return res.status(404).send({ message: error.message });
       }
-      return res.status(500).send({ message: 'Ocorreu um erro ao atualizar o comentário' });
+      return res
+        .status(500)
+        .send({ message: 'Ocorreu um erro ao atualizar o comentário, ' + error.message });
     }
   }
 
@@ -113,7 +119,9 @@ export class CommentsController {
       } else if (error instanceof NotFoundException) {
         return res.status(404).send({ message: error.message });
       }
-      return res.status(500).send({ message: 'Ocorreu um erro ao deletar o comentário' });
+      return res
+        .status(500)
+        .send({ message: 'Ocorreu um erro ao deletar o comentário, ' + error.message });
     }
   }
 }

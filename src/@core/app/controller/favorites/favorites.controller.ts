@@ -32,7 +32,9 @@ export class FavoritesController {
       if (error instanceof UnauthorizedException) {
         return res.status(401).send({ message: error.message });
       }
-      return res.status(500).send({ message: 'Ocorreu um erro ao buscar os favoritos' });
+      return res
+        .status(500)
+        .send({ message: 'Ocorreu um erro ao buscar os favoritos, ' + error.message });
     }
   }
 
@@ -52,7 +54,9 @@ export class FavoritesController {
       } else if (error instanceof ConflictException) {
         return res.status(409).send({ message: error.message });
       }
-      return res.status(500).send({ message: 'Ocorreu um erro ao criar o favorito' });
+      return res
+        .status(500)
+        .send({ message: 'Ocorreu um erro ao criar o favorito, ' + error.message });
     }
   }
 
@@ -68,7 +72,9 @@ export class FavoritesController {
       if (error instanceof UnauthorizedException) {
         return res.status(401).send({ message: error.message });
       }
-      return res.status(500).send({ message: 'Ocorreu um erro ao remover dos favoritos' });
+      return res
+        .status(500)
+        .send({ message: 'Ocorreu um erro ao remover dos favoritos, ' + error.message });
     }
   }
 }

@@ -29,7 +29,9 @@ export class ClassificationsController {
       const classification = await this.classificationsService.findAll();
       return res.status(201).json(classification);
     } catch (error) {
-      return res.status(500).send({ message: 'Ocorreu um erro ao buscar as classificações' });
+      return res
+        .status(500)
+        .send({ message: 'Ocorreu um erro ao buscar as classificações, ' + error.message });
     }
   }
 
@@ -43,7 +45,9 @@ export class ClassificationsController {
       if (error instanceof ConflictException) {
         return res.status(409).send({ message: error.message });
       }
-      return res.status(500).send({ message: 'Ocorreu um erro ao criar a classificação' });
+      return res
+        .status(500)
+        .send({ message: 'Ocorreu um erro ao criar a classificação, ' + error.message });
     }
   }
 
@@ -63,7 +67,9 @@ export class ClassificationsController {
       } else if (error instanceof ConflictException) {
         return res.status(409).send({ message: error.message });
       }
-      return res.status(500).send({ message: 'Ocorreu um erro ao atualizar a classificação' });
+      return res
+        .status(500)
+        .send({ message: 'Ocorreu um erro ao atualizar a classificação, ' + error.message });
     }
   }
 
@@ -77,7 +83,9 @@ export class ClassificationsController {
       if (error instanceof NotFoundException) {
         return res.status(404).send({ message: error.message });
       }
-      return res.status(500).send({ message: 'Ocorreu um erro ao deletar a classificação' });
+      return res
+        .status(500)
+        .send({ message: 'Ocorreu um erro ao deletar a classificação, ' + error.message });
     }
   }
 }

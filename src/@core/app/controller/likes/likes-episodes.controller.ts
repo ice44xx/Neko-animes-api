@@ -35,7 +35,7 @@ export class LikesEpisodesController {
       } else if (error instanceof ConflictException) {
         return res.status(409).send({ message: error.message });
       }
-      return res.status(500).send({ message: 'Ocorreu um erro ao criar o like' });
+      return res.status(500).send({ message: 'Ocorreu um erro ao criar o like, ' + error.message });
     }
   }
 
@@ -52,7 +52,9 @@ export class LikesEpisodesController {
       } else if (error instanceof NotFoundException) {
         return res.status(404).send({ message: error.message });
       }
-      return res.status(500).send({ message: 'Ocorreu um erro ao remover o like' });
+      return res
+        .status(500)
+        .send({ message: 'Ocorreu um erro ao remover o like, ' + error.message });
     }
   }
 }

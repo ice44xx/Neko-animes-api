@@ -31,7 +31,9 @@ export class BackgroundsController {
       if (error instanceof NotFoundException) {
         return res.status(404).send({ message: error.message });
       }
-      return res.status(500).send({ message: 'Ocorreu um erro ao buscar os backgrounds' });
+      return res
+        .status(500)
+        .send({ message: 'Ocorreu um erro ao buscar os backgrounds, ' + error.message });
     }
   }
 
@@ -42,7 +44,9 @@ export class BackgroundsController {
       const background = await this.backgroundsService.create(createBackgroundsDto);
       return res.status(201).json(background);
     } catch (error) {
-      return res.status(500).send({ message: 'Ocorreu um erro ao criar o background' });
+      return res
+        .status(500)
+        .send({ message: 'Ocorreu um erro ao criar o background, ' + error.message });
     }
   }
 
@@ -61,7 +65,9 @@ export class BackgroundsController {
       if (error instanceof NotFoundException) {
         return res.status(404).send({ message: error.message });
       }
-      return res.status(500).send({ message: 'Ocorreu um erro ao atualizar o background' });
+      return res
+        .status(500)
+        .send({ message: 'Ocorreu um erro ao atualizar o background, ' + error.message });
     }
   }
 
@@ -75,7 +81,9 @@ export class BackgroundsController {
       if (error instanceof NotFoundException) {
         return res.status(404).send({ message: error.message });
       }
-      return res.status(500).send({ message: 'Ocorreu um erro ao deletar o background' });
+      return res
+        .status(500)
+        .send({ message: 'Ocorreu um erro ao deletar o background, ' + error.message });
     }
   }
 }

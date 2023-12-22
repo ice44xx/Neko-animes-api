@@ -29,7 +29,9 @@ export class CategoriesController {
       const categories = await this.categoriesService.findAll();
       return res.status(201).json(categories);
     } catch (error) {
-      return res.status(500).send({ message: 'Ocorreu um erro ao buscar as categorias' });
+      return res
+        .status(500)
+        .send({ message: 'Ocorreu um erro ao buscar as categorias, ' + error.message });
     }
   }
 
@@ -43,7 +45,9 @@ export class CategoriesController {
       if (error instanceof ConflictException) {
         return res.status(409).send({ message: error.message });
       }
-      return res.status(500).send({ message: 'Ocorreu um erro ao criar a categoria' });
+      return res
+        .status(500)
+        .send({ message: 'Ocorreu um erro ao criar a categoria, ' + error.message });
     }
   }
 
@@ -63,7 +67,9 @@ export class CategoriesController {
       } else if (error instanceof ConflictException) {
         return res.status(409).send({ message: error.message });
       }
-      return res.status(500).send({ message: 'Ocorreu um erro ao atualizar a categoria' });
+      return res
+        .status(500)
+        .send({ message: 'Ocorreu um erro ao atualizar a categoria, ' + error.message });
     }
   }
 
@@ -77,7 +83,9 @@ export class CategoriesController {
       if (error instanceof NotFoundException) {
         return res.status(404).send({ message: error.message });
       }
-      return res.status(500).send({ message: 'Ocorreu um erro ao deletar a categoria' });
+      return res
+        .status(500)
+        .send({ message: 'Ocorreu um erro ao deletar a categoria, ' + error.message });
     }
   }
 }

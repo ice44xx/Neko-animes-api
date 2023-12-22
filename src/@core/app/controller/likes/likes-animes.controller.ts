@@ -22,19 +22,6 @@ import { LikesAnimesDto } from '../../dto/likes/create-likes-animes-dto';
 export class LikesAnimesController {
   constructor(private readonly likesAnimesService: LikesAnimesService) {}
 
-  @Public()
-  @Get()
-  async getTop10Likeds(@Res() res) {
-    try {
-      const animes = await this.likesAnimesService.getTop10Likeds();
-      return res.status(200).json(animes);
-    } catch (error) {
-      return res
-        .status(500)
-        .send({ message: 'Ocorreu um erro ao buscar o top 10 animes curtidos' });
-    }
-  }
-
   @Roles(UserType.User)
   @Post(':animeId')
   async create(@Request() req: AuthRequest, @Res() res, @Param('animeId') animeId: number) {
@@ -50,7 +37,7 @@ export class LikesAnimesController {
       } else if (error instanceof ConflictException) {
         return res.status(409).send({ message: error.message });
       }
-      return res.status(500).send({ message: 'Ocorreu um erro ao criar o like' });
+      return res.status(500).send({ message: 'Ocorreu um erro ao criar o like, ' + error.message });
     }
   }
 
@@ -67,7 +54,9 @@ export class LikesAnimesController {
       } else if (error instanceof NotFoundException) {
         return res.status(404).send({ message: error.message });
       }
-      return res.status(500).send({ message: 'Ocorreu um erro ao remover o like' });
+      return res
+        .status(500)
+        .send({ message: 'Ocorreu um erro ao remover o like, ' + error.message });
     }
   }
 }

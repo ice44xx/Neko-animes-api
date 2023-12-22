@@ -33,7 +33,9 @@ export class UsersController {
       const user = await this.usersService.findAll();
       return res.status(200).json(user);
     } catch (error) {
-      return res.status(500).send({ message: 'Ocorreu um erro ao buscar o usuário' });
+      return res
+        .status(500)
+        .send({ message: 'Ocorreu um erro ao buscar o usuário, ' + error.message });
     }
   }
 
@@ -47,7 +49,9 @@ export class UsersController {
       if (error instanceof NotFoundException) {
         return res.status(401).send({ message: error.message });
       }
-      return res.status(500).send({ message: `Ocorreu um erro ao buscar o usuário ${id}` });
+      return res
+        .status(500)
+        .send({ message: `Ocorreu um erro ao buscar o usuário ${id}, ` + error.message });
     }
   }
 
@@ -61,7 +65,9 @@ export class UsersController {
       if (error instanceof ConflictException) {
         return res.status(409).send({ message: error.message });
       }
-      return res.status(500).send({ message: 'Ocorreu um erro ao criar o usuário' });
+      return res
+        .status(500)
+        .send({ message: 'Ocorreu um erro ao criar o usuário, ' + error.message });
     }
   }
 
@@ -78,7 +84,9 @@ export class UsersController {
       } else if (error instanceof UnauthorizedException) {
         return res.status(401).send({ message: error.message });
       }
-      return res.status(500).send({ message: 'Ocorreu um erro ao atualizar o usuário' });
+      return res
+        .status(500)
+        .send({ message: 'Ocorreu um erro ao atualizar o usuário, ' + error.message });
     }
   }
 
@@ -99,7 +107,9 @@ export class UsersController {
       } else if (error instanceof ConflictException) {
         return res.status(401).send({ message: error.message });
       }
-      return res.status(500).send({ message: 'Ocorreu um erro ao criar o usuário' });
+      return res
+        .status(500)
+        .send({ message: 'Ocorreu um erro ao criar o usuário, ' + error.message });
     }
   }
 
@@ -114,7 +124,9 @@ export class UsersController {
       if (error instanceof UnauthorizedException) {
         return res.status(401).send({ message: error.message });
       }
-      return res.status(500).send({ message: 'Ocorreu um erro ao deletar o usuário' });
+      return res
+        .status(500)
+        .send({ message: 'Ocorreu um erro ao deletar o usuário, ' + error.message });
     }
   }
 }

@@ -56,7 +56,9 @@ export class SeasonsController {
       } else if (error instanceof ConflictException) {
         return res.status(409).send({ message: error.message });
       }
-      return res.status(500).send({ message: 'Ocorreu um erro ao criar a temporada' });
+      return res
+        .status(500)
+        .send({ message: 'Ocorreu um erro ao criar a temporada, ' + error.message });
     }
   }
 
@@ -74,10 +76,13 @@ export class SeasonsController {
       if (error instanceof NotFoundException) {
         return res.status(404).send({ message: error.message });
       }
-      return res.status(500).send({ message: 'Ocorreu um erro ao atualizar a temporada' });
+      return res
+        .status(500)
+        .send({ message: 'Ocorreu um erro ao atualizar a temporada, ' + error.message });
     }
   }
 
+  @Roles(UserType.Admin)
   @Delete(':id')
   async remove(@Res() res, @Param('id') id: number) {
     try {
@@ -87,7 +92,9 @@ export class SeasonsController {
       if (error instanceof NotFoundException) {
         return res.status(404).send({ message: error.message });
       }
-      return res.status(500).send({ message: 'Ocorreu um erro ao deletar a temporada' });
+      return res
+        .status(500)
+        .send({ message: 'Ocorreu um erro ao deletar a temporada, ' + error.message });
     }
   }
 }

@@ -28,7 +28,9 @@ export class EpisodesController {
       const episodes = await this.episodesService.findAll();
       return res.status(200).json(episodes);
     } catch (error) {
-      return res.status(500).send({ message: 'Ocorreu um erro ao buscar todos os episódios' });
+      return res
+        .status(500)
+        .send({ message: 'Ocorreu um erro ao buscar todos os episódios, ' + error.message });
     }
   }
 
@@ -42,7 +44,9 @@ export class EpisodesController {
       if (error instanceof NotFoundException) {
         return res.status(404).send({ message: error.message });
       }
-      return res.status(500).send({ message: `Ocorreu um erro ao buscar o episódio ${id}` });
+      return res
+        .status(500)
+        .send({ message: `Ocorreu um erro ao buscar o episódio ${id}, ` + error.message });
     }
   }
 
@@ -56,7 +60,9 @@ export class EpisodesController {
       if (error instanceof NotFoundException) {
         return res.status(404).send({ message: error.message });
       }
-      return res.status(500).send({ message: 'Ocorreu um erro ao criar o episódio' });
+      return res
+        .status(500)
+        .send({ message: 'Ocorreu um erro ao criar o episódio, ' + error.message });
     }
   }
 
@@ -74,7 +80,9 @@ export class EpisodesController {
       if (error instanceof NotFoundException) {
         return res.status(404).send({ message: error.message });
       }
-      return res.status(500).send({ message: 'Ocorreu um erro ao atualizar o episódio' });
+      return res
+        .status(500)
+        .send({ message: 'Ocorreu um erro ao atualizar o episódio, ' + error.message });
     }
   }
 
@@ -85,7 +93,9 @@ export class EpisodesController {
       await this.episodesService.remove({ id });
       return res.status(200).json({ message: 'Episódio deletado com sucesso!' });
     } catch (error) {
-      return res.status(500).send({ message: 'Ocorreu um erro ao deletar o episódio' });
+      return res
+        .status(500)
+        .send({ message: 'Ocorreu um erro ao deletar o episódio, ' + error.message });
     }
   }
 }

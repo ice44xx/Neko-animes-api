@@ -17,11 +17,6 @@ export class LikesAnimesUseCase {
     private readonly likesAnimesRepository: LikesAnimesRepository,
   ) {}
 
-  async getTop10Likeds() {
-    const animes = await this.likesAnimesRepository.getTop10Likeds();
-    return animes;
-  }
-
   async create({ userId, animeId }: LikesAnimesDto) {
     const user = await this.usersRepository.findById(userId);
 
