@@ -65,6 +65,8 @@ export class UsersUseCase {
       firstName: user.firstName,
       userName: user.userName,
       email: user.email,
+      profile: user.profile,
+      birthday: user.birthday,
       role: defaultRole.name,
       createdAt: user.createdAt,
       updatedAt: user.updatedAt,
@@ -91,6 +93,8 @@ export class UsersUseCase {
       firstName: updateUser.firstName,
       userName: updateUser.userName,
       email: updateUser.email,
+      birthday: updateUser.birthday,
+      profile: updateUser.profile,
       role: role.name,
       updatedAt: updateUser.updatedAt,
     };

@@ -7,7 +7,7 @@ import {
 import { LikesAnimesRepository } from '../../repositories/likes/likes-animes.repository';
 import { UsersRepository } from '../../repositories/users/users.repository';
 import { AnimesRepository } from '../../repositories/animes/animes.repository';
-import { LikesAnimesDto } from 'src/@core/app/dto/likes/create-likes-dto';
+import { LikesAnimesDto } from 'src/@core/app/dto/likes/create-likes-animes-dto';
 
 @Injectable()
 export class LikesAnimesUseCase {

@@ -28,7 +28,7 @@ async function bootstrap() {
 
   await app.listen(3000);
 
-  createRoles();
-  createAdmin();
+  await createRoles();
+  await createAdmin();
 }
 bootstrap();

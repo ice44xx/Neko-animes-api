@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { LikesAnimesUseCase } from 'src/@core/domain/usecases/likes/likes-animes.usecase';
-import { LikesAnimesDto } from '../../dto/likes/create-likes-dto';
+import { LikesAnimesDto } from '../../dto/likes/create-likes-animes-dto';
 
 @Injectable()
 export class LikesAnimesService {

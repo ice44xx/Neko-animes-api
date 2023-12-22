@@ -33,13 +33,15 @@ export async function createAdmin() {
   });
 
   if (!existingAdmin) {
+    const birthday = new Date('2023-12-01');
     const createdAdmin = await prisma.users.create({
       data: {
         firstName: 'Neko',
         userName: 'Neko Animes',
         email: 'nekopageanimes@gmail.com',
+        birthday: birthday,
         password: hashedPassword,
-        role: { connect: { id: adminRole.id } },
+        role: { connect: { id: adminRole?.id || 2 } },
       },
     });
 

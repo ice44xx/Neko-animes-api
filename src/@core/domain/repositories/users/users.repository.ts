@@ -13,6 +13,8 @@ export class UsersRepository {
         firstName: true,
         userName: true,
         email: true,
+        birthday: true,
+        profile: true,
         createdAt: true,
         updatedAt: true,
         role: {
@@ -43,6 +45,8 @@ export class UsersRepository {
         userName: true,
         email: true,
         password: true,
+        birthday: true,
+        profile: true,
         createdAt: true,
         updatedAt: true,
         role: {

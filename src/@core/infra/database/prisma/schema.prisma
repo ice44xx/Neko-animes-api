@@ -16,6 +16,8 @@ model Users {
   userName      String
   email         String          @unique
   password      String
+  profile       String?
+  birthday      DateTime?
   role          Roles           @relation(fields: [roleId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   roleId        Int
   createdAt     DateTime        @default(now())
