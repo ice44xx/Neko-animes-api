@@ -8,6 +8,5 @@ import { CategoriesUseCase } from 'src/@core/domain/usecases/categories/categori
 @Module({
   controllers: [CategoriesController],
   providers: [PrismaService, CategoriesService, CategoriesRepository, CategoriesUseCase],
-  exports: [CategoriesService],
 })
 export class CategoriesModule {}

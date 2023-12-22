@@ -8,6 +8,5 @@ import { RolesUseCase } from 'src/@core/domain/usecases/users/roles.usecase';
 @Module({
   controllers: [RolesController],
   providers: [PrismaService, RolesService, RolesUseCase, RolesRepository],
-  exports: [RolesService],
 })
 export class RolesModule {}

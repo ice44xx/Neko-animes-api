@@ -17,6 +17,5 @@ import { LikesAnimesController } from '../../controller/likes/likes-animes.contr
     UsersRepository,
     AnimesRepository,
   ],
-  exports: [LikesAnimesService],
 })
 export class LikesAnimesModule {}

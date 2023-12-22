@@ -17,6 +17,5 @@ import { ClassificationsRepository } from 'src/@core/domain/repositories/classif
     CategoriesRepository,
     ClassificationsRepository,
   ],
-  exports: [AnimesService],
 })
 export class AnimesModule {}

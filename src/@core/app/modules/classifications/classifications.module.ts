@@ -13,6 +13,5 @@ import { ClassificationsUseCase } from 'src/@core/domain/usecases/classification
     ClassificationsRepository,
     ClassificationsUseCase,
   ],
-  exports: [ClassificationsService],
 })
 export class ClassificationsModule {}

@@ -8,13 +8,7 @@ import { UsersUseCase } from 'src/@core/domain/usecases/users/users.usecase';
 
 @Module({
   controllers: [UsersController],
-  providers: [
-    PrismaService,
-    UsersService,
-    UsersRepository,
-    UsersUseCase,
-    RolesRepository,
-  ],
+  providers: [PrismaService, UsersService, UsersRepository, UsersUseCase, RolesRepository],
   exports: [UsersService],
 })
 export class UsersModule {}

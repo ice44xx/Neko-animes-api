@@ -9,6 +9,5 @@ import { SeasonsUseCase } from 'src/@core/domain/usecases/seasons/seasons.usecas
 @Module({
   controllers: [SeasonsController],
   providers: [PrismaService, SeasonsService, SeasonsRepository, SeasonsUseCase, AnimesRepository],
-  exports: [SeasonsService],
 })
 export class SeasonsModule {}
