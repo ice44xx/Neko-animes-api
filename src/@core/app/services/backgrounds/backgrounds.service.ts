@@ -1,57 +1,26 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Backgrounds } from 'src/@core/domain/entities/backgrounds/backgrounds.entity';
-import { Not, Repository } from 'typeorm';
-import { CreateBackgroundsDto } from '../../dto/requests/backgrounds/create-backgrounds-dto';
-import { UpdateBackgroundsDto } from '../../dto/requests/backgrounds/update-backgrounds-dto';
+import { Injectable } from '@nestjs/common';
+import { BackgroundsUseCase } from 'src/@core/domain/usecases/backgrounds/backgrounds.usecase';
+import { CreateBackgroundsDto } from '../../dto/backgrounds/create-backgrounds-dto';
+import { UpdateBackgroundsDto } from '../../dto/backgrounds/update-backgrounds-dto';
+import { BackgroundsDto } from '../../dto/backgrounds/backgrounds-dto';
 
 @Injectable()
 export class BackgroundsService {
-  constructor(
-    @InjectRepository(Backgrounds)
-    private readonly backgroundsRepository: Repository<Backgrounds>,
-  ) {}
+  constructor(private readonly backgroundUseCase: BackgroundsUseCase) {}
 
-  findAll() {
-    try {
-      const background = this.backgroundsRepository.find();
-      return background;
-    } catch (error) {
-      throw new Error('Ocorreu um erro ao encontrar todos backgrounds, ') + error.message;
-    }
+  async findAll() {
+    return await this.backgroundUseCase.findAll();
   }
 
-  create(createBackgroundsDto: CreateBackgroundsDto) {
-    try {
-      const background = this.backgroundsRepository.create(createBackgroundsDto);
-      return this.backgroundsRepository.save(background);
-    } catch (error) {
-      throw new Error('Ocorreu um erro ao criar o background, ') + error.message;
-    }
+  async create(createBackgroundsDto: CreateBackgroundsDto) {
+    return await this.backgroundUseCase.create(createBackgroundsDto);
   }
 
   async update(id: number, updateBackgroundsDto: UpdateBackgroundsDto) {
-    try {
-      const background = await this.backgroundsRepository.findOne({
-        where: { id },
-      });
-      if (!background) {
-        throw new NotFoundException('Background não encontrado');
-      }
-
-      Object.assign(background, updateBackgroundsDto);
-      return this.backgroundsRepository.save(background);
-    } catch (error) {
-      throw new Error('Ocorreu um erro ao atualizar o background, ') + error.message;
-    }
+    return await this.backgroundUseCase.update(id, updateBackgroundsDto);
   }
 
-  delete(id: number) {
-    try {
-      const background = this.backgroundsRepository.delete(id);
-      return background;
-    } catch (error) {
-      throw new Error('Ocorreu um erro ao deletar o background, ') + error.message;
-    }
+  async remove({ id }: BackgroundsDto) {
+    return await this.backgroundUseCase.remove({ id });
   }
 }

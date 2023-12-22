@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
 import { Strategy } from 'passport-local';
-import { ValidateUsersDto } from 'src/@core/app/dto/requests/auth/validate-users-dto';
-import { AuthServices } from 'src/@core/app/services/auth/auth.service';
+import { UsersDto } from 'src/@core/app/dto/users/users-dtos';
+import { AuthServices } from 'src/@core/app/services/auth/auth.services';
 
 @Injectable()
 export class LocalStrategy extends PassportStrategy(Strategy) {
@@ -11,7 +11,7 @@ export class LocalStrategy extends PassportStrategy(Strategy) {
   }
 
   validate(email: string, password: string) {
-    const validateUsersDto: ValidateUsersDto = { email, password };
+    const validateUsersDto: UsersDto = { email, password };
     return this.authService.validateUser(validateUsersDto);
   }
 }

@@ -1,34 +1,60 @@
-import { Controller, Delete, Request, Param, Post, Res } from '@nestjs/common';
-import { LikesEpisodesService } from '../../services/likes/likes-episodes.service';
-import { AuthRequest } from 'src/@core/infra/auth/models/auth-request';
+import {
+  ConflictException,
+  Controller,
+  Delete,
+  NotFoundException,
+  Param,
+  Post,
+  Request,
+  Res,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
+import { AuthRequest } from 'src/@core/infra/auth/models/auth-request';
+import { Roles, UserType } from 'src/@core/infra/decorators/roles.decorator';
+import { LikesEpisodesService } from '../../services/likes/likes-episodes.service';
+import { LikesEpisodesDto } from '../../dto/likes/create-likes-episodes-dto';
 
-@ApiTags('Curtidas dos episódios')
+@ApiTags('Likes Episódios')
 @Controller('likes-episodes')
 export class LikesEpisodesController {
-  constructor(private readonly likesService: LikesEpisodesService) {}
+  constructor(private readonly likesEpisodesService: LikesEpisodesService) {}
 
-  @Post(':id')
-  async create(@Request() req: AuthRequest, @Res() res, @Param('id') id: number) {
+  @Roles(UserType.User)
+  @Post(':episodeId')
+  async create(@Request() req: AuthRequest, @Res() res, @Param('episodeId') episodeId: number) {
     try {
-      const currentUser = req.user;
-
-      await this.likesService.createLike(currentUser.id, id);
-      return res.status(201).send({ message: 'Like adicionado com sucesso!' });
+      const createLike: LikesEpisodesDto = { userId: req.user.id, episodeId: episodeId };
+      await this.likesEpisodesService.create(createLike);
+      return res.status(201).send({ message: 'Like adicionado ao episódio!' });
     } catch (error) {
-      return res.status(500).send({ message: 'Erro ao adicionar o like' });
+      if (error instanceof UnauthorizedException) {
+        return res.status(401).send({ message: error.message });
+      } else if (error instanceof NotFoundException) {
+        return res.status(404).send({ message: error.message });
+      } else if (error instanceof ConflictException) {
+        return res.status(409).send({ message: error.message });
+      }
+      return res.status(500).send({ message: 'Ocorreu um erro ao criar o like, ' + error.message });
     }
   }
 
-  @Delete(':id')
-  async remove(@Request() req: AuthRequest, @Res() res, @Param('id') id: number) {
+  @Roles(UserType.User)
+  @Delete(':episodeId')
+  async remove(@Request() req: AuthRequest, @Res() res, @Param('episodeId') episodeId: number) {
     try {
-      const currentUser = req.user;
-
-      await this.likesService.deleteLike(currentUser.id, id);
-      return res.status(201).send({ message: 'Like removido com sucesso!' });
+      const removeLike: LikesEpisodesDto = { userId: req.user.id, episodeId: episodeId };
+      await this.likesEpisodesService.remove(removeLike);
+      return res.status(200).send({ message: 'Like removido' });
     } catch (error) {
-      return res.status(500).send({ message: 'Erro ao remover o like' });
+      if (error instanceof UnauthorizedException) {
+        return res.status(401).send({ message: error.message });
+      } else if (error instanceof NotFoundException) {
+        return res.status(404).send({ message: error.message });
+      }
+      return res
+        .status(500)
+        .send({ message: 'Ocorreu um erro ao remover o like, ' + error.message });
     }
   }
 }

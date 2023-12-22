@@ -1,14 +1,21 @@
 import { Module } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { LikesAnimesController } from '../../controller/likes/likes-animes.controller';
+import { PrismaService } from 'src/@core/infra/database/prisma/prisma.service';
+import { LikesAnimesRepository } from 'src/@core/domain/repositories/likes/likes-animes.repository';
+import { LikesAnimesUseCase } from 'src/@core/domain/usecases/likes/likes-animes.usecase';
 import { LikesAnimesService } from '../../services/likes/likes-animes.service';
-import { LikesAnimes } from 'src/@core/domain/entities/likes-animes/likes-animes.entity';
-import { Users } from 'src/@core/domain/entities/users/users.entity';
-import { Animes } from 'src/@core/domain/entities/animes/animes.entity';
+import { UsersRepository } from 'src/@core/domain/repositories/users/users.repository';
+import { AnimesRepository } from 'src/@core/domain/repositories/animes/animes.repository';
+import { LikesAnimesController } from '../../controller/likes/likes-animes.controller';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([LikesAnimes, Users, Animes])],
   controllers: [LikesAnimesController],
-  providers: [LikesAnimesService],
+  providers: [
+    PrismaService,
+    LikesAnimesRepository,
+    LikesAnimesUseCase,
+    LikesAnimesService,
+    UsersRepository,
+    AnimesRepository,
+  ],
 })
-export class LikesAnimeModule {}
+export class LikesAnimesModule {}

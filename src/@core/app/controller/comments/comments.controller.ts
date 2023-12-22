@@ -3,18 +3,20 @@ import {
   Controller,
   Delete,
   Get,
-  HttpCode,
+  NotFoundException,
   Param,
   Post,
   Put,
   Request,
   Res,
+  UnauthorizedException,
 } from '@nestjs/common';
 import { CommentsService } from '../../services/comments/comments.service';
-import { AuthRequest } from 'src/@core/infra/auth/models/auth-request';
 import { Public } from 'src/@core/infra/decorators/public-route.decorator';
-import { CreateCommentsDto } from '../../dto/requests/comments/create-comments-dto';
-import { UpdateCommentsDto } from '../../dto/requests/comments/update-comments-dto';
+import { Roles, UserType } from 'src/@core/infra/decorators/roles.decorator';
+import { AuthRequest } from 'src/@core/infra/auth/models/auth-request';
+import { CreateCommentsDto } from '../../dto/comments/create-comments-dto';
+import { UpdateCommentsDto } from '../../dto/comments/update-comments-dto';
 import { ApiTags } from '@nestjs/swagger';
 
 @ApiTags('Comentários')
@@ -22,69 +24,104 @@ import { ApiTags } from '@nestjs/swagger';
 export class CommentsController {
   constructor(private readonly commentsService: CommentsService) {}
 
-  @Get()
-  async findByUser(@Res() res, @Request() req: AuthRequest) {
-    try {
-      const currentUser = req.user.id;
-      const comment = await this.commentsService.findByUser(currentUser);
-      return res.status(201).json(comment);
-    } catch (error) {
-      return res.status(500).send({ message: 'Erro ao encontrar os comentários' });
-    }
-  }
-
   @Public()
   @Get(':episodeId')
-  async findByEpisode(@Res() res, @Param('episodeId') episodeId: number) {
+  async findAllByEpisode(@Res() res, @Param('episodeId') episodeId: number) {
     try {
-      const comment = await this.commentsService.findAllByEpisode(episodeId);
-      return res.status(201).json(comment);
+      const comments = await this.commentsService.findAllByEpisode(episodeId);
+      return res.status(200).json(comments);
     } catch (error) {
-      return res.status(500).send({ message: 'Erro ao encontrar os comentários' });
+      if (error instanceof NotFoundException) {
+        return res.status(404).send({ message: error.message });
+      }
+      return res
+        .status(500)
+        .send({ message: 'Ocorreu um erro ao buscar os comentários, ' + error.message });
     }
   }
 
-  @Post()
+  @Roles(UserType.Admin)
+  @Get('/user/:userId')
+  async findAllByUser(@Res() res, @Param('userId') userId: number) {
+    try {
+      const comments = await this.commentsService.findByUser(userId);
+      return res.status(200).json(comments);
+    } catch (error) {
+      if (error instanceof NotFoundException) {
+        return res.status(404).send({ message: error.message });
+      }
+      return res
+        .status(500)
+        .send({ message: 'Ocorreu um erro ao buscar os comentários do usuário, ' + error.message });
+    }
+  }
+
+  @Roles(UserType.User)
+  @Post('create')
   async create(
-    @Res() res,
     @Request() req: AuthRequest,
-    @Body() createCommentDto: CreateCommentsDto,
+    @Res() res,
+    @Body() createCommentsDto: CreateCommentsDto,
   ) {
     try {
       const currentUser = req.user.id;
-      const comment = await this.commentsService.create(currentUser, createCommentDto);
+      const comment = await this.commentsService.create(currentUser, createCommentsDto);
+
       return res.status(201).json(comment);
     } catch (error) {
-      return res.status(500).send({ message: 'Erro ao criar o comentário' });
+      if (error instanceof UnauthorizedException) {
+        return res.status(401).send({ message: error.message });
+      } else if (error instanceof NotFoundException) {
+        return res.status(404).send({ message: error.message });
+      }
+      return res
+        .status(500)
+        .send({ message: 'Ocorreu um erro ao criar o comentário, ' + error.message });
     }
   }
 
+  @Roles(UserType.User)
   @Put(':id')
   async update(
-    @Res() res,
     @Request() req: AuthRequest,
     @Param('id') id: number,
+    @Res() res,
     @Body() updateCommentsDto: UpdateCommentsDto,
   ) {
     try {
       const currentUser = req.user.id;
-      const comment = await this.commentsService.update(
-        currentUser,
-        id,
-        updateCommentsDto,
-      );
-      return res.status(201).json(comment);
+      const comment = await this.commentsService.update(currentUser, id, updateCommentsDto);
+
+      return res.status(200).json(comment);
     } catch (error) {
+      if (error instanceof UnauthorizedException) {
+        return res.status(401).send({ message: error.message });
+      } else if (error instanceof NotFoundException) {
+        return res.status(404).send({ message: error.message });
+      }
       return res
         .status(500)
-        .send({ message: 'Erro ao encontrar e atualizar o comentário' });
+        .send({ message: 'Ocorreu um erro ao atualizar o comentário, ' + error.message });
     }
   }
 
-  @HttpCode(204)
+  @Roles(UserType.User)
   @Delete(':id')
-  async remove(@Request() req: AuthRequest, @Param('id') id: number) {
-    const currentUser = req.user.id;
-    await this.commentsService.delete(currentUser, id);
+  async remove(@Request() req: AuthRequest, @Res() res, @Param('id') id: number) {
+    try {
+      const currentUser = req.user.id;
+      await this.commentsService.remove({ userId: currentUser, id });
+
+      return res.status(200).send({ mesage: 'Comentário removido!' });
+    } catch (error) {
+      if (error instanceof UnauthorizedException) {
+        return res.status(401).send({ message: error.message });
+      } else if (error instanceof NotFoundException) {
+        return res.status(404).send({ message: error.message });
+      }
+      return res
+        .status(500)
+        .send({ message: 'Ocorreu um erro ao deletar o comentário, ' + error.message });
+    }
   }
 }

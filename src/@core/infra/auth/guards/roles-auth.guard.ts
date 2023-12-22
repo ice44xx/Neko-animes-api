@@ -1,7 +1,7 @@
 import { Injectable, CanActivate, ExecutionContext } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { JwtService } from '@nestjs/jwt';
-import { UsersPayloadDto } from 'src/@core/app/dto/requests/auth/users-payload-dto';
+import { UsersPayloadDto } from 'src/@core/app/dto/auth/users-payload-dto';
 import { ROLES_KEY, UserType } from 'src/@core/infra/decorators/roles.decorator';
 
 @Injectable()

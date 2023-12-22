@@ -3,34 +3,37 @@ import {
   Controller,
   Delete,
   Get,
-  HttpCode,
-  HttpStatus,
+  NotFoundException,
   Param,
   Post,
   Put,
   Res,
 } from '@nestjs/common';
-import { Public } from 'src/@core/infra/decorators/public-route.decorator';
 import { BackgroundsService } from '../../services/backgrounds/backgrounds.service';
-import { UpdateBackgroundsDto } from '../../dto/requests/backgrounds/update-backgrounds-dto';
-import { CreateBackgroundsDto } from '../../dto/requests/backgrounds/create-backgrounds-dto';
+import { CreateBackgroundsDto } from '../../dto/backgrounds/create-backgrounds-dto';
+import { UpdateBackgroundsDto } from '../../dto/backgrounds/update-backgrounds-dto';
 import { Roles, UserType } from 'src/@core/infra/decorators/roles.decorator';
+import { Public } from 'src/@core/infra/decorators/public-route.decorator';
 import { ApiTags } from '@nestjs/swagger';
 
-@ApiTags('Planos de fundo')
+@ApiTags('Planos de fundos')
 @Controller('backgrounds')
 export class BackgroundsController {
   constructor(private readonly backgroundsService: BackgroundsService) {}
 
   @Public()
-  @HttpCode(HttpStatus.OK)
   @Get()
   async findAll(@Res() res) {
     try {
-      const background = await this.backgroundsService.findAll();
-      return background;
+      const backgrounds = await this.backgroundsService.findAll();
+      return res.status(200).json(backgrounds);
     } catch (error) {
-      return res.status(500).send({ message: 'Ocorreu um erro ao buscar os background' });
+      if (error instanceof NotFoundException) {
+        return res.status(404).send({ message: error.message });
+      }
+      return res
+        .status(500)
+        .send({ message: 'Ocorreu um erro ao buscar os backgrounds, ' + error.message });
     }
   }
 
@@ -41,7 +44,9 @@ export class BackgroundsController {
       const background = await this.backgroundsService.create(createBackgroundsDto);
       return res.status(201).json(background);
     } catch (error) {
-      return res.status(500).send({ message: 'Ocorreu um erro ao criar o background' });
+      return res
+        .status(500)
+        .send({ message: 'Ocorreu um erro ao criar o background, ' + error.message });
     }
   }
 
@@ -50,22 +55,35 @@ export class BackgroundsController {
   async update(
     @Res() res,
     @Param('id') id: number,
-    @Body() updateBackgrounds: UpdateBackgroundsDto,
+    @Body() updateBackgroundsDto: UpdateBackgroundsDto,
   ) {
     try {
-      const background = await this.backgroundsService.update(id, updateBackgrounds);
-      return background;
+      const background = await this.backgroundsService.update(id, updateBackgroundsDto);
+
+      return res.status(200).json(background);
     } catch (error) {
+      if (error instanceof NotFoundException) {
+        return res.status(404).send({ message: error.message });
+      }
       return res
         .status(500)
-        .send({ message: 'Ocorreu um erro ao atualizar o background' });
+        .send({ message: 'Ocorreu um erro ao atualizar o background, ' + error.message });
     }
   }
 
   @Roles(UserType.Admin)
   @Delete(':id')
-  @HttpCode(204)
-  async remove(@Param('id') id: number) {
-    await this.backgroundsService.delete(id);
+  async remove(@Res() res, @Param('id') id: number) {
+    try {
+      await this.backgroundsService.remove({ id });
+      return res.status(200).send({ message: 'Background deletado' });
+    } catch (error) {
+      if (error instanceof NotFoundException) {
+        return res.status(404).send({ message: error.message });
+      }
+      return res
+        .status(500)
+        .send({ message: 'Ocorreu um erro ao deletar o background, ' + error.message });
+    }
   }
 }

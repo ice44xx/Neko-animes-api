@@ -3,15 +3,15 @@ import {
   Controller,
   Delete,
   Get,
-  HttpCode,
+  NotFoundException,
   Param,
   Post,
   Put,
   Res,
 } from '@nestjs/common';
 import { EpisodesService } from '../../services/episodes/episodes.service';
-import { CreateEpisodesDto } from '../../dto/requests/episodes/create-episodes-dto';
-import { UpdateEpisodesDto } from '../../dto/requests/episodes/update-episodes-dto';
+import { CreateEpisodesDto } from '../../dto/episodes/create-episodes-dto';
+import { UpdateEpisodesDto } from '../../dto/episodes/update-episodes-dto';
 import { Public } from 'src/@core/infra/decorators/public-route.decorator';
 import { Roles, UserType } from 'src/@core/infra/decorators/roles.decorator';
 import { ApiTags } from '@nestjs/swagger';
@@ -26,24 +26,27 @@ export class EpisodesController {
   async findAll(@Res() res) {
     try {
       const episodes = await this.episodesService.findAll();
-      return res.status(201).json(episodes);
+      return res.status(200).json(episodes);
     } catch (error) {
       return res
         .status(500)
-        .send({ message: 'Ocorreu um erro ao buscar todos episódios' });
+        .send({ message: 'Ocorreu um erro ao buscar todos os episódios, ' + error.message });
     }
   }
 
   @Public()
-  @Get(':name')
-  async findByName(@Res() res, @Param('name') name: string) {
+  @Get(':id')
+  async findById(@Res() res, @Param('id') id: number) {
     try {
-      const episode = await this.episodesService.findByName(name);
-      return res.status(201).send(episode);
+      const episode = await this.episodesService.findById({ id });
+      return res.status(200).json(episode);
     } catch (error) {
+      if (error instanceof NotFoundException) {
+        return res.status(404).send({ message: error.message });
+      }
       return res
         .status(500)
-        .send({ message: `Ocorreu um erro ao buscar o episódio ${name}` });
+        .send({ message: `Ocorreu um erro ao buscar o episódio ${id}, ` + error.message });
     }
   }
 
@@ -54,29 +57,45 @@ export class EpisodesController {
       const episode = await this.episodesService.create(createEpisodesDto);
       return res.status(201).json(episode);
     } catch (error) {
-      return res.status(500).send({ message: 'Ocorreu um erro ao criar o episódio' });
+      if (error instanceof NotFoundException) {
+        return res.status(404).send({ message: error.message });
+      }
+      return res
+        .status(500)
+        .send({ message: 'Ocorreu um erro ao criar o episódio, ' + error.message });
     }
   }
 
   @Roles(UserType.Admin)
-  @Put(':id')
+  @Put(':episodeId')
   async update(
-    @Param('id') id: number,
     @Res() res,
+    @Param('episodeId') episodeId: number,
     @Body() updateEpisodesDto: UpdateEpisodesDto,
   ) {
     try {
-      const episode = await this.episodesService.update(id, updateEpisodesDto);
-      return res.status(201).json(episode);
+      const episode = await this.episodesService.update(episodeId, updateEpisodesDto);
+      return res.status(200).json(episode);
     } catch (error) {
-      return res.status(500).send({ message: 'Ocorreu um erro ao atualizar o episódio' });
+      if (error instanceof NotFoundException) {
+        return res.status(404).send({ message: error.message });
+      }
+      return res
+        .status(500)
+        .send({ message: 'Ocorreu um erro ao atualizar o episódio, ' + error.message });
     }
   }
 
   @Roles(UserType.Admin)
-  @HttpCode(204)
   @Delete(':id')
-  async remove(@Param('id') id: number) {
-    await this.episodesService.delete(id);
+  async remove(@Res() res, @Param('id') id: number) {
+    try {
+      await this.episodesService.remove({ id });
+      return res.status(200).json({ message: 'Episódio deletado com sucesso!' });
+    } catch (error) {
+      return res
+        .status(500)
+        .send({ message: 'Ocorreu um erro ao deletar o episódio, ' + error.message });
+    }
   }
 }

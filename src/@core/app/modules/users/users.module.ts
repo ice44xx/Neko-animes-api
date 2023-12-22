@@ -1,16 +1,14 @@
 import { Module } from '@nestjs/common';
 import { UsersController } from '../../controller/users/users.controller';
 import { UsersService } from '../../services/users/users.service';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { Users } from '../../../domain/entities/users/users.entity';
-import { LikesEpisodes } from 'src/@core/domain/entities/likes-episodes/likes-episodes.entity';
-import { Favorites } from 'src/@core/domain/entities/favorites/favorites.entity';
-import { Roles } from 'src/@core/domain/entities/users/roles.entity';
+import { PrismaService } from 'src/@core/infra/database/prisma/prisma.service';
+import { UsersRepository } from 'src/@core/domain/repositories/users/users.repository';
+import { RolesRepository } from 'src/@core/domain/repositories/users/roles.repository';
+import { UsersUseCase } from 'src/@core/domain/usecases/users/users.usecase';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Users, Roles, LikesEpisodes, Favorites])],
   controllers: [UsersController],
-  providers: [UsersService],
+  providers: [PrismaService, UsersService, UsersRepository, UsersUseCase, RolesRepository],
   exports: [UsersService],
 })
 export class UsersModule {}

@@ -1,18 +1,8 @@
-import {
-  Body,
-  Controller,
-  Delete,
-  Get,
-  HttpCode,
-  NotFoundException,
-  Param,
-  Post,
-  Res,
-} from '@nestjs/common';
+import { Controller, Post, Body, Get, Res } from '@nestjs/common';
 import { RolesService } from '../../services/users/roles.service';
-import { CreateRolesDto } from '../../dto/requests/users/create-roles-dto';
-import { Roles, UserType } from 'src/@core/infra/decorators/roles.decorator';
+import { CreateRolesDto } from '../../dto/users/create-roles-dto';
 import { ApiTags } from '@nestjs/swagger';
+import { Roles, UserType } from 'src/@core/infra/decorators/roles.decorator';
 
 @ApiTags('Roles')
 @Controller('roles')
@@ -23,10 +13,9 @@ export class RolesController {
   @Get()
   async findAll(@Res() res) {
     try {
-      const role = await this.rolesService.findAll();
-      return res.status(201).json(role);
+      return this.rolesService.findAll();
     } catch (error) {
-      throw new NotFoundException('Ocorreu algum erro ao encontrar as roles');
+      return res.status(500).send('Ocorreu um erro ao criar a role, ' + error.message);
     }
   }
 
@@ -34,21 +23,10 @@ export class RolesController {
   @Post('create')
   async create(@Res() res, @Body() createRolesDto: CreateRolesDto) {
     try {
-      const role = await this.rolesService.create(createRolesDto);
-      return res.status(201).json(role);
+      const roles = await this.rolesService.create(createRolesDto);
+      return res.status(201).json(roles);
     } catch (error) {
-      throw new NotFoundException('Ocorreu algum erro ao criar a role');
-    }
-  }
-
-  @Roles(UserType.Admin)
-  @Delete()
-  @HttpCode(204)
-  async remove(@Param('id') id: number) {
-    try {
-      return this.rolesService.remove(id);
-    } catch (error) {
-      throw new NotFoundException('Ocorreu algum erro ao deletar a role');
+      return res.status(500).send('Ocorreu um erro ao criar a role, ' + error.message);
     }
   }
 }

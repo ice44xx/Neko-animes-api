@@ -1,14 +1,21 @@
 import { Module } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { LikesEpisodes } from 'src/@core/domain/entities/likes-episodes/likes-episodes.entity';
-import { LikesEpisodesController } from '../../controller/likes/likes-episodes.controller';
+import { EpisodesRepository } from 'src/@core/domain/repositories/episodes/episodes.repository';
+import { LikesEpisodesRepository } from 'src/@core/domain/repositories/likes/likes-episodes.repository';
+import { UsersRepository } from 'src/@core/domain/repositories/users/users.repository';
+import { LikesEpisodesUseCase } from 'src/@core/domain/usecases/likes/likes-episodes.usecase';
+import { PrismaService } from 'src/@core/infra/database/prisma/prisma.service';
 import { LikesEpisodesService } from '../../services/likes/likes-episodes.service';
-import { Episodes } from 'src/@core/domain/entities/episodes/episodes.entity';
-import { Users } from 'src/@core/domain/entities/users/users.entity';
+import { LikesEpisodesController } from '../../controller/likes/likes-episodes.controller';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([LikesEpisodes, Episodes, Users])],
   controllers: [LikesEpisodesController],
-  providers: [LikesEpisodesService],
+  providers: [
+    PrismaService,
+    LikesEpisodesService,
+    LikesEpisodesUseCase,
+    LikesEpisodesRepository,
+    UsersRepository,
+    EpisodesRepository,
+  ],
 })
 export class LikesEpisodesModule {}

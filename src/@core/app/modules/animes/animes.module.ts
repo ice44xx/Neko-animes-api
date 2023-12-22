@@ -1,26 +1,21 @@
 import { Module } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { Animes } from '../../../domain/entities/animes/animes.entity';
 import { AnimesController } from '../../controller/animes/animes.controller';
+import { PrismaService } from 'src/@core/infra/database/prisma/prisma.service';
 import { AnimesService } from '../../services/animes/animes.service';
-import { Categories } from '../../../domain/entities/categories/categories.entity';
-import { Seasons } from 'src/@core/domain/entities/seasons/seasons.entity';
-import { LikesAnimes } from 'src/@core/domain/entities/likes-animes/likes-animes.entity';
-import { Favorites } from 'src/@core/domain/entities/favorites/favorites.entity';
-import { Classifications } from 'src/@core/domain/entities/classifications/classifications.entity';
+import { AnimesUseCase } from 'src/@core/domain/usecases/animes/animes.usecase';
+import { AnimesRepository } from 'src/@core/domain/repositories/animes/animes.repository';
+import { CategoriesRepository } from 'src/@core/domain/repositories/categories/categories.repository';
+import { ClassificationsRepository } from 'src/@core/domain/repositories/classifications/classifications.repository';
 
 @Module({
-  imports: [
-    TypeOrmModule.forFeature([
-      Animes,
-      Classifications,
-      Categories,
-      Seasons,
-      LikesAnimes,
-      Favorites,
-    ]),
-  ],
   controllers: [AnimesController],
-  providers: [AnimesService],
+  providers: [
+    PrismaService,
+    AnimesService,
+    AnimesUseCase,
+    AnimesRepository,
+    CategoriesRepository,
+    ClassificationsRepository,
+  ],
 })
-export class AnimeModule {}
+export class AnimesModule {}

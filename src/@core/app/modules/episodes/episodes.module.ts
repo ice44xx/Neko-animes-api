@@ -1,14 +1,19 @@
 import { Module } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { Episodes } from '../../../domain/entities/episodes/episodes.entity';
-import { EpisodesController } from '../../controller/episodes/episodes.controller';
+import { PrismaService } from 'src/@core/infra/database/prisma/prisma.service';
 import { EpisodesService } from '../../services/episodes/episodes.service';
-import { Seasons } from '../../../domain/entities/seasons/seasons.entity';
-import { LikesEpisodes } from 'src/@core/domain/entities/likes-episodes/likes-episodes.entity';
+import { EpisodesUseCase } from 'src/@core/domain/usecases/episodes/episodes.usecase';
+import { EpisodesRepository } from 'src/@core/domain/repositories/episodes/episodes.repository';
+import { SeasonsRepository } from 'src/@core/domain/repositories/seasons/seasons.repository';
+import { EpisodesController } from '../../controller/episodes/episodes.controller';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Episodes, Seasons, LikesEpisodes])],
   controllers: [EpisodesController],
-  providers: [EpisodesService],
+  providers: [
+    PrismaService,
+    EpisodesService,
+    EpisodesUseCase,
+    EpisodesRepository,
+    SeasonsRepository,
+  ],
 })
 export class EpisodesModule {}

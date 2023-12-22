@@ -1,14 +1,19 @@
 import { Module } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { Users } from 'src/@core/domain/entities/users/users.entity';
-import { Watchlist } from 'src/@core/domain/entities/watchlist/watchlist.entity';
 import { WatchlistController } from '../../controller/watchlist/watchlist.controller';
-import { WatchlistService } from '../../services/watchlist/watchlist.service';
+import { PrismaService } from 'src/@core/infra/database/prisma/prisma.service';
+import { WatchlistRepository } from 'src/@core/domain/repositories/watchlist/watchlist.repository';
+import { WatchlistUseCase } from 'src/@core/domain/usecases/watchlist/watchlist.usecase';
+import { WatchListService } from '../../services/watchlist/watchlist.service';
+import { UsersRepository } from 'src/@core/domain/repositories/users/users.repository';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Watchlist, Users])],
   controllers: [WatchlistController],
-  providers: [WatchlistService],
-  exports: [],
+  providers: [
+    PrismaService,
+    WatchlistRepository,
+    WatchlistUseCase,
+    WatchListService,
+    UsersRepository,
+  ],
 })
 export class WatchlistModule {}

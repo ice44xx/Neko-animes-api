@@ -1,19 +1,20 @@
 import {
   Body,
+  ConflictException,
   Controller,
   Delete,
   Get,
-  HttpCode,
+  NotFoundException,
   Param,
   Post,
   Put,
   Res,
 } from '@nestjs/common';
 import { SeasonsService } from '../../services/seasons/seasons.service';
-import { CreateSeasonsDto } from '../../dto/requests/seasons/create-seasons-dto';
-import { UpdateSeasonsDto } from '../../dto/requests/seasons/update-seasons-dto';
-import { Public } from 'src/@core/infra/decorators/public-route.decorator';
+import { CreateSeasonsDto } from '../../dto/seasons/create-seasons-dto';
 import { Roles, UserType } from 'src/@core/infra/decorators/roles.decorator';
+import { Public } from 'src/@core/infra/decorators/public-route.decorator';
+import { UpdateSeasonsDto } from '../../dto/seasons/update-seasons-dto';
 import { ApiTags } from '@nestjs/swagger';
 
 @ApiTags('Temporadas')
@@ -23,12 +24,12 @@ export class SeasonsController {
 
   @Public()
   @Get()
-  findAll(@Res() res) {
+  async findAll(@Res() res) {
     try {
-      const season = this.seasonsService.findAll();
-      return res.status(201).json(season);
+      const seasons = await this.seasonsService.findAll();
+      return res.status(200).json(seasons);
     } catch (error) {
-      return res.status(500).send({ message: 'Erro ao buscar todas temporadas' });
+      return res.status(500).send({ message: 'Ocorreu um erro ao buscar todas temporadas' });
     }
   }
 
@@ -36,44 +37,64 @@ export class SeasonsController {
   @Get(':name')
   async findByName(@Res() res, @Param('name') name: string) {
     try {
-      const season = await this.seasonsService.findByName(name);
-      return res.status(201).send(season);
+      const seasons = await this.seasonsService.findByName({ name });
+      return res.status(200).json(seasons);
     } catch (error) {
-      return res.status(500).send({ message: `Erro ao buscar a  temporada ${name}` });
+      return res.status(500).send({ message: `Ocorreu um erro ao buscar a temporda ${name} ` });
     }
   }
 
   @Roles(UserType.Admin)
   @Post('create')
-  async create(@Res() res, @Body() createSeasonDto: CreateSeasonsDto) {
+  async create(@Res() res, @Body() createSeasonsDto: CreateSeasonsDto) {
     try {
-      const season = await this.seasonsService.create(createSeasonDto);
-      return season;
+      const season = await this.seasonsService.create(createSeasonsDto);
+      return res.status(201).json(season);
     } catch (error) {
-      return res.status(500).send({ message: 'Erro ao criar temporada' });
+      if (error instanceof NotFoundException) {
+        return res.status(404).send({ message: error.message });
+      } else if (error instanceof ConflictException) {
+        return res.status(409).send({ message: error.message });
+      }
+      return res
+        .status(500)
+        .send({ message: 'Ocorreu um erro ao criar a temporada, ' + error.message });
     }
   }
 
   @Roles(UserType.Admin)
-  @Put(':id')
+  @Put(':seasonId')
   async update(
     @Res() res,
+    @Param('seasonId') seasonId: number,
     @Body() updateSeasonsDto: UpdateSeasonsDto,
-    @Param('id') id: number,
   ) {
     try {
-      this.seasonsService.update(id, updateSeasonsDto);
-      return res.status(201).json({ message: 'Temporada atualizada' });
+      const season = await this.seasonsService.update(seasonId, updateSeasonsDto);
+      return res.status(200).json(season);
     } catch (error) {
-      return res.status(500).send({ message: 'Erro ao atualizar temporada' });
+      if (error instanceof NotFoundException) {
+        return res.status(404).send({ message: error.message });
+      }
+      return res
+        .status(500)
+        .send({ message: 'Ocorreu um erro ao atualizar a temporada, ' + error.message });
     }
   }
 
   @Roles(UserType.Admin)
-  @HttpCode(204)
   @Delete(':id')
   async remove(@Res() res, @Param('id') id: number) {
-    await this.seasonsService.delete(id);
-    return res.status(201).send({ message: 'Temporada deletada' });
+    try {
+      await this.seasonsService.remove({ id });
+      return res.status(200).send({ message: 'Temporada deletada!' });
+    } catch (error) {
+      if (error instanceof NotFoundException) {
+        return res.status(404).send({ message: error.message });
+      }
+      return res
+        .status(500)
+        .send({ message: 'Ocorreu um erro ao deletar a temporada, ' + error.message });
+    }
   }
 }

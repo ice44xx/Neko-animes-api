@@ -1,23 +1,25 @@
 import {
-  Body,
   Controller,
-  Delete,
-  Get,
-  HttpCode,
-  Param,
   Post,
-  Put,
+  Body,
+  Get,
   Res,
+  Param,
+  Put,
   Request,
+  Delete,
+  NotFoundException,
+  ConflictException,
+  UnauthorizedException,
 } from '@nestjs/common';
 import { UsersService } from '../../services/users/users.service';
-import { CreateUsersDto } from '../../dto/requests/users/create-users-dto';
-import { UpdateUsersDto } from '../../dto/requests/users/update-users-dto';
-import { AuthRequest } from 'src/@core/infra/auth/models/auth-request';
-import { Public } from 'src/@core/infra/decorators/public-route.decorator';
-import { UpdateUsersPasswordDto } from '../../dto/requests/users/update-users-password-dto';
-import { Roles, UserType } from 'src/@core/infra/decorators/roles.decorator';
+import { CreateUsersDto } from '../../dto/users/create-users-dto';
 import { ApiTags } from '@nestjs/swagger';
+import { Roles, UserType } from 'src/@core/infra/decorators/roles.decorator';
+import { Public } from 'src/@core/infra/decorators/public-route.decorator';
+import { UpdateUsersDto } from '../../dto/users/update-users-dto';
+import { AuthRequest } from 'src/@core/infra/auth/models/auth-request';
+import { UpdateUsersPasswordDto } from '../../dto/users/update-users-password-dto';
 
 @ApiTags('Usuários')
 @Controller('users')
@@ -28,21 +30,28 @@ export class UsersController {
   @Get()
   async findAll(@Res() res) {
     try {
-      const users = await this.usersService.findAll();
-      return res.status(201).send(users);
+      const user = await this.usersService.findAll();
+      return res.status(200).json(user);
     } catch (error) {
-      return res.status(500).send({ message: 'Erro ao buscar todos usuários' });
+      return res
+        .status(500)
+        .send({ message: 'Ocorreu um erro ao buscar o usuário, ' + error.message });
     }
   }
 
   @Roles(UserType.Admin)
   @Get(':id')
-  async findUserId(@Res() res, @Param('id') id: number) {
+  async findById(@Res() res, @Param('id') id: number) {
     try {
-      const user = await this.usersService.findById(id);
-      return res.status(201).json(user);
+      const user = await this.usersService.findById({ id });
+      return res.status(200).json(user);
     } catch (error) {
-      return res.status(500).send({ message: `Erro ao buscar o usuário ${id}` });
+      if (error instanceof NotFoundException) {
+        return res.status(401).send({ message: error.message });
+      }
+      return res
+        .status(500)
+        .send({ message: `Ocorreu um erro ao buscar o usuário ${id}, ` + error.message });
     }
   }
 
@@ -53,49 +62,71 @@ export class UsersController {
       const user = await this.usersService.create(createUsersDto);
       return res.status(201).json(user);
     } catch (error) {
-      return res.status(500).send({ message: 'Erro ao criar usuário' });
+      if (error instanceof ConflictException) {
+        return res.status(409).send({ message: error.message });
+      }
+      return res
+        .status(500)
+        .send({ message: 'Ocorreu um erro ao criar o usuário, ' + error.message });
     }
   }
 
+  @Roles(UserType.User)
   @Put()
-  async update(
-    @Request() req: AuthRequest,
-    @Body() updateUsersDto: UpdateUsersDto,
-    @Res() res,
-  ) {
+  async update(@Request() req: AuthRequest, @Res() res, @Body() updateUsersDto: UpdateUsersDto) {
     try {
-      const currentUser = req.user;
-      const user = await this.usersService.update(currentUser.id, updateUsersDto);
-      return res.status(201).json({ message: 'Usuário atualizado!', user: user });
+      const currentUser = req.user.id;
+      const user = await this.usersService.update(currentUser, updateUsersDto);
+      return res.status(200).json(user);
     } catch (error) {
-      return res.status(500).send({ message: 'Erro ao atualizar o usuário' });
+      if (error instanceof ConflictException) {
+        return res.status(409).send({ message: error.message });
+      } else if (error instanceof UnauthorizedException) {
+        return res.status(401).send({ message: error.message });
+      }
+      return res
+        .status(500)
+        .send({ message: 'Ocorreu um erro ao atualizar o usuário, ' + error.message });
     }
   }
 
+  @Roles(UserType.User)
   @Put('password')
   async updatePassword(
     @Request() req: AuthRequest,
-    @Body() updateUsersPasswordDto: UpdateUsersPasswordDto,
     @Res() res,
+    @Body() updateUsersPassswordDto: UpdateUsersPasswordDto,
   ) {
     try {
-      const currentUser = req.user;
-      const user = await this.usersService.updatePassword(
-        currentUser.id,
-        updateUsersPasswordDto,
-      );
-      return res
-        .status(201)
-        .json({ message: 'Senha atualizada com sucesso!', user: user });
+      const currentUser = req.user.id;
+      const user = await this.usersService.updatePassword(currentUser, updateUsersPassswordDto);
+      return res.status(200).json(user);
     } catch (error) {
-      return res.status(500).send({ message: 'Erro ao atualizar a senha do usuário' });
+      if (error instanceof UnauthorizedException) {
+        return res.status(401).send({ message: error.message });
+      } else if (error instanceof ConflictException) {
+        return res.status(401).send({ message: error.message });
+      }
+      return res
+        .status(500)
+        .send({ message: 'Ocorreu um erro ao criar o usuário, ' + error.message });
     }
   }
 
-  @HttpCode(204)
+  @Roles(UserType.Admin)
   @Delete()
-  async remove(@Request() req: AuthRequest) {
-    const currentUser = req.user;
-    return this.usersService.delete(currentUser.id);
+  async delete(@Request() req: AuthRequest, @Res() res) {
+    try {
+      const currentUser = req.user;
+      await this.usersService.remove(currentUser);
+      return res.status(200).send({ message: 'Usuário deletado com sucesso' });
+    } catch (error) {
+      if (error instanceof UnauthorizedException) {
+        return res.status(401).send({ message: error.message });
+      }
+      return res
+        .status(500)
+        .send({ message: 'Ocorreu um erro ao deletar o usuário, ' + error.message });
+    }
   }
 }
