@@ -41,6 +41,7 @@ export class AnimesRepository {
                     id: true,
                     usersId: true,
                     text: true,
+                    likes: true,
                     createdAt: true,
                   },
                 },
@@ -61,6 +62,10 @@ export class AnimesRepository {
         episodes: season.episodes.map((episode) => ({
           ...episode,
           likes: episode.likes.length,
+          comments: episode.comments.map((comment) => ({
+            ...comment,
+            likes: comment.likes.length,
+          })),
         })),
       })),
     }));
@@ -217,11 +222,13 @@ export class AnimesRepository {
                 name: true,
                 episodeOrder: true,
                 url: true,
+                likes: true,
                 comments: {
                   select: {
                     id: true,
                     usersId: true,
                     text: true,
+                    likes: true,
                     createdAt: true,
                   },
                 },
@@ -235,12 +242,23 @@ export class AnimesRepository {
       },
     });
 
-    const formattedLikes = {
+    const formattedAnime = {
       ...anime,
       likes: anime.likes.length,
+      seasons: anime.seasons.map((season) => ({
+        ...season,
+        episodes: season.episodes.map((episode) => ({
+          ...episode,
+          likes: episode.likes.length,
+          comments: episode.comments.map((comment) => ({
+            ...comment,
+            likes: comment.likes.length,
+          })),
+        })),
+      })),
     };
 
-    return formattedLikes;
+    return formattedAnime;
   }
 
   async findById(id: number) {
@@ -272,11 +290,13 @@ export class AnimesRepository {
                 name: true,
                 episodeOrder: true,
                 url: true,
+                likes: true,
                 comments: {
                   select: {
                     id: true,
                     usersId: true,
                     text: true,
+                    likes: true,
                     createdAt: true,
                   },
                 },
@@ -290,12 +310,23 @@ export class AnimesRepository {
       },
     });
 
-    const formattedLikes = {
+    const formattedAnime = {
       ...anime,
       likes: anime.likes.length,
+      seasons: anime.seasons.map((season) => ({
+        ...season,
+        episodes: season.episodes.map((episode) => ({
+          ...episode,
+          likes: episode.likes.length,
+          comments: episode.comments.map((comment) => ({
+            ...comment,
+            likes: comment.likes.length,
+          })),
+        })),
+      })),
     };
 
-    return formattedLikes;
+    return formattedAnime;
   }
 
   async create(data: Prisma.AnimesCreateInput) {

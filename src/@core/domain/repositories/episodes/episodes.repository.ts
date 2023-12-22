@@ -37,6 +37,7 @@ export class EpisodesRepository {
             },
             usersId: true,
             text: true,
+            likes: true,
             createdAt: true,
           },
         },
@@ -46,6 +47,10 @@ export class EpisodesRepository {
     const formattedLikes = episodes.map((episode) => ({
       ...episode,
       likes: episode.likes.length,
+      comments: episode.comments.map((comment) => ({
+        ...episode,
+        likes: comment.likes.length,
+      })),
     }));
 
     return formattedLikes;

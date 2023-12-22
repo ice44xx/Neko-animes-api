@@ -21,10 +21,11 @@ model Users {
   createdAt     DateTime        @default(now())
   updatedAt     DateTime        @default(now())
   favorites     Favorites[]
+  comments      Comments[]
   likesAnimes   LikesAnimes[]
   likesEpisodes LikesEpisodes[]
+  likesComments LikesComments[]
   watchList     WatchList[]
-  comments      Comments[]
 
   @@map("users")
 }
@@ -141,14 +142,23 @@ model WatchList {
 }
 
 model Comments {
-  id         Int      @id @default(autoincrement())
+  id         Int             @id @default(autoincrement())
   text       String
-  users      Users    @relation(fields: [usersId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  users      Users           @relation(fields: [usersId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   usersId    Int
-  episodes   Episodes @relation(fields: [episodesId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  episodes   Episodes        @relation(fields: [episodesId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   episodesId Int
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @default(now())
+  likes      LikesComments[]
+  createdAt  DateTime        @default(now())
+  updatedAt  DateTime        @default(now())
 
   @@map("comments")
+}
+
+model LikesComments {
+  id         Int      @id @default(autoincrement())
+  comments   Comments @relation(fields: [commentsId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  commentsId Int
+  users      Users    @relation(fields: [usersId], references: [id])
+  usersId    Int
 }

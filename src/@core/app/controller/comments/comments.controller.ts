@@ -17,7 +17,9 @@ import { Roles, UserType } from 'src/@core/infra/decorators/roles.decorator';
 import { AuthRequest } from 'src/@core/infra/auth/models/auth-request';
 import { CreateCommentsDto } from '../../dto/comments/create-comments-dto';
 import { UpdateCommentsDto } from '../../dto/comments/update-comments-dto';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Comentários')
 @Controller('comments')
 export class CommentsController {
   constructor(private readonly commentsService: CommentsService) {}
