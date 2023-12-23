@@ -8,7 +8,7 @@ import { createRoles } from './@core/infra/database/prisma/seeders/roles.seed';
 import { createAdmin } from './@core/infra/database/prisma/seeders/admin.seed';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create(AppModule, { cors: true });
 
   app.useGlobalPipes(
     new ValidationPipe({
@@ -18,14 +18,20 @@ async function bootstrap() {
     }),
   );
 
+  app.enableCors();
+
   const config = new DocumentBuilder()
     .setTitle('Neko Animes')
     .setDescription('Bem-vindo a Neko Animes Api')
     .setVersion('1.0')
     .build();
+
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);
 
   await app.listen(3000);
+
+  await createRoles();
+  await createAdmin();
 }
 bootstrap();
