@@ -67,10 +67,11 @@ model Categories {
 }
 
 model Classifications {
-  id     Int      @id @default(autoincrement())
-  name   String   @unique
-  desc   String
-  animes Animes[]
+  id        Int      @id @default(autoincrement())
+  name      String   @unique
+  desc      String
+  thumbnail String
+  animes    Animes[]
 
   @@map("classifications")
 }

@@ -27,7 +27,7 @@ export class CategoriesController {
   async findAll(@Res() res) {
     try {
       const categories = await this.categoriesService.findAll();
-      return res.status(201).json(categories);
+      return res.status(200).json(categories);
     } catch (error) {
       return res
         .status(500)

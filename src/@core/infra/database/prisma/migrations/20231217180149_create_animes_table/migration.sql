@@ -25,6 +25,7 @@ CREATE TABLE "classifications" (
     "id" SERIAL NOT NULL,
     "name" TEXT NOT NULL,
     "desc" TEXT NOT NULL,
+    "thumbnail" TEXT NOT NULL,
 
     CONSTRAINT "classifications_pkey" PRIMARY KEY ("id")
 );

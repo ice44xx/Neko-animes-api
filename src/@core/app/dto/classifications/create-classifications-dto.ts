@@ -5,5 +5,8 @@ export class CreateClassificationsDto {
   name: string;
 
   @IsString()
+  thumbnail: string;
+
+  @IsString()
   desc: string;
 }

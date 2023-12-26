@@ -5,5 +5,8 @@ export class UpdateClassificationsDto {
   name: string;
 
   @IsString()
+  thumbnail: string;
+
+  @IsString()
   desc: string;
 }

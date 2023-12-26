@@ -8,5 +8,8 @@ export class ClassificationsDto {
   name?: string;
 
   @IsString()
+  thumbnail?: string;
+
+  @IsString()
   desc?: string;
 }
