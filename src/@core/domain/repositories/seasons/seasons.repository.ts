@@ -9,18 +9,14 @@ export class SeasonsRepository {
   async findAll() {
     return this.prisma.seasons.findMany({
       select: {
+        id: true,
+        name: true,
         anime: {
           select: {
             id: true,
             name: true,
             synopsis: true,
             thumbnailUrl: true,
-            seasons: {
-              select: {
-                id: true,
-                name: true,
-              },
-            },
           },
         },
       },
@@ -31,18 +27,14 @@ export class SeasonsRepository {
     return this.prisma.seasons.findFirst({
       where: { name: { contains: name, mode: 'insensitive' } },
       select: {
+        id: true,
+        name: true,
         anime: {
           select: {
             id: true,
             name: true,
             synopsis: true,
             thumbnailUrl: true,
-            seasons: {
-              select: {
-                id: true,
-                name: true,
-              },
-            },
           },
         },
       },
