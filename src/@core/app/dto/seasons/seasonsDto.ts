@@ -8,5 +8,8 @@ export class SeasonsDto {
   readonly name?: string;
 
   @IsNumber()
+  readonly order?: number;
+
+  @IsNumber()
   readonly animeId?: number;
 }
