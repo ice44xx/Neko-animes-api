@@ -24,7 +24,7 @@ export class SeasonsRepository {
   }
 
   async findByName(name: string) {
-    return this.prisma.seasons.findFirst({
+    return this.prisma.seasons.findMany({
       where: { name: { contains: name, mode: 'insensitive' } },
       select: {
         id: true,

@@ -8,6 +8,67 @@ export class EpisodesRepository {
 
   async findAll() {
     const episodes = await this.prisma.episodes.findMany({
+      where: {},
+      select: {
+        id: true,
+        name: true,
+        episodeOrder: true,
+        url: true,
+        likes: true,
+        seasons: {
+          select: {
+            id: true,
+            name: true,
+            anime: {
+              select: {
+                id: true,
+                name: true,
+              },
+            },
+          },
+        },
+        comments: {
+          select: {
+            id: true,
+            episodes: {
+              select: {
+                id: true,
+                name: true,
+              },
+            },
+            usersId: true,
+            text: true,
+            likes: true,
+            createdAt: true,
+          },
+        },
+      },
+    });
+
+    const formattedLikes = episodes.map((episode) => ({
+      ...episode,
+      likes: episode.likes.length,
+      comments: episode.comments.map((comment) => ({
+        ...episode,
+        likes: comment.likes.length,
+      })),
+    }));
+
+    return formattedLikes;
+  }
+
+  async findByName(name: string) {
+    const episodes = await this.prisma.episodes.findMany({
+      where: {
+        seasons: {
+          anime: {
+            name: {
+              contains: name,
+              mode: 'insensitive',
+            },
+          },
+        },
+      },
       select: {
         id: true,
         name: true,

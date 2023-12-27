@@ -35,6 +35,22 @@ export class EpisodesController {
   }
 
   @Public()
+  @Get('name/:name')
+  async findByName(@Res() res, @Param('name') name: string) {
+    try {
+      const episode = await this.episodesService.findByName(name);
+      return res.status(200).json(episode);
+    } catch (error) {
+      if (error instanceof NotFoundException) {
+        return res.status(404).send({ message: error.message });
+      }
+      return res
+        .status(500)
+        .send({ message: `Ocorreu um erro ao buscar o episódio ${name}, ` + error.message });
+    }
+  }
+
+  @Public()
   @Get(':id')
   async findById(@Res() res, @Param('id') id: number) {
     try {

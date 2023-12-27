@@ -16,6 +16,15 @@ export class EpisodesUseCase {
     return await this.episodesRepository.findAll();
   }
 
+  async findByName(name: string) {
+    const episode = await this.episodesRepository.findByName(name);
+
+    if (!episode) {
+      throw new NotFoundException('Anime não encontrado');
+    }
+    return episode;
+  }
+
   async findById({ id }: EpisodesDto) {
     const episode = await this.episodesRepository.findById(id);
 
@@ -23,7 +32,7 @@ export class EpisodesUseCase {
       throw new NotFoundException('Episódio não encontrado');
     }
 
-    return await this.episodesRepository.findById(id);
+    return episode;
   }
 
   async create({ name, seasonId, ...episodesData }: CreateEpisodesDto) {
