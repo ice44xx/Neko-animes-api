@@ -34,6 +34,7 @@ export class UpdateAdminsDto {
   @IsString()
   readonly profile: string;
 
+  @IsNotEmpty({ message: 'A role é obrigatório' })
   @IsNumber()
   readonly roleId: number;
 }

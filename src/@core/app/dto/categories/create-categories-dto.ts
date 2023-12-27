@@ -1,6 +1,6 @@
 import { IsString } from 'class-validator';
 
 export class CreateCategoriesDto {
-  @IsString()
+  @IsString({ message: 'O nome é obrigatório' })
   readonly name: string;
 }
