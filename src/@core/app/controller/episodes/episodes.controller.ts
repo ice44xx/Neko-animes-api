@@ -51,7 +51,7 @@ export class EpisodesController {
   }
 
   @Public()
-  @Get(':id')
+  @Get('id/:id')
   async findById(@Res() res, @Param('id') id: number) {
     try {
       const episode = await this.episodesService.findById({ id });

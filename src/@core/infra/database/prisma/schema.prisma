@@ -111,7 +111,7 @@ model Episodes {
   id           Int             @id @default(autoincrement())
   name         String
   url          String
-  episodeOrder Int             @unique
+  episodeOrder Int
   seasons      Seasons         @relation(fields: [seasonsId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   seasonsId    Int
   likes        LikesEpisodes[]
