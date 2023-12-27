@@ -4,6 +4,8 @@ import { UsersUseCase } from 'src/@core/domain/usecases/users/users.usecase';
 import { UpdateUsersDto } from '../../dto/users/update-users-dto';
 import { UpdateUsersPasswordDto } from '../../dto/users/update-users-password-dto';
 import { UsersDto } from '../../dto/users/users-dtos';
+import { CreateAdminsDto } from '../../dto/users/create-admins-dto';
+import { UpdateAdminsDto } from '../../dto/users/update-admins-dto';
 
 @Injectable()
 export class UsersService {
@@ -21,12 +23,24 @@ export class UsersService {
     return await this.usersUseCase.findByEmail({ email });
   }
 
+  async findByUserName({ userName }: UsersDto) {
+    return await this.usersUseCase.findByUserName({ userName });
+  }
+
   async create(createUsersDto: CreateUsersDto) {
     return await this.usersUseCase.create(createUsersDto);
   }
 
+  async createAdmin(createAdminsDto: CreateAdminsDto) {
+    return await this.usersUseCase.createAdmin(createAdminsDto);
+  }
+
   async update(userId: number, updateUsersDto: UpdateUsersDto) {
     return await this.usersUseCase.update(userId, updateUsersDto);
+  }
+
+  async updateAdmin(userId: number, updateAdminsDto: UpdateAdminsDto) {
+    return await this.usersUseCase.updateAdmin(userId, updateAdminsDto);
   }
 
   async updatePassword(userId: number, updateUsersPasswordDto: UpdateUsersPasswordDto) {

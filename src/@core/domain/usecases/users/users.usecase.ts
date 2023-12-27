@@ -11,6 +11,8 @@ import { CreateUsersDto } from 'src/@core/app/dto/users/create-users-dto';
 import { UpdateUsersDto } from 'src/@core/app/dto/users/update-users-dto';
 import { UpdateUsersPasswordDto } from 'src/@core/app/dto/users/update-users-password-dto';
 import { UsersDto } from 'src/@core/app/dto/users/users-dtos';
+import { CreateAdminsDto } from 'src/@core/app/dto/users/create-admins-dto';
+import { UpdateAdminsDto } from 'src/@core/app/dto/users/update-admins-dto';
 
 @Injectable()
 export class UsersUseCase {
@@ -25,6 +27,16 @@ export class UsersUseCase {
 
   async findById({ id }: UsersDto) {
     const user = await this.usersRepository.findById(id);
+
+    if (!user) {
+      throw new NotFoundException('Usuário não encontrado');
+    }
+
+    return user;
+  }
+
+  async findByUserName({ userName }: UsersDto) {
+    const user = await this.usersRepository.findByUserName(userName);
 
     if (!user) {
       throw new NotFoundException('Usuário não encontrado');
@@ -51,6 +63,12 @@ export class UsersUseCase {
     const existingUser = await this.usersRepository.findByEmail(createUsersDto.email);
 
     if (existingUser) throw new ConflictException('Usuário já existe');
+
+    const existingUserName = await this.usersRepository.findByUserNameUnique(
+      createUsersDto.userName,
+    );
+
+    if (existingUserName) throw new ConflictException('Username já em uso');
 
     const defaultRole = await this.rolesRepository.findOneByName('user');
 
@@ -83,6 +101,12 @@ export class UsersUseCase {
     const existingUser = await this.usersRepository.findByEmail(updateUsersDto.email);
 
     if (existingUser) throw new ConflictException('Usuário já existe');
+
+    const existingUserName = await this.usersRepository.findByUserNameUnique(
+      updateUsersDto.userName,
+    );
+
+    if (existingUserName) throw new ConflictException('Username já em uso');
 
     const updateUser = await this.usersRepository.update(userId, updateUsersDto);
 
@@ -117,6 +141,71 @@ export class UsersUseCase {
     const hashedNewPassword = await bcrypt.hash(updateUsersPasswordDto.newPassword, saltRounds);
 
     await this.usersRepository.update(userId, { password: hashedNewPassword });
+  }
+
+  async createAdmin(createAdminsDto: CreateAdminsDto) {
+    const { password, roleId, ...adminData } = createAdminsDto;
+    const saltRounds = 10;
+    const hashedPassword = await bcrypt.hash(password, saltRounds);
+
+    const existingUser = await this.usersRepository.findByEmail(createAdminsDto.email);
+
+    if (existingUser) throw new ConflictException('Usuário já existe');
+
+    const existingUserName = await this.usersRepository.findByUserNameUnique(
+      createAdminsDto.userName,
+    );
+
+    if (existingUserName) throw new ConflictException('Username já em uso');
+
+    const user = await this.usersRepository.create({
+      ...adminData,
+      password: hashedPassword,
+      role: { connect: { id: roleId } },
+    });
+
+    return {
+      id: user.id,
+      firstName: user.firstName,
+      userName: user.userName,
+      email: user.email,
+      profile: user.profile,
+      birthday: user.birthday,
+      role: roleId,
+      createdAt: user.createdAt,
+      updatedAt: user.updatedAt,
+    };
+  }
+
+  async updateAdmin(userId: number, updateAdminsDto: UpdateAdminsDto) {
+    const user = await this.usersRepository.findById(userId);
+
+    if (!user) {
+      throw new UnauthorizedException('Credenciais inválidas');
+    }
+
+    const existingUser = await this.usersRepository.findByEmail(updateAdminsDto.email);
+
+    if (existingUser) throw new ConflictException('Usuário já existe');
+
+    const existingUserName = await this.usersRepository.findByUserNameUnique(
+      updateAdminsDto.userName,
+    );
+
+    if (existingUserName) throw new ConflictException('Username já em uso');
+
+    const updateAdmin = await this.usersRepository.update(userId, updateAdminsDto);
+
+    return {
+      id: updateAdmin.id,
+      firstName: updateAdmin.firstName,
+      userName: updateAdmin.userName,
+      email: updateAdmin.email,
+      birthday: updateAdmin.birthday,
+      profile: updateAdmin.profile,
+      role: updateAdmin.roleId,
+      updatedAt: updateAdmin.updatedAt,
+    };
   }
 
   async remove({ id }: UsersDto) {

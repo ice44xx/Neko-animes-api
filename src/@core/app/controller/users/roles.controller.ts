@@ -13,9 +13,10 @@ export class RolesController {
   @Get()
   async findAll(@Res() res) {
     try {
-      return this.rolesService.findAll();
+      const roles = await this.rolesService.findAll();
+      return res.status(200).json(roles);
     } catch (error) {
-      return res.status(500).send('Ocorreu um erro ao criar a role, ' + error.message);
+      return res.status(500).send('Ocorreu um erro ao buscar as roles, ' + error.message);
     }
   }
 

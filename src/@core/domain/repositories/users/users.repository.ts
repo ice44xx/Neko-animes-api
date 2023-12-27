@@ -32,10 +32,6 @@ export class UsersRepository {
     return formattedUsers;
   }
 
-  async create(data: Prisma.UsersCreateInput) {
-    return this.prisma.users.create({ data });
-  }
-
   async findById(id: number) {
     const user = await this.prisma.users.findUnique({
       where: { id },
@@ -63,8 +59,49 @@ export class UsersRepository {
     };
   }
 
+  async findByUserName(name: string) {
+    const users = await this.prisma.users.findMany({
+      where: {
+        userName: {
+          contains: name,
+          mode: 'insensitive',
+        },
+      },
+      select: {
+        id: true,
+        firstName: true,
+        userName: true,
+        email: true,
+        password: true,
+        birthday: true,
+        profile: true,
+        createdAt: true,
+        updatedAt: true,
+        role: {
+          select: {
+            name: true,
+          },
+        },
+      },
+    });
+    const modifiedUsers = users.map((user) => ({
+      ...user,
+      role: user.role.name,
+    }));
+
+    return modifiedUsers;
+  }
+
+  async findByUserNameUnique(name: string) {
+    return await this.prisma.users.findUnique({ where: { userName: name } });
+  }
+
   async findByEmail(email: string) {
     return this.prisma.users.findUnique({ where: { email } });
+  }
+
+  async create(data: Prisma.UsersCreateInput) {
+    return this.prisma.users.create({ data });
   }
 
   async update(id: number, data: Prisma.UsersUpdateInput) {

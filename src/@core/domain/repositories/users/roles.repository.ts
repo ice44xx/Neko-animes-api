@@ -14,6 +14,10 @@ export class RolesRepository {
     return this.prisma.roles.findMany();
   }
 
+  async findById(id: number) {
+    return this.prisma.roles.findUnique({ where: { id } });
+  }
+
   async findOneByName(name: string) {
     return this.prisma.roles.findFirst({ where: { name } });
   }

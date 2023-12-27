@@ -20,6 +20,8 @@ import { Public } from 'src/@core/infra/decorators/public-route.decorator';
 import { UpdateUsersDto } from '../../dto/users/update-users-dto';
 import { AuthRequest } from 'src/@core/infra/auth/models/auth-request';
 import { UpdateUsersPasswordDto } from '../../dto/users/update-users-password-dto';
+import { CreateAdminsDto } from '../../dto/users/create-admins-dto';
+import { UpdateAdminsDto } from '../../dto/users/update-admins-dto';
 
 @ApiTags('Usuários')
 @Controller('users')
@@ -40,7 +42,7 @@ export class UsersController {
   }
 
   @Roles(UserType.Admin)
-  @Get(':id')
+  @Get('/id/:id')
   async findById(@Res() res, @Param('id') id: number) {
     try {
       const user = await this.usersService.findById({ id });
@@ -52,6 +54,22 @@ export class UsersController {
       return res
         .status(500)
         .send({ message: `Ocorreu um erro ao buscar o usuário ${id}, ` + error.message });
+    }
+  }
+
+  @Roles(UserType.Admin)
+  @Get('/username/:name')
+  async findByUserName(@Res() res, @Param('name') name: string) {
+    try {
+      const user = await this.usersService.findByUserName({ userName: name });
+      return res.status(200).json(user);
+    } catch (error) {
+      if (error instanceof NotFoundException) {
+        return res.status(404).send({ message: error.message });
+      }
+      return res
+        .status(500)
+        .send({ message: `Ocorreu um erro ao buscar o usuário ${name}, ` + error.message });
     }
   }
 
@@ -91,6 +109,23 @@ export class UsersController {
   }
 
   @Roles(UserType.User)
+  @Delete()
+  async delete(@Request() req: AuthRequest, @Res() res) {
+    try {
+      const currentUser = req.user;
+      await this.usersService.remove(currentUser);
+      return res.status(200).send({ message: 'Usuário deletado com sucesso' });
+    } catch (error) {
+      if (error instanceof UnauthorizedException) {
+        return res.status(401).send({ message: error.message });
+      }
+      return res
+        .status(500)
+        .send({ message: 'Ocorreu um erro ao deletar o usuário, ' + error.message });
+    }
+  }
+
+  @Roles(UserType.User)
   @Put('password')
   async updatePassword(
     @Request() req: AuthRequest,
@@ -114,11 +149,44 @@ export class UsersController {
   }
 
   @Roles(UserType.Admin)
-  @Delete()
-  async delete(@Request() req: AuthRequest, @Res() res) {
+  @Post('create/admin')
+  async createAdmin(@Res() res, @Body() createAdminsDto: CreateAdminsDto) {
     try {
-      const currentUser = req.user;
-      await this.usersService.remove(currentUser);
+      const user = await this.usersService.createAdmin(createAdminsDto);
+      return res.status(201).json(user);
+    } catch (error) {
+      if (error instanceof ConflictException) {
+        return res.status(409).send({ message: error.message });
+      }
+      return res
+        .status(500)
+        .send({ message: 'Ocorreu um erro ao criar o administrador, ' + error.message });
+    }
+  }
+
+  @Roles(UserType.Admin)
+  @Put(':id')
+  async updateAdmin(@Param('id') id: number, @Res() res, @Body() updateAdminsDto: UpdateAdminsDto) {
+    try {
+      const user = await this.usersService.updateAdmin(id, updateAdminsDto);
+      return res.status(200).json(user);
+    } catch (error) {
+      if (error instanceof ConflictException) {
+        return res.status(409).send({ message: error.message });
+      } else if (error instanceof UnauthorizedException) {
+        return res.status(401).send({ message: error.message });
+      }
+      return res
+        .status(500)
+        .send({ message: 'Ocorreu um erro ao atualizar o administrador, ' + error.message });
+    }
+  }
+
+  @Roles(UserType.Admin)
+  @Delete(':userId')
+  async deleteAdmin(@Param('userId') userId: number, @Res() res) {
+    try {
+      await this.usersService.remove({ id: userId });
       return res.status(200).send({ message: 'Usuário deletado com sucesso' });
     } catch (error) {
       if (error instanceof UnauthorizedException) {

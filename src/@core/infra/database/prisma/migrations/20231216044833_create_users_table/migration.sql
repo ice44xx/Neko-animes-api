@@ -26,6 +26,9 @@ CREATE TABLE "roles" (
 CREATE UNIQUE INDEX "users_email_key" ON "users"("email");
 
 -- CreateIndex
+CREATE UNIQUE INDEX "users_username_key" ON "users"("userName");
+
+-- CreateIndex
 CREATE UNIQUE INDEX "roles_name_key" ON "roles"("name");
 
 -- AddForeignKey

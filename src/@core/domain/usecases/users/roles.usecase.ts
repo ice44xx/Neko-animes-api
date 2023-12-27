@@ -13,9 +13,6 @@ export class RolesUseCase {
 
   async create(createRolesDto: CreateRolesDto) {
     const role = await this.rolesRepository.create(createRolesDto);
-    return {
-      id: role.id,
-      name: role.name,
-    };
+    return role;
   }
 }
