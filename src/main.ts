@@ -4,8 +4,7 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
-import { createRoles } from './@core/infra/database/prisma/seeders/roles.seed';
-import { createAdmin } from './@core/infra/database/prisma/seeders/admin.seed';
+import { generateSeeds } from './@core/infra/database/prisma/seeders/generator.seed';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, { cors: true });
@@ -31,7 +30,6 @@ async function bootstrap() {
 
   await app.listen(3000);
 
-  await createRoles();
-  await createAdmin();
+  await generateSeeds();
 }
 bootstrap();
