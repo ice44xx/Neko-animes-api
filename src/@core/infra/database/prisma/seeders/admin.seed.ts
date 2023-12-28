@@ -34,7 +34,7 @@ export async function createAdmin() {
 
   if (!existingAdmin) {
     const birthday = new Date('2023-12-01');
-    const createdAdmin = await prisma.users.create({
+    await prisma.users.create({
       data: {
         firstName: 'Neko',
         userName: 'Neko Animes',
@@ -44,14 +44,15 @@ export async function createAdmin() {
         role: { connect: { id: adminRole?.id || 2 } },
       },
     });
-
-    console.log('Administrador, gerado: ', createdAdmin);
   }
 }
 
 createAdmin()
-  .catch((e) => {
-    console.error(e);
+  .then(() => {
+    console.log('Admin gerado com sucesso');
+  })
+  .catch((error) => {
+    console.error('Erro ao gerar Admin:', error);
   })
   .finally(async () => {
     await prisma.$disconnect();

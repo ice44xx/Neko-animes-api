@@ -17,13 +17,15 @@ export async function createRoles() {
     await prisma.roles.createMany({
       data: rolesToCreate.map((roleName) => ({ name: roleName })),
     });
-    console.log('Roles criadas com sucesso.');
   }
 }
 
 createRoles()
-  .catch((e) => {
-    console.error(e);
+  .then(() => {
+    console.log('Roles geradas com sucesso');
+  })
+  .catch((error) => {
+    console.error('Erro ao gerar roles:', error);
   })
   .finally(async () => {
     await prisma.$disconnect();

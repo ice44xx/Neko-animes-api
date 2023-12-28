@@ -3,150 +3,50 @@ import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
 export async function createCategories() {
-  await prisma.categories.create({
-    data: {
-      name: 'Ação',
-    },
-  });
+  const categoriesToCreate = [
+    'Ação',
+    'Aventura',
+    'Comédia',
+    'Drama',
+    'Isekai',
+    'Histórico',
+    'Fantasia',
+    'Sci-fi',
+    'Slice of Life',
+    'Cyberpunk',
+    'Culinária',
+    'Ecchi',
+    'Rpg',
+    'Pós-apocalíptico',
+    'Terror',
+    'Suspense',
+    'Romance',
+    'Mecha',
+    'Magia',
+    'Psicológico',
+    'Esportes',
+    'Harem',
+  ];
 
-  await prisma.categories.create({
-    data: {
-      name: 'Aventura',
-    },
-  });
+  for (const categoryName of categoriesToCreate) {
+    const existingCategory = await prisma.categories.findUnique({
+      where: { name: categoryName },
+    });
 
-  await prisma.categories.create({
-    data: {
-      name: 'Comédia',
-    },
-  });
-
-  await prisma.categories.create({
-    data: {
-      name: 'Drama',
-    },
-  });
-
-  await prisma.categories.create({
-    data: {
-      name: 'Isekai',
-    },
-  });
-
-  await prisma.categories.create({
-    data: {
-      name: 'Histórico',
-    },
-  });
-
-  await prisma.categories.create({
-    data: {
-      name: 'Fantasia',
-    },
-  });
-
-  await prisma.categories.create({
-    data: {
-      name: 'Sci-fi',
-    },
-  });
-
-  await prisma.categories.create({
-    data: {
-      name: 'Slice of Life',
-    },
-  });
-
-  await prisma.categories.create({
-    data: {
-      name: 'Cyberpunk',
-    },
-  });
-
-  await prisma.categories.create({
-    data: {
-      name: 'Culinária',
-    },
-  });
-
-  await prisma.categories.create({
-    data: {
-      name: 'Ecchi',
-    },
-  });
-
-  await prisma.categories.create({
-    data: {
-      name: 'Rpg',
-    },
-  });
-
-  await prisma.categories.create({
-    data: {
-      name: 'Pós-apocalíptico',
-    },
-  });
-
-  await prisma.categories.create({
-    data: {
-      name: 'Terror',
-    },
-  });
-
-  await prisma.categories.create({
-    data: {
-      name: 'Suspense',
-    },
-  });
-
-  await prisma.categories.create({
-    data: {
-      name: 'Romance',
-    },
-  });
-
-  await prisma.categories.create({
-    data: {
-      name: 'Mecha',
-    },
-  });
-
-  await prisma.categories.create({
-    data: {
-      name: 'Magia',
-    },
-  });
-
-  await prisma.categories.create({
-    data: {
-      name: 'Psicológico',
-    },
-  });
-
-  await prisma.categories.create({
-    data: {
-      name: 'Esportes',
-    },
-  });
-
-  await prisma.categories.create({
-    data: {
-      name: 'Harem',
-    },
-  });
-
-  await prisma.categories.create({
-    data: {
-      name: 'Mecha',
-    },
-  });
-
-  console.log('Categorias geradas.');
+    if (!existingCategory) {
+      await prisma.categories.create({
+        data: { name: categoryName },
+      });
+    }
+  }
 }
 
 createCategories()
-  .catch((e) => {
-    console.error(e);
+  .then(() => {
+    console.log('Categorias geradas com sucesso.');
+  })
+  .catch((error) => {
+    console.error('Erro ao gerar categorias:', error);
   })
   .finally(async () => {
     await prisma.$disconnect();
