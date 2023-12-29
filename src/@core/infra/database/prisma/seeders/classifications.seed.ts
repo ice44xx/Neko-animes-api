@@ -3,7 +3,7 @@ import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
 export async function createClassifications() {
-  const classificationsToAdd = [
+  const classificationsToCreate = [
     {
       id: 1,
       name: 'Shounen',
@@ -41,7 +41,16 @@ export async function createClassifications() {
     },
   ];
 
-  for (const classificationData of classificationsToAdd) {
+  const classificationsInLowerCase = classificationsToCreate.map((classificationData) => {
+    return {
+      ...classificationData,
+      name: classificationData.name.toLowerCase(),
+      desc: classificationData.desc.toLowerCase(),
+      thumbnail: classificationData.thumbnail.toLowerCase(),
+    };
+  });
+
+  for (const classificationData of classificationsInLowerCase) {
     const existingClassification = await prisma.classifications.findUnique({
       where: { id: classificationData.id },
     });

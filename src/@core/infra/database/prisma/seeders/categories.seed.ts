@@ -29,13 +29,15 @@ export async function createCategories() {
   ];
 
   for (const categoryName of categoriesToCreate) {
+    const lowerCaseName = categoryName.toLocaleLowerCase();
+
     const existingCategory = await prisma.categories.findUnique({
-      where: { name: categoryName },
+      where: { name: lowerCaseName },
     });
 
     if (!existingCategory) {
       await prisma.categories.create({
-        data: { name: categoryName },
+        data: { name: lowerCaseName },
       });
     }
   }
