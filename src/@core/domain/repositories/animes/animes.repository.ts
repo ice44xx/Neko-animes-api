@@ -192,7 +192,7 @@ export class AnimesRepository {
   }
 
   async findByName(name: string) {
-    const anime = await this.prisma.animes.findFirst({
+    const anime = await this.prisma.animes.findMany({
       where: {
         name: { contains: name, mode: 'insensitive' },
       },
@@ -242,7 +242,7 @@ export class AnimesRepository {
       },
     });
 
-    const formattedAnime = {
+    const formattedAnimes = anime.map((anime) => ({
       ...anime,
       likes: anime.likes.length,
       seasons: anime.seasons.map((season) => ({
@@ -256,9 +256,9 @@ export class AnimesRepository {
           })),
         })),
       })),
-    };
+    }));
 
-    return formattedAnime;
+    return formattedAnimes;
   }
 
   async findById(id: number) {
