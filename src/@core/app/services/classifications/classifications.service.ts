@@ -12,6 +12,10 @@ export class ClassificationsService {
     return await this.classificationsUseCase.findAll();
   }
 
+  async findByName({ name }: ClassificationsDto) {
+    return await this.classificationsUseCase.findByName({ name });
+  }
+
   async create(createClassificationsDto: CreateClassificationsDto) {
     return await this.classificationsUseCase.create(createClassificationsDto);
   }

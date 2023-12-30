@@ -2,7 +2,7 @@ import { IsNumber, IsString } from 'class-validator';
 
 export class ClassificationsDto {
   @IsNumber()
-  id: number;
+  id?: number;
 
   @IsString()
   name?: string;

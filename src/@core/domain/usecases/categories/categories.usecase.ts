@@ -13,6 +13,16 @@ export class CategoriesUseCase {
     return categories;
   }
 
+  async findByName({ name }: CreateCategoriesDto) {
+    const categories = await this.categoriesRepository.findByName(name);
+
+    if (!categories) {
+      throw new NotFoundException('Categoria não encontrada');
+    }
+
+    return categories;
+  }
+
   async create({ name }: CreateCategoriesDto) {
     const nameLower = name.toLocaleLowerCase();
 

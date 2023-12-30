@@ -12,6 +12,10 @@ export class CategoriesService {
     return await this.categoriesUseCase.findAll();
   }
 
+  async findByName({ name }: CreateCategoriesDto) {
+    return await this.categoriesUseCase.findByName({ name });
+  }
+
   async create(createCategoriesDto: CreateCategoriesDto) {
     return await this.categoriesUseCase.create(createCategoriesDto);
   }

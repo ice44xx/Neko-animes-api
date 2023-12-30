@@ -15,7 +15,19 @@ export class ClassificationsRepository {
   }
 
   async findByName(name: string) {
-    return this.prisma.classifications.findUnique({ where: { name } });
+    return this.prisma.classifications.findUnique({
+      where: { name },
+      select: {
+        animes: {
+          select: {
+            id: true,
+            name: true,
+            synopsis: true,
+            thumbnailUrl: true,
+          },
+        },
+      },
+    });
   }
 
   async create(data: Prisma.ClassificationsCreateInput) {
