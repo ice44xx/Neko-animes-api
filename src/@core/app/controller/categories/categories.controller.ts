@@ -35,6 +35,22 @@ export class CategoriesController {
     }
   }
 
+  @Public()
+  @Get(':name')
+  async findByName(@Res() res, @Param('name') name: string) {
+    try {
+      const categories = await this.categoriesService.findByName({ name });
+      return res.status(200).json(categories);
+    } catch (error) {
+      if (error instanceof NotFoundException) {
+        return res.status(404).send({ message: error.message });
+      }
+      return res
+        .status(500)
+        .send({ message: `Ocorreu um erro ao buscar a categoria ${name}, ` + error.message });
+    }
+  }
+
   @Roles(UserType.Admin)
   @Post('create')
   async create(@Res() res, @Body() createCategoriesDto: CreateCategoriesDto) {

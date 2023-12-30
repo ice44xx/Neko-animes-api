@@ -13,6 +13,16 @@ export class ClassificationsUseCase {
     return classification;
   }
 
+  async findByName({ name }: ClassificationsDto) {
+    const classification = await this.classificationsRepository.findByName(name);
+
+    if (!classification) {
+      throw new NotFoundException('Classificação não encontrada');
+    }
+
+    return classification;
+  }
+
   async create({ name, ...classificationData }: CreateClassificationsDto) {
     const nameLower = name.toLocaleLowerCase();
 

@@ -35,6 +35,22 @@ export class ClassificationsController {
     }
   }
 
+  @Public()
+  @Get(':name')
+  async findByName(@Res() res, @Param('name') name: string) {
+    try {
+      const classification = await this.classificationsService.findByName({ name });
+      return res.status(200).json(classification);
+    } catch (error) {
+      if (error instanceof NotFoundException) {
+        return res.status(404).send({ message: error.message });
+      }
+      return res
+        .status(500)
+        .send({ message: `Ocorreu um erro ao buscar a classificação ${name}, ` + error.message });
+    }
+  }
+
   @Roles(UserType.Admin)
   @Post('create')
   async create(@Res() res, @Body() createClassificationsDto: CreateClassificationsDto) {

@@ -15,7 +15,19 @@ export class CategoriesRepository {
   }
 
   async findByName(name: string) {
-    return this.prisma.categories.findUnique({ where: { name } });
+    return this.prisma.categories.findUnique({
+      where: { name },
+      select: {
+        animes: {
+          select: {
+            id: true,
+            name: true,
+            synopsis: true,
+            thumbnailUrl: true,
+          },
+        },
+      },
+    });
   }
 
   async findManyByNames(names: string[]) {
