@@ -5,12 +5,14 @@ import { AnimesRepository } from 'src/@core/domain/repositories/animes/animes.re
 import { CategoriesRepository } from '../../repositories/categories/categories.repository';
 import { ClassificationsRepository } from '../../repositories/classifications/classifications.repository';
 import { AnimesDto } from 'src/@core/app/dto/animes/animes-dto';
+import { TypesAnimesRepository } from '../../repositories/type/types.repository';
 
 @Injectable()
 export class AnimesUseCase {
   constructor(
     private readonly categoriesRepository: CategoriesRepository,
     private readonly classificationsRepository: ClassificationsRepository,
+    private readonly typesAnimesRepository: TypesAnimesRepository,
     private readonly animesRepository: AnimesRepository,
   ) {}
 
@@ -47,12 +49,18 @@ export class AnimesUseCase {
   }
 
   async create(createAnimesDto: CreateAnimesDto) {
-    const { classificationName, categoryNames, name, ...animeData } = createAnimesDto;
+    const { classificationName, categoryNames, name, type, ...animeData } = createAnimesDto;
+
+    const typesAnimes = await this.typesAnimesRepository.findByName(type);
     const classification = await this.classificationsRepository.findByName(classificationName);
     const formattedName = name.charAt(0).toUpperCase() + name.slice(1);
 
     if (!classification) {
       throw new NotFoundException('Esta classificação não existe');
+    }
+
+    if (!typesAnimes) {
+      throw new NotFoundException('Este tipo não existe');
     }
 
     const categories = await this.categoriesRepository.findManyByNames(categoryNames);
@@ -64,6 +72,9 @@ export class AnimesUseCase {
     const anime = await this.animesRepository.create({
       ...animeData,
       name: formattedName,
+      types: {
+        connect: { name: type },
+      },
       classifications: {
         connect: { name: classificationName },
       },
@@ -77,6 +88,7 @@ export class AnimesUseCase {
       name: formattedName,
       thumbnailUrl: anime.thumbnailUrl,
       feature: anime.feature,
+      type: type,
       classification: classificationName,
       categories: categoryNames,
       createdAt: anime.createdAt,
@@ -84,7 +96,10 @@ export class AnimesUseCase {
   }
 
   async update(animeId: number, updateAnimesDto: UpdateAnimesDto) {
-    const { classificationName, categoryNames, name, ...animeData } = updateAnimesDto;
+    const { classificationName, categoryNames, name, type, ...animeData } = updateAnimesDto;
+
+    const typesAnimes = await this.typesAnimesRepository.findByName(type);
+    const classification = await this.classificationsRepository.findByName(classificationName);
     const formattedName = name.charAt(0).toUpperCase() + name.slice(1);
 
     const existingAnime = await this.animesRepository.findById(animeId);
@@ -93,10 +108,12 @@ export class AnimesUseCase {
       throw new NotFoundException(`O anime com ID ${animeId} não foi encontrado`);
     }
 
-    const classification = await this.classificationsRepository.findByName(classificationName);
-
     if (!classification) {
       throw new NotFoundException('Esta classificação não existe');
+    }
+
+    if (!typesAnimes) {
+      throw new NotFoundException('Este tipo não existe');
     }
 
     const categories = await this.categoriesRepository.findManyByNames(categoryNames);
@@ -108,6 +125,9 @@ export class AnimesUseCase {
     const animeUpdate = await this.animesRepository.update(animeId, {
       ...animeData,
       name: formattedName,
+      types: {
+        connect: { name: type },
+      },
       classifications: {
         connect: { name: classificationName },
       },
@@ -122,6 +142,7 @@ export class AnimesUseCase {
       synopsis: animeUpdate.synopsis,
       thumbnailUrl: animeUpdate.thumbnailUrl,
       feature: animeUpdate.feature,
+      type: type,
       classification: classificationName,
       categories: categoryNames,
     };

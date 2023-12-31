@@ -12,7 +12,6 @@ import { ApiTags } from '@nestjs/swagger';
 import { LikesAnimesService } from '../../services/likes/likes-animes.service';
 import { AuthRequest } from 'src/@core/infra/auth/models/auth-request';
 import { Roles, UserType } from 'src/@core/infra/decorators/roles.decorator';
-import { Public } from 'src/@core/infra/decorators/public-route.decorator';
 import { LikesAnimesDto } from '../../dto/likes/create-likes-animes-dto';
 
 @ApiTags('Likes Animes')

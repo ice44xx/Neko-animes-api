@@ -14,6 +14,7 @@ export async function createAnimes() {
         'https://res.cloudinary.com/doupbxhfd/image/upload/v1690133090/Thumbnails/jujutsu_aboouc_ehronz.webp',
       feature: true,
       categoryNames: ['terror', 'aventura'],
+      type: 'series',
       classificationName: 'seinen',
     },
     {
@@ -24,6 +25,7 @@ export async function createAnimes() {
         'https://res.cloudinary.com/doupbxhfd/image/upload/v1690133090/Thumbnails/KonoSuba_erzgrt_ubbfcj.webp',
       feature: true,
       categoryNames: ['fantasia', 'comédia'],
+      type: 'series',
       classificationName: 'shounen',
     },
     {
@@ -34,6 +36,7 @@ export async function createAnimes() {
         'https://res.cloudinary.com/doupbxhfd/image/upload/v1690133089/Thumbnails/Dr._Stone_c5ljk4_rgc0yc.webp',
       feature: true,
       categoryNames: ['sci-fi', 'drama'],
+      type: 'series',
       classificationName: 'shounen',
     },
     {
@@ -44,6 +47,7 @@ export async function createAnimes() {
         'https://res.cloudinary.com/doupbxhfd/image/upload/v1690133090/Thumbnails/Chainsaw_man_tndear_md6klt.webp',
       feature: true,
       categoryNames: ['ação', 'terror'],
+      type: 'series',
       classificationName: 'shounen',
     },
     {
@@ -53,6 +57,7 @@ export async function createAnimes() {
         'https://res.cloudinary.com/doupbxhfd/image/upload/v1690132962/Thumbnails/SpyxFamily_udjb16_r2h2io.webp',
       feature: true,
       categoryNames: ['comédia', 'drama'],
+      type: 'series',
       classificationName: 'shounen',
     },
     {
@@ -63,6 +68,7 @@ export async function createAnimes() {
         'https://res.cloudinary.com/doupbxhfd/image/upload/v1690132960/Thumbnails/Oshi_No_Ko_tkcp3i_bvnbri.webp',
       feature: true,
       categoryNames: ['drama', 'aventura'],
+      type: 'series',
       classificationName: 'shounen',
     },
     {
@@ -72,6 +78,7 @@ export async function createAnimes() {
         'https://res.cloudinary.com/doupbxhfd/image/upload/v1690132961/Thumbnails/Overlord_3_Temporada_faj9qm_fy4ksy.webp',
       feature: true,
       categoryNames: ['ação', 'fantasia'],
+      type: 'series',
       classificationName: 'shounen',
     },
     {
@@ -82,6 +89,7 @@ export async function createAnimes() {
         'https://res.cloudinary.com/doupbxhfd/image/upload/v1690132960/Thumbnails/My_Hero_a_ct9h64_dbxlf6.webp',
       feature: true,
       categoryNames: ['ação', 'fantasia'],
+      type: 'series',
       classificationName: 'shounen',
     },
     {
@@ -92,6 +100,7 @@ export async function createAnimes() {
         'https://res.cloudinary.com/doupbxhfd/image/upload/v1690132959/Thumbnails/Mashle_illcy6_l2ladk.webp',
       feature: true,
       categoryNames: ['ação', 'fantasia'],
+      type: 'series',
       classificationName: 'shounen',
     },
     {
@@ -102,6 +111,7 @@ export async function createAnimes() {
         'https://res.cloudinary.com/doupbxhfd/image/upload/v1690132957/Thumbnails/Kaguya-sama_zipp7i_cpl30v.webp',
       feature: true,
       categoryNames: ['comédia', 'romance'],
+      type: 'movies',
       classificationName: 'seinen',
     },
   ];
@@ -126,6 +136,11 @@ export async function createAnimes() {
             synopsis: animeData.synopsis,
             thumbnailUrl: animeData.thumbnailUrl,
             feature: animeData.feature,
+            types: {
+              connect: {
+                name: animeData.type,
+              },
+            },
             classifications: {
               connect: {
                 name: animeData.classificationName,

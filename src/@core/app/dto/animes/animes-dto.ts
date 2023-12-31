@@ -17,6 +17,9 @@ export class AnimesDto {
   readonly feature?: boolean;
 
   @IsString()
+  readonly type?: string;
+
+  @IsString()
   readonly classificationName?: string;
 
   @IsArray()
