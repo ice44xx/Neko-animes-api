@@ -51,11 +51,21 @@ model Animes {
   favorites         Favorites[]
   classifications   Classifications @relation(fields: [classificationsId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   classificationsId Int
+  types             TypesAnimes     @relation(fields: [typesId], references: [id])
+  typesId           Int
   seasons           Seasons[]
   createdAt         DateTime        @default(now())
   updatedAt         DateTime        @default(now())
 
   @@map("animes")
+}
+
+model TypesAnimes {
+  id     Int      @id @default(autoincrement())
+  name   String   @unique
+  animes Animes[]
+
+  @@map("types-animes")
 }
 
 model Categories {

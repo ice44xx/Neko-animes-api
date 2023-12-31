@@ -22,6 +22,11 @@ export class CreateAnimesDto {
   @IsBoolean()
   readonly feature: boolean;
 
+  @ApiProperty({ description: 'Nome do tipo do anime' })
+  @IsNotEmpty({ message: 'O tipo é obrigatória' })
+  @IsString()
+  readonly type: string;
+
   @ApiProperty({ description: 'Nome da classificação do anime' })
   @IsNotEmpty({ message: 'A classificação é obrigatória' })
   @IsString()

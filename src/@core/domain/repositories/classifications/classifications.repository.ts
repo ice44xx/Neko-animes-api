@@ -34,7 +34,7 @@ export class ClassificationsRepository {
     return this.prisma.classifications.create({ data });
   }
 
-  async update(id: number, data: Prisma.ClassificationsCreateInput) {
+  async update(id: number, data: Prisma.ClassificationsUpdateInput) {
     return this.prisma.classifications.update({ where: { id }, data });
   }
 

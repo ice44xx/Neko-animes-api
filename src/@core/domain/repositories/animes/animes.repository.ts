@@ -14,6 +14,11 @@ export class AnimesRepository {
         synopsis: true,
         thumbnailUrl: true,
         feature: true,
+        types: {
+          select: {
+            name: true,
+          },
+        },
         classifications: {
           select: {
             name: true,
@@ -82,6 +87,11 @@ export class AnimesRepository {
         synopsis: true,
         thumbnailUrl: true,
         feature: true,
+        types: {
+          select: {
+            name: true,
+          },
+        },
         classifications: {
           select: {
             name: true,
@@ -140,6 +150,11 @@ export class AnimesRepository {
         synopsis: true,
         thumbnailUrl: true,
         feature: true,
+        types: {
+          select: {
+            name: true,
+          },
+        },
         classifications: {
           select: {
             name: true,
@@ -202,6 +217,11 @@ export class AnimesRepository {
         synopsis: true,
         thumbnailUrl: true,
         feature: true,
+        types: {
+          select: {
+            name: true,
+          },
+        },
         classifications: {
           select: {
             name: true,
@@ -270,6 +290,11 @@ export class AnimesRepository {
         synopsis: true,
         thumbnailUrl: true,
         feature: true,
+        types: {
+          select: {
+            name: true,
+          },
+        },
         classifications: {
           select: {
             name: true,

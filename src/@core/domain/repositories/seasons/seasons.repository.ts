@@ -19,6 +19,15 @@ export class SeasonsRepository {
             thumbnailUrl: true,
           },
         },
+        episodes: {
+          select: {
+            id: true,
+            name: true,
+            url: true,
+            episodeOrder: true,
+            likes: true,
+          },
+        },
       },
     });
   }
@@ -35,6 +44,15 @@ export class SeasonsRepository {
             name: true,
             synopsis: true,
             thumbnailUrl: true,
+          },
+        },
+        episodes: {
+          select: {
+            id: true,
+            name: true,
+            url: true,
+            episodeOrder: true,
+            likes: true,
           },
         },
       },
