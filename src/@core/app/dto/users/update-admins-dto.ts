@@ -1,3 +1,4 @@
+import { ApiProperty } from '@nestjs/swagger';
 import { Transform } from 'class-transformer';
 import {
   IsDate,
@@ -10,23 +11,27 @@ import {
 } from 'class-validator';
 
 export class UpdateAdminsDto {
+  @ApiProperty({ description: 'Nome do administrador', example: 'John Doe' })
   @IsNotEmpty({ message: 'O nome é obrigatório' })
   @MinLength(2, { message: 'O nome deve ter no mínimo 2 caracteres' })
   @MaxLength(50, { message: 'O nome deve ter no máximo 50 caracteres' })
   @IsString()
   readonly firstName: string;
 
+  @ApiProperty({ description: 'Nome de usuário do administrador', example: 'john123' })
   @IsNotEmpty({ message: 'O nickname é obrigatório' })
   @MinLength(3, { message: 'O nome de usuário deve ter no mínimo 3 caracteres' })
   @MaxLength(15, { message: 'O nome de usuário deve ter no máximo 15 caracteres' })
   @IsString()
   readonly userName: string;
 
+  @ApiProperty({ description: 'Email do administrador', example: 'example@example.com' })
   @IsNotEmpty({ message: 'O email é obrigatório' })
   @IsEmail({}, { message: 'O email fornecido é inválido' })
   @IsString()
   readonly email: string;
 
+  @ApiProperty({ description: 'Data de aniversário do administrador', example: '1990-01-01' })
   @IsDate()
   @Transform(({ value }) => new Date(value))
   readonly birthday: Date;
@@ -34,6 +39,7 @@ export class UpdateAdminsDto {
   @IsString()
   readonly profile: string;
 
+  @ApiProperty({ description: 'ID da função do administrador', example: 1 })
   @IsNotEmpty({ message: 'A role é obrigatório' })
   @IsNumber()
   readonly roleId: number;
