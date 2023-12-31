@@ -7,7 +7,7 @@ const prisma = new PrismaClient();
 export async function createAnimes() {
   const animesToCreate = [
     {
-      name: 'jujutsu no kaisen',
+      name: 'Jujutsu no kaisen',
       synopsis:
         'Sofrimento, arrependimento, vergonha: os sentimentos negativos dos humanos tornam-se Maldições...',
       thumbnailUrl:
@@ -107,27 +107,37 @@ export async function createAnimes() {
   ];
 
   for (const animeData of animesToCreate) {
-    const categories = animeData.categoryNames.map((categoryName) => ({
-      where: { name: categoryName },
-      create: { name: categoryName },
-    }));
-
-    await prisma.animes.create({
-      data: {
+    const existingAnime = await prisma.animes.findMany({
+      where: {
         name: animeData.name,
-        synopsis: animeData.synopsis,
-        thumbnailUrl: animeData.thumbnailUrl,
-        feature: animeData.feature,
-        classifications: {
-          connect: {
-            name: animeData.classificationName,
-          },
-        },
-        categories: {
-          connectOrCreate: categories,
-        },
       },
     });
+
+    if (existingAnime.length === 0) {
+      const categories = animeData.categoryNames.map((categoryName) => ({
+        where: { name: categoryName },
+        create: { name: categoryName },
+      }));
+
+      try {
+        await prisma.animes.create({
+          data: {
+            name: animeData.name,
+            synopsis: animeData.synopsis,
+            thumbnailUrl: animeData.thumbnailUrl,
+            feature: animeData.feature,
+            classifications: {
+              connect: {
+                name: animeData.classificationName,
+              },
+            },
+            categories: {
+              connectOrCreate: categories,
+            },
+          },
+        });
+      } catch (error) {}
+    }
   }
 }
 
