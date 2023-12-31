@@ -1,4 +1,4 @@
-import { IsNumber } from 'class-validator';
+import { IsBoolean, IsNumber } from 'class-validator';
 
 export class LikesEpisodesDto {
   @IsNumber()
@@ -6,4 +6,7 @@ export class LikesEpisodesDto {
 
   @IsNumber()
   readonly episodeId?: number;
+
+  @IsBoolean()
+  readonly like?: boolean;
 }

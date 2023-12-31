@@ -3,6 +3,7 @@ CREATE TABLE "likes-episodes" (
     "id" SERIAL NOT NULL,
     "usersId" INTEGER NOT NULL,
     "episodesId" INTEGER NOT NULL,
+    "like" BOOLEAN DEFAULT false,
 
     CONSTRAINT "likes-episodes_pkey" PRIMARY KEY ("id")
 );

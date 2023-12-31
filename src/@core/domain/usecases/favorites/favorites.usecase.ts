@@ -1,9 +1,4 @@
-import {
-  ConflictException,
-  Injectable,
-  NotFoundException,
-  UnauthorizedException,
-} from '@nestjs/common';
+import { Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { FavoritesRepository } from '../../repositories/favorites/favorites.repository';
 import { UsersRepository } from '../../repositories/users/users.repository';
 import { CreateFavoritesDto } from 'src/@core/app/dto/favorites/create-favorites-dto';
@@ -35,17 +30,11 @@ export class FavoritesUseCase {
     return favorites;
   }
 
-  async create({ userId, animeId }: CreateFavoritesDto) {
+  async create({ userId, animeId, favorite }: CreateFavoritesDto) {
     const user = await this.usersRepository.findById(userId);
 
     if (!user) {
       throw new UnauthorizedException('Credenciais inválidas');
-    }
-
-    const existingFavorite = await this.favoritesRepository.findOne(userId, animeId);
-
-    if (existingFavorite) {
-      throw new ConflictException('Anime já adicionado aos favoritos');
     }
 
     const anime = await this.animesRepository.findById(animeId);
@@ -54,15 +43,16 @@ export class FavoritesUseCase {
       throw new NotFoundException('Anime não encontrado');
     }
 
-    const favorite = await this.favoritesRepository.create({
+    await this.favoritesRepository.create({
       user: { connect: { id: userId } },
       animes: { connect: { id: animeId } },
+      favorite: true,
     });
 
     return {
-      id: favorite.id,
       animeId: anime.id,
       anime: anime.name,
+      favorite: favorite,
     };
   }
 
@@ -73,8 +63,12 @@ export class FavoritesUseCase {
       throw new UnauthorizedException('Credenciais inválidas');
     }
 
-    const anime = await this.animesRepository.findById(animeId);
+    const favorite = await this.favoritesRepository.findById(animeId);
 
-    await this.favoritesRepository.remove(anime.id);
+    if (!favorite) {
+      throw new NotFoundException('Anime não encontrado');
+    }
+
+    await this.favoritesRepository.remove(animeId);
   }
 }

@@ -30,18 +30,17 @@ export class LikesEpisodesUseCase {
       throw new NotFoundException('Episódio não encontrado');
     }
 
-    const existingLike = await this.likesEpisodesRepository.findOne(userId, episodeId);
-
-    if (existingLike) {
-      throw new ConflictException('Usuário já curtiu este episódio');
-    }
-
     const newLike = await this.likesEpisodesRepository.create({
       user: { connect: { id: userId } },
       episodes: { connect: { id: episodeId } },
+      like: true,
     });
 
-    return newLike;
+    return {
+      episodeId: newLike.episodesId,
+      episode: episode.name,
+      like: newLike.like,
+    };
   }
 
   async remove({ userId, episodeId }: LikesEpisodesDto) {

@@ -35,6 +35,7 @@ CREATE TABLE "favorites" (
     "id" SERIAL NOT NULL,
     "userId" INTEGER NOT NULL,
     "animesId" INTEGER NOT NULL,
+    "favorite" BOOLEAN DEFAULT false,
 
     CONSTRAINT "favorites_pkey" PRIMARY KEY ("id")
 );
@@ -44,7 +45,8 @@ CREATE TABLE "likes-animes" (
     "id" SERIAL NOT NULL,
     "userId" INTEGER NOT NULL,
     "animesId" INTEGER NOT NULL,
-
+    "like" BOOLEAN DEFAULT false,
+    
     CONSTRAINT "likes-animes_pkey" PRIMARY KEY ("id")
 );
 

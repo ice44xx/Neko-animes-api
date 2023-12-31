@@ -1,9 +1,4 @@
-import {
-  ConflictException,
-  Injectable,
-  NotFoundException,
-  UnauthorizedException,
-} from '@nestjs/common';
+import { Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { LikesAnimesRepository } from '../../repositories/likes/likes-animes.repository';
 import { UsersRepository } from '../../repositories/users/users.repository';
 import { AnimesRepository } from '../../repositories/animes/animes.repository';
@@ -30,18 +25,17 @@ export class LikesAnimesUseCase {
       throw new NotFoundException('Anime não encontrado');
     }
 
-    const existingLike = await this.likesAnimesRepository.findOne(userId, animeId);
-
-    if (existingLike) {
-      throw new ConflictException('Usuário já curtiu este anime');
-    }
-
     const newLike = await this.likesAnimesRepository.create({
       user: { connect: { id: userId } },
       anime: { connect: { id: animeId } },
+      like: true,
     });
 
-    return newLike;
+    return {
+      animeId: newLike.animesId,
+      anime: anime.name,
+      like: newLike.like,
+    };
   }
 
   async remove({ userId, animeId }: LikesAnimesDto) {
