@@ -1,5 +1,4 @@
 import {
-  ConflictException,
   Controller,
   Delete,
   NotFoundException,
@@ -25,15 +24,13 @@ export class LikesEpisodesController {
   async create(@Request() req: AuthRequest, @Res() res, @Param('episodeId') episodeId: number) {
     try {
       const createLike: LikesEpisodesDto = { userId: req.user.id, episodeId: episodeId };
-      await this.likesEpisodesService.create(createLike);
-      return res.status(201).send({ message: 'Like adicionado ao episódio!' });
+      const like = await this.likesEpisodesService.create(createLike);
+      return res.status(201).send({ message: 'Like adicionado ao episódio!', like });
     } catch (error) {
       if (error instanceof UnauthorizedException) {
         return res.status(401).send({ message: error.message });
       } else if (error instanceof NotFoundException) {
         return res.status(404).send({ message: error.message });
-      } else if (error instanceof ConflictException) {
-        return res.status(409).send({ message: error.message });
       }
       return res.status(500).send({ message: 'Ocorreu um erro ao criar o like, ' + error.message });
     }

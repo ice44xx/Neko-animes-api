@@ -10,17 +10,15 @@ export class FavoritesRepository {
     const favorites = await this.prisma.favorites.findMany({
       where: { userId },
       select: {
-        id: true,
-        userId: true,
         animes: true,
+        favorite: true,
       },
     });
 
     return favorites.map((favorite) => ({
-      id: favorite.id,
-      userId: favorite.userId,
       animeId: favorite.animes.id,
       anime: favorite.animes.name,
+      favorite: favorite.favorite,
       thumbnailUrl: favorite.animes.thumbnailUrl,
     }));
   }
@@ -34,11 +32,19 @@ export class FavoritesRepository {
     });
   }
 
+  async findById(animeId: number) {
+    return this.prisma.favorites.findFirst({
+      where: {
+        animesId: animeId,
+      },
+    });
+  }
+
   async create(data: Prisma.FavoritesCreateInput) {
     return this.prisma.favorites.create({ data });
   }
 
-  async remove(id: number) {
-    return this.prisma.favorites.delete({ where: { id } });
+  async remove(animeId: number) {
+    return this.prisma.favorites.deleteMany({ where: { animesId: animeId } });
   }
 }

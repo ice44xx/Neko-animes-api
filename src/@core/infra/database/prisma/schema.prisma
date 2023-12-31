@@ -77,21 +77,23 @@ model Classifications {
 }
 
 model Favorites {
-  id       Int    @id @default(autoincrement())
-  user     Users  @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  id       Int     @id @default(autoincrement())
+  user     Users   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   userId   Int
-  animes   Animes @relation(fields: [animesId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  animes   Animes  @relation(fields: [animesId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   animesId Int
+  favorite Boolean @default(false)
 
   @@map("favorites")
 }
 
 model LikesAnimes {
-  id       Int    @id @default(autoincrement())
-  anime    Animes @relation(fields: [animesId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  id       Int     @id @default(autoincrement())
+  anime    Animes  @relation(fields: [animesId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   animesId Int
-  user     Users  @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  user     Users   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   userId   Int
+  like     Boolean @default(false)
 
   @@map("likes-animes")
 }
@@ -126,6 +128,7 @@ model LikesEpisodes {
   userId     Int
   episodes   Episodes @relation(fields: [episodesId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   episodesId Int
+  like       Boolean  @default(false)
 
   @@map("likes-episodes")
 }
@@ -164,6 +167,7 @@ model LikesComments {
   commentsId Int
   users      Users    @relation(fields: [usersId], references: [id])
   usersId    Int
+  like       Boolean  @default(false)
 
   @@map("likes-comments")
 }

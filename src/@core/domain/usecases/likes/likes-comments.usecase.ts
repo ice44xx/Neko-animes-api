@@ -1,9 +1,4 @@
-import {
-  ConflictException,
-  Injectable,
-  NotFoundException,
-  UnauthorizedException,
-} from '@nestjs/common';
+import { Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { UsersRepository } from '../../repositories/users/users.repository';
 import { CommentsRepository } from '../../repositories/comments/comments.repository';
 import { LikesCommentsDto } from 'src/@core/app/dto/likes/create-likes-comments-dto';
@@ -28,12 +23,6 @@ export class LikesCommentsUseCase {
 
     if (!comment) {
       throw new NotFoundException('Comentário não encontrado');
-    }
-
-    const existingLike = await this.likesCommentsRepository.findOne(userId, commentId);
-
-    if (existingLike) {
-      throw new ConflictException('Usuário já curtiu este comentário');
     }
 
     const newLike = await this.likesCommentsRepository.create({

@@ -1,5 +1,4 @@
 import {
-  ConflictException,
   Controller,
   Delete,
   Get,
@@ -51,8 +50,6 @@ export class FavoritesController {
         return res.status(401).send({ message: error.message });
       } else if (error instanceof NotFoundException) {
         return res.status(404).send({ message: error.message });
-      } else if (error instanceof ConflictException) {
-        return res.status(409).send({ message: error.message });
       }
       return res
         .status(500)
@@ -67,10 +64,12 @@ export class FavoritesController {
     const favoritesDto: CreateFavoritesDto = { userId: currentUser.id, animeId: animeId };
     try {
       await this.favoritesService.remove(favoritesDto);
-      return res.status(200).json({ message: 'Like removido com sucesso!' });
+      return res.status(200).json({ message: 'Favorito removido com sucesso!' });
     } catch (error) {
       if (error instanceof UnauthorizedException) {
         return res.status(401).send({ message: error.message });
+      } else if (error instanceof NotFoundException) {
+        return res.status(404).send({ message: error.message });
       }
       return res
         .status(500)
