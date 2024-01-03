@@ -48,7 +48,7 @@ export class AnimesController {
   }
 
   @Public()
-  @Get()
+  @Get('newest')
   async findNewest(@Res() res) {
     try {
       const animes = await this.animesService.findTopNewest();
