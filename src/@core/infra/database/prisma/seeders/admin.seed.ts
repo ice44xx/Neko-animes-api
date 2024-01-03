@@ -36,7 +36,6 @@ export async function createAdmin() {
     const birthday = new Date('2023-12-01');
     await prisma.users.create({
       data: {
-        firstName: 'Neko',
         userName: 'Neko Animes',
         email: 'nekopageanimes@gmail.com',
         birthday: birthday,

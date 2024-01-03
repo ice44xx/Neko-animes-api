@@ -80,7 +80,6 @@ export class UsersUseCase {
 
     return {
       id: user.id,
-      firstName: user.firstName,
       userName: user.userName,
       email: user.email,
       profile: user.profile,
@@ -114,7 +113,6 @@ export class UsersUseCase {
 
     return {
       id: updateUser.id,
-      firstName: updateUser.firstName,
       userName: updateUser.userName,
       email: updateUser.email,
       birthday: updateUser.birthday,
@@ -166,7 +164,6 @@ export class UsersUseCase {
 
     return {
       id: user.id,
-      firstName: user.firstName,
       userName: user.userName,
       email: user.email,
       profile: user.profile,
@@ -198,7 +195,6 @@ export class UsersUseCase {
 
     return {
       id: updateAdmin.id,
-      firstName: updateAdmin.firstName,
       userName: updateAdmin.userName,
       email: updateAdmin.email,
       birthday: updateAdmin.birthday,
