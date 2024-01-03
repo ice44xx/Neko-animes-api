@@ -16,6 +16,10 @@ export class AnimesService {
     return await this.animesUseCase.findAllFeature();
   }
 
+  async findTopNewest() {
+    return await this.animesUseCase.findTopNewest();
+  }
+
   async findTopLikes() {
     return await this.animesUseCase.findTopLikes();
   }

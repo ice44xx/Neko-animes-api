@@ -24,6 +24,10 @@ export class AnimesUseCase {
     return await this.animesRepository.findAllFeature();
   }
 
+  async findTopNewest() {
+    return await this.animesRepository.findTopNewest();
+  }
+
   async findTopLikes() {
     return await this.animesRepository.findTopLikes();
   }
