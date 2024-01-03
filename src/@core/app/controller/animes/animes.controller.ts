@@ -48,6 +48,19 @@ export class AnimesController {
   }
 
   @Public()
+  @Get()
+  async findNewest(@Res() res) {
+    try {
+      const animes = await this.animesService.findTopNewest();
+      return res.status(200).json(animes);
+    } catch (error) {
+      return res
+        .status(500)
+        .send({ message: 'Ocorreu um erro ao buscar os animes lançamentos, ' + error.message });
+    }
+  }
+
+  @Public()
   @Get('likes')
   async findTopLikes(@Res() res) {
     try {
