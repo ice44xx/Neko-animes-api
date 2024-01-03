@@ -15,12 +15,14 @@ import { RolesModule } from 'src/@core/app/modules/users/roles.module';
 import { UsersModule } from 'src/@core/app/modules/users/users.module';
 import { WatchlistModule } from 'src/@core/app/modules/watchlist/watchlist.module';
 import { AuthModule } from 'src/@core/app/modules/auth/auth.module';
-import { TypesAnimesModule } from 'src/@core/app/modules/type/types.module';
+import { TypesAnimesModule } from 'src/@core/app/modules/types-animes/types.module';
+import { BackgroundsAuthModule } from 'src/@core/app/modules/backgrounds-auth/backgrounds-auth.module';
 
 @Module({
   imports: [
     AnimesModule,
     BackgroundsModule,
+    BackgroundsAuthModule,
     TypesAnimesModule,
     CategoriesModule,
     ClassificationsModule,

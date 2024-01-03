@@ -190,3 +190,13 @@ model Backgrounds {
 
   @@map("backgrounds")
 }
+
+model BackgroundsAuth {
+  id        Int      @id @default(autoincrement())
+  url       String
+  order     Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+
+  @@map("backgrounds-auth")
+}

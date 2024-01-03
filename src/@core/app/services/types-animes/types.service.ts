@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
-import { TypesAnimesUseCase } from 'src/@core/domain/usecases/type/types.usecase';
-import { TypesAnimesDto } from '../../dto/type/types-dto';
-import { UpdateTypesAnimesDto } from '../../dto/type/update-types-dto';
-import { CreateTypesAnimesDto } from '../../dto/type/create-types-dto';
+import { TypesAnimesUseCase } from 'src/@core/domain/usecases/types-animes/types.usecase';
+import { TypesAnimesDto } from '../../dto/types-animes/types-dto';
+import { UpdateTypesAnimesDto } from '../../dto/types-animes/update-types-dto';
+import { CreateTypesAnimesDto } from '../../dto/types-animes/create-types-dto';
 
 @Injectable()
 export class TypesAnimesService {

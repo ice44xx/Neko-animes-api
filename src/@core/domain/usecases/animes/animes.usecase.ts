@@ -5,7 +5,7 @@ import { AnimesRepository } from 'src/@core/domain/repositories/animes/animes.re
 import { CategoriesRepository } from '../../repositories/categories/categories.repository';
 import { ClassificationsRepository } from '../../repositories/classifications/classifications.repository';
 import { AnimesDto } from 'src/@core/app/dto/animes/animes-dto';
-import { TypesAnimesRepository } from '../../repositories/type/types.repository';
+import { TypesAnimesRepository } from '../../repositories/types-animes/types.repository';
 
 @Injectable()
 export class AnimesUseCase {
