@@ -19,9 +19,8 @@ export class AuthServices {
 
     const payload: UsersPayloadDto = {
       id: user.id,
-      firstName: user.firstName,
-      email: user.email,
       userName: user.userName,
+      email: user.email,
       role: user.role,
     };
 

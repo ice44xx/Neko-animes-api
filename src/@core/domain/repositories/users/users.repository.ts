@@ -10,7 +10,6 @@ export class UsersRepository {
     const users = await this.prisma.users.findMany({
       select: {
         id: true,
-        firstName: true,
         userName: true,
         email: true,
         birthday: true,
@@ -37,7 +36,6 @@ export class UsersRepository {
       where: { id },
       select: {
         id: true,
-        firstName: true,
         userName: true,
         email: true,
         password: true,
@@ -69,7 +67,6 @@ export class UsersRepository {
       },
       select: {
         id: true,
-        firstName: true,
         userName: true,
         email: true,
         password: true,

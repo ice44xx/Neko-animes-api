@@ -5,9 +5,6 @@ export class UsersDto {
   readonly id?: number;
 
   @IsString()
-  readonly firstName?: string;
-
-  @IsString()
   readonly userName?: string;
 
   @IsString()

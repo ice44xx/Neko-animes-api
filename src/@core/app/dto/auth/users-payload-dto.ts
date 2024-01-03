@@ -8,9 +8,6 @@ export class UsersPayloadDto {
   readonly email: string;
 
   @IsString()
-  readonly firstName: string;
-
-  @IsString()
   readonly userName: string;
 
   @IsString()

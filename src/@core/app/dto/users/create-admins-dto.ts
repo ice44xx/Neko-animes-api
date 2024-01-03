@@ -12,13 +12,6 @@ import {
 } from 'class-validator';
 
 export class CreateAdminsDto {
-  @ApiProperty({ description: 'Nome do usuário', example: 'John Doe' })
-  @IsNotEmpty({ message: 'O nome é obrigatório' })
-  @MinLength(2, { message: 'O nome deve ter no mínimo 2 caracteres' })
-  @MaxLength(50, { message: 'O nome deve ter no máximo 50 caracteres' })
-  @IsString()
-  readonly firstName: string;
-
   @ApiProperty({ description: 'Nome de usuário do administrador', example: 'john123' })
   @IsNotEmpty({ message: 'O nickname é obrigatório' })
   @MinLength(3, { message: 'O nome de usuário deve ter no mínimo 3 caracteres' })
