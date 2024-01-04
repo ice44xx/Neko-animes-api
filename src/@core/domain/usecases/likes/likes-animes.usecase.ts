@@ -12,6 +12,18 @@ export class LikesAnimesUseCase {
     private readonly likesAnimesRepository: LikesAnimesRepository,
   ) {}
 
+  async findAllLikesUser({ userId }: LikesAnimesDto) {
+    const user = await this.usersRepository.findById(userId);
+
+    if (!user) {
+      throw new UnauthorizedException('Credenciais inválidas');
+    }
+
+    const likes = await this.likesAnimesRepository.findAllLikesUser(user.id);
+
+    return likes;
+  }
+
   async create({ userId, animeId }: LikesAnimesDto) {
     const user = await this.usersRepository.findById(userId);
 
@@ -57,6 +69,6 @@ export class LikesAnimesUseCase {
       throw new NotFoundException('Like não encontrado');
     }
 
-    await this.likesAnimesRepository.remove(like.id);
+    await this.likesAnimesRepository.remove(animeId);
   }
 }

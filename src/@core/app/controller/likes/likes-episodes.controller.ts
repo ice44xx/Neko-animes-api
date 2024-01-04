@@ -1,6 +1,7 @@
 import {
   Controller,
   Delete,
+  Get,
   NotFoundException,
   Param,
   Post,
@@ -18,6 +19,23 @@ import { LikesEpisodesDto } from '../../dto/likes/create-likes-episodes-dto';
 @Controller('likes-episodes')
 export class LikesEpisodesController {
   constructor(private readonly likesEpisodesService: LikesEpisodesService) {}
+
+  @Roles(UserType.User)
+  @Get()
+  async findAllLikesUser(@Request() req: AuthRequest, @Res() res) {
+    try {
+      const likesDto: LikesEpisodesDto = { userId: req.user.id };
+      const likes = await this.likesEpisodesService.findAllLikesUser(likesDto);
+      return res.status(200).json(likes);
+    } catch (error) {
+      if (error instanceof UnauthorizedException) {
+        return res.status(401).send({ message: error.message });
+      }
+      return res
+        .status(500)
+        .send({ message: 'Ocorreu um erro ao buscar os likes, ' + error.message });
+    }
+  }
 
   @Roles(UserType.User)
   @Post(':episodeId')

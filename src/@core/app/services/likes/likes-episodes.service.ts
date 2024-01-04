@@ -6,6 +6,10 @@ import { LikesEpisodesDto } from '../../dto/likes/create-likes-episodes-dto';
 export class LikesEpisodesService {
   constructor(private readonly likesEpisodesUseCase: LikesEpisodesUseCase) {}
 
+  async findAllLikesUser({ userId }: LikesEpisodesDto) {
+    return await this.likesEpisodesUseCase.findAllLikesUser({ userId });
+  }
+
   async create({ userId, episodeId }: LikesEpisodesDto) {
     return await this.likesEpisodesUseCase.create({ userId, episodeId });
   }
