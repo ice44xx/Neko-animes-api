@@ -99,13 +99,17 @@ export class UsersUseCase {
 
     const existingUser = await this.usersRepository.findByEmail(updateUsersDto.email);
 
-    if (existingUser) throw new ConflictException('Usuário já existe');
+    if (existingUser && existingUser.id !== userId) {
+      throw new ConflictException('Usuário já existe');
+    }
 
     const existingUserName = await this.usersRepository.findByUserNameUnique(
       updateUsersDto.userName,
     );
 
-    if (existingUserName) throw new ConflictException('Username já em uso');
+    if (existingUserName && existingUserName.id !== userId) {
+      throw new ConflictException('Username já em uso');
+    }
 
     const updateUser = await this.usersRepository.update(userId, updateUsersDto);
 
