@@ -36,7 +36,7 @@ export class EpisodesUseCase {
   }
 
   async create({ name, seasonId, ...episodesData }: CreateEpisodesDto) {
-    const nameLower = name.toLocaleLowerCase().trim();
+    const nameLower = name.trim();
 
     const season = await this.seasonsRepository.findById(seasonId);
 
@@ -54,7 +54,7 @@ export class EpisodesUseCase {
   }
 
   async update(episodeId: number, { name, seasonId, ...episodesData }: UpdateEpisodesDto) {
-    const nameLower = name.toLocaleLowerCase();
+    const nameLower = name.trim();
 
     const episode = await this.episodesRepository.findById(episodeId);
 
