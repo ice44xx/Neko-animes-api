@@ -13,6 +13,7 @@ import { UpdateUsersPasswordDto } from 'src/@core/app/dto/users/update-users-pas
 import { UsersDto } from 'src/@core/app/dto/users/users-dtos';
 import { CreateAdminsDto } from 'src/@core/app/dto/users/create-admins-dto';
 import { UpdateAdminsDto } from 'src/@core/app/dto/users/update-admins-dto';
+import { UpdateUsersProfileDto } from 'src/@core/app/dto/users/update-user-profile-dto';
 
 @Injectable()
 export class UsersUseCase {
@@ -99,13 +100,17 @@ export class UsersUseCase {
 
     const existingUser = await this.usersRepository.findByEmail(updateUsersDto.email);
 
-    if (existingUser) throw new ConflictException('Usuário já existe');
+    if (existingUser && existingUser.id !== userId) {
+      throw new ConflictException('Usuário já existe');
+    }
 
     const existingUserName = await this.usersRepository.findByUserNameUnique(
       updateUsersDto.userName,
     );
 
-    if (existingUserName) throw new ConflictException('Username já em uso');
+    if (existingUserName && existingUserName.id !== userId) {
+      throw new ConflictException('Username já em uso');
+    }
 
     const updateUser = await this.usersRepository.update(userId, updateUsersDto);
 
@@ -120,6 +125,16 @@ export class UsersUseCase {
       role: role.name,
       updatedAt: updateUser.updatedAt,
     };
+  }
+
+  async updateProfile(userId: number, updateUsersProfile: UpdateUsersProfileDto) {
+    const user = await this.usersRepository.findById(userId);
+
+    if (!user) {
+      throw new UnauthorizedException('Credenciais inválidas');
+    }
+
+    await this.usersRepository.update(userId, updateUsersProfile);
   }
 
   async updatePassword(userId: number, updateUsersPasswordDto: UpdateUsersPasswordDto) {

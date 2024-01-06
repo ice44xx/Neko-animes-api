@@ -4,6 +4,7 @@ CREATE TABLE "animes" (
     "name" TEXT NOT NULL,
     "synopsis" TEXT NOT NULL,
     "thumbnailUrl" TEXT NOT NULL,
+    "background" TEXT,
     "feature" BOOLEAN NOT NULL DEFAULT false,
     "classificationsId" INTEGER NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,

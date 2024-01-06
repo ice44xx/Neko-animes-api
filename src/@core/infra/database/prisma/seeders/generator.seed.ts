@@ -5,6 +5,9 @@ import { createCategories } from './categories.seed';
 import { createClassifications } from './classifications.seed';
 import { createAnimes } from './animes.seed';
 import { createTypesAnimes } from './types.seed';
+import { createBackgroundsAuth } from './backgrounds-auth.seed';
+import { createSeasons } from './seasons.seed';
+import { createEpisodes } from './episodes.seed';
 
 export async function generateSeeds() {
   await createRoles();
@@ -12,6 +15,9 @@ export async function generateSeeds() {
   await createTypesAnimes();
   await createClassifications();
   await createCategories();
-  await createBackgrounds();
   await createAnimes();
+  await createBackgrounds();
+  await createSeasons();
+  await createBackgroundsAuth();
+  await createEpisodes();
 }

@@ -11,6 +11,9 @@ export class UsersPayloadDto {
   readonly userName: string;
 
   @IsString()
+  readonly profile: string;
+
+  @IsString()
   readonly role: string;
 
   @IsString()

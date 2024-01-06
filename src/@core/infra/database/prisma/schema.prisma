@@ -44,6 +44,7 @@ model Animes {
   name              String
   synopsis          String
   thumbnailUrl      String
+  background        String?
   feature           Boolean         @default(false)
   categories        Categories[]
   likes             LikesAnimes[]
@@ -189,4 +190,14 @@ model Backgrounds {
   updatedAt DateTime @default(now())
 
   @@map("backgrounds")
+}
+
+model BackgroundsAuth {
+  id        Int      @id @default(autoincrement())
+  url       String
+  order     Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+
+  @@map("backgrounds-auth")
 }

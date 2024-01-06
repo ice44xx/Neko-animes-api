@@ -13,9 +13,9 @@ import {
 import { Public } from 'src/@core/infra/decorators/public-route.decorator';
 import { Roles, UserType } from 'src/@core/infra/decorators/roles.decorator';
 import { ApiTags } from '@nestjs/swagger';
-import { TypesAnimesService } from '../../services/type/types.service';
-import { CreateTypesAnimesDto } from '../../dto/type/create-types-dto';
-import { UpdateTypesAnimesDto } from '../../dto/type/update-types-dto';
+import { TypesAnimesService } from '../../services/types-animes/types.service';
+import { CreateTypesAnimesDto } from '../../dto/types-animes/create-types-dto';
+import { UpdateTypesAnimesDto } from '../../dto/types-animes/update-types-dto';
 
 @ApiTags('Tipos de Animes')
 @Controller('types-animes')

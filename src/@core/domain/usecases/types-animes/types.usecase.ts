@@ -1,8 +1,8 @@
 import { ConflictException, Injectable, NotFoundException } from '@nestjs/common';
-import { TypesAnimesDto } from 'src/@core/app/dto/type/types-dto';
-import { CreateTypesAnimesDto } from 'src/@core/app/dto/type/create-types-dto';
-import { UpdateTypesAnimesDto } from 'src/@core/app/dto/type/update-types-dto';
-import { TypesAnimesRepository } from '../../repositories/type/types.repository';
+import { TypesAnimesDto } from 'src/@core/app/dto/types-animes/types-dto';
+import { CreateTypesAnimesDto } from 'src/@core/app/dto/types-animes/create-types-dto';
+import { UpdateTypesAnimesDto } from 'src/@core/app/dto/types-animes/update-types-dto';
+import { TypesAnimesRepository } from '../../repositories/types-animes/types.repository';
 
 @Injectable()
 export class TypesAnimesUseCase {
