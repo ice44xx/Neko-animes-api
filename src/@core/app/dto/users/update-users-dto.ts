@@ -20,7 +20,4 @@ export class UpdateUsersDto {
   @IsDate()
   @Transform(({ value }) => new Date(value))
   readonly birthday: Date;
-
-  @IsString()
-  readonly profile: string;
 }
