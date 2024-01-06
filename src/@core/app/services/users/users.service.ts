@@ -6,6 +6,7 @@ import { UpdateUsersPasswordDto } from '../../dto/users/update-users-password-dt
 import { UsersDto } from '../../dto/users/users-dtos';
 import { CreateAdminsDto } from '../../dto/users/create-admins-dto';
 import { UpdateAdminsDto } from '../../dto/users/update-admins-dto';
+import { UpdateUsersProfileDto } from '../../dto/users/update-user-profile-dto';
 
 @Injectable()
 export class UsersService {
@@ -37,6 +38,10 @@ export class UsersService {
 
   async update(userId: number, updateUsersDto: UpdateUsersDto) {
     return await this.usersUseCase.update(userId, updateUsersDto);
+  }
+
+  async updateProfile(userId: number, updateUsersProfileDto: UpdateUsersProfileDto) {
+    return await this.usersUseCase.updateProfile(userId, updateUsersProfileDto);
   }
 
   async updateAdmin(userId: number, updateAdminsDto: UpdateAdminsDto) {

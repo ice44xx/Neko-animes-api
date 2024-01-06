@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { FavoritesRepository } from '../../repositories/favorites/favorites.repository';
 import { UsersRepository } from '../../repositories/users/users.repository';
-import { CreateFavoritesDto } from 'src/@core/app/dto/favorites/create-favorites-dto';
+import { FavoritesDto } from 'src/@core/app/dto/favorites/create-favorites-dto';
 import { AnimesRepository } from '../../repositories/animes/animes.repository';
 
 @Injectable()
@@ -12,7 +12,7 @@ export class FavoritesUseCase {
     private readonly favoritesRepository: FavoritesRepository,
   ) {}
 
-  async findAllFavoritesUser({ userId }: CreateFavoritesDto) {
+  async findAllFavoritesUser({ userId }: FavoritesDto) {
     const user = await this.usersRepository.findById(userId);
 
     if (!user) {
@@ -30,7 +30,7 @@ export class FavoritesUseCase {
     return favorites;
   }
 
-  async create({ userId, animeId, favorite }: CreateFavoritesDto) {
+  async create({ userId, animeId, favorite }: FavoritesDto) {
     const user = await this.usersRepository.findById(userId);
 
     if (!user) {
@@ -56,7 +56,7 @@ export class FavoritesUseCase {
     };
   }
 
-  async remove({ userId, animeId }: CreateFavoritesDto) {
+  async remove({ userId, animeId }: FavoritesDto) {
     const user = await this.usersRepository.findById(userId);
 
     if (!user) {

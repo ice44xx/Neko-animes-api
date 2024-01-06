@@ -22,6 +22,7 @@ import { AuthRequest } from 'src/@core/infra/auth/models/auth-request';
 import { UpdateUsersPasswordDto } from '../../dto/users/update-users-password-dto';
 import { CreateAdminsDto } from '../../dto/users/create-admins-dto';
 import { UpdateAdminsDto } from '../../dto/users/update-admins-dto';
+import { UpdateUsersProfileDto } from '../../dto/users/update-user-profile-dto';
 
 @ApiTags('Usuários')
 @Controller('users')
@@ -73,6 +74,25 @@ export class UsersController {
     }
   }
 
+  @Roles(UserType.User)
+  @Get('/data')
+  async getUser(@Request() req: AuthRequest, @Res() res) {
+    try {
+      const currentUser = req.user.id;
+      const user = await this.usersService.findById({ id: currentUser });
+      return res.status(200).json(user);
+    } catch (error) {
+      if (error instanceof UnauthorizedException) {
+        return res.status(401).send({ message: error.message });
+      } else if (error instanceof ConflictException) {
+        return res.status(401).send({ message: error.message });
+      }
+      return res
+        .status(500)
+        .send({ message: 'Ocorreu um erro ao buscar o usuário, ' + error.message });
+    }
+  }
+
   @Public()
   @Post('create')
   async create(@Res() res, @Body() createUsersDto: CreateUsersDto) {
@@ -95,6 +115,29 @@ export class UsersController {
     try {
       const currentUser = req.user.id;
       const user = await this.usersService.update(currentUser, updateUsersDto);
+      return res.status(200).json(user);
+    } catch (error) {
+      if (error instanceof ConflictException) {
+        return res.status(409).send({ message: error.message });
+      } else if (error instanceof UnauthorizedException) {
+        return res.status(401).send({ message: error.message });
+      }
+      return res
+        .status(500)
+        .send({ message: 'Ocorreu um erro ao atualizar o usuário, ' + error.message });
+    }
+  }
+
+  @Roles(UserType.User)
+  @Put('profile')
+  async updateProfile(
+    @Request() req: AuthRequest,
+    @Res() res,
+    @Body() updateUsersProfileDto: UpdateUsersProfileDto,
+  ) {
+    try {
+      const currentUser = req.user.id;
+      const user = await this.usersService.updateProfile(currentUser, updateUsersProfileDto);
       return res.status(200).json(user);
     } catch (error) {
       if (error instanceof ConflictException) {

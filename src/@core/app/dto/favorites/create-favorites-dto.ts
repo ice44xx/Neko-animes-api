@@ -1,6 +1,6 @@
 import { IsBoolean, IsNumber } from 'class-validator';
 
-export class CreateFavoritesDto {
+export class FavoritesDto {
   @IsNumber()
   readonly userId: number;
 

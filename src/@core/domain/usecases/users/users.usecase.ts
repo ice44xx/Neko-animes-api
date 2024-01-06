@@ -13,6 +13,7 @@ import { UpdateUsersPasswordDto } from 'src/@core/app/dto/users/update-users-pas
 import { UsersDto } from 'src/@core/app/dto/users/users-dtos';
 import { CreateAdminsDto } from 'src/@core/app/dto/users/create-admins-dto';
 import { UpdateAdminsDto } from 'src/@core/app/dto/users/update-admins-dto';
+import { UpdateUsersProfileDto } from 'src/@core/app/dto/users/update-user-profile-dto';
 
 @Injectable()
 export class UsersUseCase {
@@ -124,6 +125,16 @@ export class UsersUseCase {
       role: role.name,
       updatedAt: updateUser.updatedAt,
     };
+  }
+
+  async updateProfile(userId: number, updateUsersProfile: UpdateUsersProfileDto) {
+    const user = await this.usersRepository.findById(userId);
+
+    if (!user) {
+      throw new UnauthorizedException('Credenciais inválidas');
+    }
+
+    await this.usersRepository.update(userId, updateUsersProfile);
   }
 
   async updatePassword(userId: number, updateUsersPasswordDto: UpdateUsersPasswordDto) {

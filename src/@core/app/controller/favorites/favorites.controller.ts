@@ -12,7 +12,7 @@ import {
 import { FavoritesService } from '../../services/favorites/favorites.service';
 import { Roles, UserType } from 'src/@core/infra/decorators/roles.decorator';
 import { AuthRequest } from 'src/@core/infra/auth/models/auth-request';
-import { CreateFavoritesDto } from '../../dto/favorites/create-favorites-dto';
+import { FavoritesDto } from '../../dto/favorites/create-favorites-dto';
 import { ApiTags } from '@nestjs/swagger';
 
 @ApiTags('Favoritos')
@@ -24,7 +24,7 @@ export class FavoritesController {
   @Get()
   async findAllFavoritesUser(@Request() req: AuthRequest, @Res() res) {
     try {
-      const favoritesDto: CreateFavoritesDto = { userId: req.user.id };
+      const favoritesDto: FavoritesDto = { userId: req.user.id };
       const favorites = await this.favoritesService.findAllFavoritesUser(favoritesDto);
       return res.status(200).json(favorites);
     } catch (error) {
@@ -41,7 +41,7 @@ export class FavoritesController {
   @Post(':animeId')
   async create(@Request() req: AuthRequest, @Res() res, @Param('animeId') animeId: number) {
     const currentUser = req.user;
-    const favoritesDto: CreateFavoritesDto = { userId: currentUser.id, animeId: animeId };
+    const favoritesDto: FavoritesDto = { userId: currentUser.id, animeId: animeId };
     try {
       const favorites = await this.favoritesService.create(favoritesDto);
       return res.status(201).json(favorites);
@@ -61,7 +61,7 @@ export class FavoritesController {
   @Delete(':animeId')
   async remove(@Request() req: AuthRequest, @Res() res, @Param('animeId') animeId: number) {
     const currentUser = req.user;
-    const favoritesDto: CreateFavoritesDto = { userId: currentUser.id, animeId: animeId };
+    const favoritesDto: FavoritesDto = { userId: currentUser.id, animeId: animeId };
     try {
       await this.favoritesService.remove(favoritesDto);
       return res.status(200).json({ message: 'Favorito removido com sucesso!' });
