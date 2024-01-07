@@ -17,6 +17,7 @@ export async function createAnimes() {
       feature: true,
       categoryNames: ['terror', 'aventura'],
       type: 'series',
+      dubbed: 'leg',
       classificationName: 'seinen',
     },
     {
@@ -30,6 +31,7 @@ export async function createAnimes() {
       feature: true,
       categoryNames: ['fantasia', 'comédia'],
       type: 'series',
+      dubbed: 'leg',
       classificationName: 'shounen',
     },
     {
@@ -43,6 +45,7 @@ export async function createAnimes() {
       feature: true,
       categoryNames: ['sci-fi', 'drama'],
       type: 'series',
+      dubbed: 'leg',
       classificationName: 'shounen',
     },
     {
@@ -56,6 +59,7 @@ export async function createAnimes() {
       feature: true,
       categoryNames: ['ação', 'terror'],
       type: 'series',
+      dubbed: 'leg',
       classificationName: 'shounen',
     },
     {
@@ -69,6 +73,7 @@ export async function createAnimes() {
       feature: true,
       categoryNames: ['comédia', 'drama'],
       type: 'series',
+      dubbed: 'leg',
       classificationName: 'shounen',
     },
     {
@@ -82,6 +87,7 @@ export async function createAnimes() {
       feature: true,
       categoryNames: ['drama', 'aventura'],
       type: 'series',
+      dubbed: 'leg',
       classificationName: 'shounen',
     },
     {
@@ -95,6 +101,7 @@ export async function createAnimes() {
       feature: true,
       categoryNames: ['ação', 'fantasia'],
       type: 'series',
+      dubbed: 'leg',
       classificationName: 'shounen',
     },
     {
@@ -108,6 +115,7 @@ export async function createAnimes() {
       feature: true,
       categoryNames: ['ação', 'fantasia'],
       type: 'series',
+      dubbed: 'leg',
       classificationName: 'shounen',
     },
     {
@@ -121,6 +129,7 @@ export async function createAnimes() {
       feature: true,
       categoryNames: ['ação', 'fantasia'],
       type: 'series',
+      dubbed: 'leg',
       classificationName: 'shounen',
     },
     {
@@ -134,6 +143,7 @@ export async function createAnimes() {
       feature: true,
       categoryNames: ['comédia', 'romance'],
       type: 'movies',
+      dubbed: 'leg',
       classificationName: 'seinen',
     },
   ];
@@ -162,6 +172,11 @@ export async function createAnimes() {
             types: {
               connect: {
                 name: animeData.type,
+              },
+            },
+            dubbeds: {
+              connect: {
+                name: animeData.dubbed,
               },
             },
             classifications: {
