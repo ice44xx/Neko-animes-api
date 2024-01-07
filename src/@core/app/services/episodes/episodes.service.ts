@@ -12,8 +12,12 @@ export class EpisodesService {
     return await this.episodesUseCase.findAll();
   }
 
-  async findByName(name: string) {
-    return await this.episodesUseCase.findByName(name);
+  async findByAnimeName(name: string) {
+    return await this.episodesUseCase.findByAnimeName(name);
+  }
+
+  async findByAnimeId(id: number) {
+    return await this.episodesUseCase.findByAnimeId(id);
   }
 
   async findById({ id }: EpisodesDto) {
