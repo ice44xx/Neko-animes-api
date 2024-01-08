@@ -16,8 +16,17 @@ export class EpisodesUseCase {
     return await this.episodesRepository.findAll();
   }
 
-  async findByName(name: string) {
-    const episode = await this.episodesRepository.findByName(name);
+  async findByAnimeName(name: string) {
+    const episode = await this.episodesRepository.findByAnimeName(name);
+
+    if (!episode) {
+      throw new NotFoundException('Anime não encontrado');
+    }
+    return episode;
+  }
+
+  async findByAnimeId(id: number) {
+    const episode = await this.episodesRepository.findByAnimeId(id);
 
     if (!episode) {
       throw new NotFoundException('Anime não encontrado');

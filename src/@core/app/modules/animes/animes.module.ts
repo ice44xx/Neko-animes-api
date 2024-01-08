@@ -7,6 +7,7 @@ import { AnimesRepository } from 'src/@core/domain/repositories/animes/animes.re
 import { CategoriesRepository } from 'src/@core/domain/repositories/categories/categories.repository';
 import { ClassificationsRepository } from 'src/@core/domain/repositories/classifications/classifications.repository';
 import { TypesAnimesRepository } from 'src/@core/domain/repositories/types-animes/types.repository';
+import { DubbedsRepository } from 'src/@core/domain/repositories/dubbeds/dubbeds.repository';
 
 @Module({
   controllers: [AnimesController],
@@ -18,6 +19,7 @@ import { TypesAnimesRepository } from 'src/@core/domain/repositories/types-anime
     CategoriesRepository,
     ClassificationsRepository,
     TypesAnimesRepository,
+    DubbedsRepository,
   ],
 })
 export class AnimesModule {}

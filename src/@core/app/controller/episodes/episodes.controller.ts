@@ -36,9 +36,9 @@ export class EpisodesController {
 
   @Public()
   @Get('name/:name')
-  async findByName(@Res() res, @Param('name') name: string) {
+  async findByAnimeName(@Res() res, @Param('name') name: string) {
     try {
-      const episode = await this.episodesService.findByName(name);
+      const episode = await this.episodesService.findByAnimeName(name);
       return res.status(200).json(episode);
     } catch (error) {
       if (error instanceof NotFoundException) {
@@ -47,6 +47,22 @@ export class EpisodesController {
       return res
         .status(500)
         .send({ message: `Ocorreu um erro ao buscar o episódio ${name}, ` + error.message });
+    }
+  }
+
+  @Public()
+  @Get('animeId/:id')
+  async findByAnimeId(@Res() res, @Param('id') id: number) {
+    try {
+      const episode = await this.episodesService.findByAnimeId(id);
+      return res.status(200).json(episode);
+    } catch (error) {
+      if (error instanceof NotFoundException) {
+        return res.status(404).send({ message: error.message });
+      }
+      return res
+        .status(500)
+        .send({ message: `Ocorreu um erro ao buscar o episódio ${id}, ` + error.message });
     }
   }
 

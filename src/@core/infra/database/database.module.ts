@@ -17,12 +17,14 @@ import { WatchlistModule } from 'src/@core/app/modules/watchlist/watchlist.modul
 import { AuthModule } from 'src/@core/app/modules/auth/auth.module';
 import { TypesAnimesModule } from 'src/@core/app/modules/types-animes/types.module';
 import { BackgroundsAuthModule } from 'src/@core/app/modules/backgrounds-auth/backgrounds-auth.module';
+import { DubbedsModule } from 'src/@core/app/modules/dubbeds/dubbeds.module';
 
 @Module({
   imports: [
     AnimesModule,
     BackgroundsModule,
     BackgroundsAuthModule,
+    DubbedsModule,
     TypesAnimesModule,
     CategoriesModule,
     ClassificationsModule,

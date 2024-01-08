@@ -20,6 +20,9 @@ export class AnimesDto {
   readonly type?: string;
 
   @IsString()
+  readonly dubbed?: string;
+
+  @IsString()
   readonly classificationName?: string;
 
   @IsArray()

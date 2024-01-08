@@ -8,10 +8,12 @@ import { createTypesAnimes } from './types.seed';
 import { createBackgroundsAuth } from './backgrounds-auth.seed';
 import { createSeasons } from './seasons.seed';
 import { createEpisodes } from './episodes.seed';
+import { createDubbeds } from './dubbeds.seed';
 
 export async function generateSeeds() {
   await createRoles();
   await createAdmin();
+  await createDubbeds();
   await createTypesAnimes();
   await createClassifications();
   await createCategories();

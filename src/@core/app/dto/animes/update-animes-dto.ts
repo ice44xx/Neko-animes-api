@@ -27,6 +27,11 @@ export class UpdateAnimesDto {
   @IsString()
   readonly type: string;
 
+  @ApiProperty({ description: 'Nome do dubbed do anime' })
+  @IsNotEmpty({ message: 'O dubbed é obrigatório' })
+  @IsString()
+  readonly dubbed: string;
+
   @ApiProperty({ description: 'Nome da classificação do anime' })
   @IsNotEmpty({ message: 'A classificação é obrigatória' })
   @IsString()

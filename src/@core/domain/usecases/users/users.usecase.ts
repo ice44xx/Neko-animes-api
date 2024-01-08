@@ -121,8 +121,6 @@ export class UsersUseCase {
       userName: updateUser.userName,
       email: updateUser.email,
       birthday: updateUser.birthday,
-      profile: updateUser.profile,
-      role: role.name,
       updatedAt: updateUser.updatedAt,
     };
   }
