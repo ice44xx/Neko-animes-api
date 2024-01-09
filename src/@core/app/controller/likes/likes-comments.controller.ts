@@ -1,6 +1,7 @@
 import {
   Controller,
   Delete,
+  Get,
   NotFoundException,
   Param,
   Post,
@@ -18,6 +19,23 @@ import { LikesCommentsService } from '../../services/likes/likes-comments.servic
 @Controller('likes-comments')
 export class LikesCommentsController {
   constructor(private readonly likesCommentsService: LikesCommentsService) {}
+
+  @Roles(UserType.User)
+  @Get()
+  async findAllLikesUser(@Request() req: AuthRequest, @Res() res) {
+    try {
+      const likesDto: LikesCommentsDto = { userId: req.user.id };
+      const likes = await this.likesCommentsService.findAllLikesUser(likesDto);
+      return res.status(200).json(likes);
+    } catch (error) {
+      if (error instanceof UnauthorizedException) {
+        return res.status(401).send({ message: error.message });
+      }
+      return res
+        .status(500)
+        .send({ message: 'Ocorreu um erro ao buscar os likes, ' + error.message });
+    }
+  }
 
   @Roles(UserType.User)
   @Post(':commentId')

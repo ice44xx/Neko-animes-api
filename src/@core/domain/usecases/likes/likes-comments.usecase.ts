@@ -12,6 +12,18 @@ export class LikesCommentsUseCase {
     private readonly likesCommentsRepository: LikesCommentsRepository,
   ) {}
 
+  async findAllLikesUser({ userId }: LikesCommentsDto) {
+    const user = await this.usersRepository.findById(userId);
+
+    if (!user) {
+      throw new UnauthorizedException('Credenciais inválidas');
+    }
+
+    const likes = await this.likesCommentsRepository.findAllLikesUser(user.id);
+
+    return likes;
+  }
+
   async create({ userId, commentId }: LikesCommentsDto) {
     const user = await this.usersRepository.findById(userId);
 
@@ -28,9 +40,14 @@ export class LikesCommentsUseCase {
     const newLike = await this.likesCommentsRepository.create({
       users: { connect: { id: userId } },
       comments: { connect: { id: commentId } },
+      like: true,
     });
 
-    return newLike;
+    return {
+      commentId: newLike.commentsId,
+      user: newLike.usersId,
+      like: newLike.like,
+    };
   }
 
   async remove({ userId, commentId }: LikesCommentsDto) {
@@ -52,6 +69,6 @@ export class LikesCommentsUseCase {
       throw new NotFoundException('Like não encontrado');
     }
 
-    await this.likesCommentsRepository.remove(like.id);
+    await this.likesCommentsRepository.remove(commentId);
   }
 }

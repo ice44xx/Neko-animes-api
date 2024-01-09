@@ -6,6 +6,10 @@ import { LikesCommentsUseCase } from 'src/@core/domain/usecases/likes/likes-comm
 export class LikesCommentsService {
   constructor(private readonly likesCommentsUseCase: LikesCommentsUseCase) {}
 
+  async findAllLikesUser({ userId }: LikesCommentsDto) {
+    return await this.likesCommentsUseCase.findAllLikesUser({ userId });
+  }
+
   async create({ userId, commentId }: LikesCommentsDto) {
     return await this.likesCommentsUseCase.create({ userId, commentId });
   }
