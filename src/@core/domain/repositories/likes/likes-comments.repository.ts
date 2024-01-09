@@ -34,7 +34,7 @@ export class LikesCommentsRepository {
     return this.prisma.likesComments.create({ data });
   }
 
-  async remove(commentId: number) {
-    return this.prisma.likesComments.deleteMany({ where: { commentsId: commentId } });
+  async remove(usersId: number, commentId: number) {
+    return this.prisma.likesComments.deleteMany({ where: { usersId, commentsId: commentId } });
   }
 }

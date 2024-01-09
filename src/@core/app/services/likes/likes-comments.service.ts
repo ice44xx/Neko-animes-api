@@ -15,6 +15,6 @@ export class LikesCommentsService {
   }
 
   async remove({ userId, commentId }: LikesCommentsDto) {
-    return await this.likesCommentsUseCase.remove({ userId, commentId });
+    return await this.likesCommentsUseCase.remove(userId, commentId);
   }
 }

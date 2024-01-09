@@ -50,25 +50,19 @@ export class LikesCommentsUseCase {
     };
   }
 
-  async remove({ userId, commentId }: LikesCommentsDto) {
+  async remove(userId: number, commentId: number) {
     const user = await this.usersRepository.findById(userId);
-
     if (!user) {
       throw new UnauthorizedException('Usuário não encontrado');
     }
 
-    const episode = await this.commentsRepository.findById(commentId);
-
-    if (!episode) {
+    const comment = await this.commentsRepository.findById(commentId);
+    if (!comment) {
       throw new NotFoundException('Comentário não encontrado');
     }
 
-    const like = await this.likesCommentsRepository.findOne(userId, commentId);
+    const removedLikes = await this.likesCommentsRepository.remove(userId, commentId);
 
-    if (!like) {
-      throw new NotFoundException('Like não encontrado');
-    }
-
-    await this.likesCommentsRepository.remove(commentId);
+    return removedLikes;
   }
 }
