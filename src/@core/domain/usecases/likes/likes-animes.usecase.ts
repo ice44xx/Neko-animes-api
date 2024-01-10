@@ -69,6 +69,6 @@ export class LikesAnimesUseCase {
       throw new NotFoundException('Like não encontrado');
     }
 
-    await this.likesAnimesRepository.remove(animeId);
+    await this.likesAnimesRepository.remove(userId, animeId);
   }
 }

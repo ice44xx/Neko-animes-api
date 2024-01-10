@@ -36,7 +36,7 @@ export class LikesAnimesRepository {
     return this.prisma.likesAnimes.create({ data });
   }
 
-  async remove(animeId: number) {
-    return this.prisma.likesAnimes.deleteMany({ where: { animesId: animeId } });
+  async remove(userId: number, animeId: number) {
+    return this.prisma.likesAnimes.deleteMany({ where: { userId, animesId: animeId } });
   }
 }

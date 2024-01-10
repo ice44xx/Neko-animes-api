@@ -35,7 +35,7 @@ export class LikesEpisodesRepository {
     return this.prisma.likesEpisodes.create({ data });
   }
 
-  async remove(episodeId: number) {
-    return this.prisma.likesEpisodes.deleteMany({ where: { episodesId: episodeId } });
+  async remove(userId: number, episodeId: number) {
+    return this.prisma.likesEpisodes.deleteMany({ where: { userId, episodesId: episodeId } });
   }
 }

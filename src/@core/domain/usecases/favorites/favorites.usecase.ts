@@ -69,6 +69,6 @@ export class FavoritesUseCase {
       throw new NotFoundException('Anime não encontrado');
     }
 
-    await this.favoritesRepository.remove(animeId);
+    await this.favoritesRepository.remove(userId, animeId);
   }
 }
