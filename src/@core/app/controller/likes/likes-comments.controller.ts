@@ -2,6 +2,7 @@ import {
   Controller,
   Delete,
   Get,
+  HttpStatus,
   NotFoundException,
   Param,
   Post,
@@ -26,13 +27,13 @@ export class LikesCommentsController {
     try {
       const likesDto: LikesCommentsDto = { userId: req.user.id };
       const likes = await this.likesCommentsService.findAllLikesUser(likesDto);
-      return res.status(200).json(likes);
+      return res.status(HttpStatus.OK).json(likes);
     } catch (error) {
       if (error instanceof UnauthorizedException) {
-        return res.status(401).send({ message: error.message });
+        return res.status(HttpStatus.UNAUTHORIZED).send({ message: error.message });
       }
       return res
-        .status(500)
+        .status(HttpStatus.INTERNAL_SERVER_ERROR)
         .send({ message: 'Ocorreu um erro ao buscar os likes, ' + error.message });
     }
   }
@@ -43,14 +44,16 @@ export class LikesCommentsController {
     try {
       const createLike: LikesCommentsDto = { userId: req.user.id, commentId: commentId };
       await this.likesCommentsService.create(createLike);
-      return res.status(201).send({ message: 'Like adicionado ao comentário!' });
+      return res.status(HttpStatus.CREATED).send({ message: 'Like adicionado ao comentário!' });
     } catch (error) {
       if (error instanceof UnauthorizedException) {
-        return res.status(401).send({ message: error.message });
+        return res.status(HttpStatus.UNAUTHORIZED).send({ message: error.message });
       } else if (error instanceof NotFoundException) {
-        return res.status(404).send({ message: error.message });
+        return res.status(HttpStatus.NOT_FOUND).send({ message: error.message });
       }
-      return res.status(500).send({ message: 'Ocorreu um erro ao criar o like, ' + error.message });
+      return res
+        .status(HttpStatus.INTERNAL_SERVER_ERROR)
+        .send({ message: 'Ocorreu um erro ao criar o like, ' + error.message });
     }
   }
 
@@ -60,15 +63,15 @@ export class LikesCommentsController {
     try {
       const removeLike: LikesCommentsDto = { userId: req.user.id, commentId: commentId };
       await this.likesCommentsService.remove(removeLike);
-      return res.status(200).send({ message: 'Like removido' });
+      return res.status(HttpStatus.OK).send({ message: 'Like removido' });
     } catch (error) {
       if (error instanceof UnauthorizedException) {
-        return res.status(401).send({ message: error.message });
+        return res.status(HttpStatus.UNAUTHORIZED).send({ message: error.message });
       } else if (error instanceof NotFoundException) {
-        return res.status(404).send({ message: error.message });
+        return res.status(HttpStatus.NOT_FOUND).send({ message: error.message });
       }
       return res
-        .status(500)
+        .status(HttpStatus.INTERNAL_SERVER_ERROR)
         .send({ message: 'Ocorreu um erro ao remover o like, ' + error.message });
     }
   }

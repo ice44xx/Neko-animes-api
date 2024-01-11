@@ -3,6 +3,7 @@ import {
   Controller,
   Delete,
   Get,
+  HttpStatus,
   NotFoundException,
   Param,
   Post,
@@ -26,13 +27,13 @@ export class BackgroundsController {
   async findAll(@Res() res) {
     try {
       const backgrounds = await this.backgroundsService.findAll();
-      return res.status(200).json(backgrounds);
+      return res.status(HttpStatus.OK).json(backgrounds);
     } catch (error) {
       if (error instanceof NotFoundException) {
-        return res.status(404).send({ message: error.message });
+        return res.status(HttpStatus.NOT_FOUND).send({ message: error.message });
       }
       return res
-        .status(500)
+        .status(HttpStatus.INTERNAL_SERVER_ERROR)
         .send({ message: 'Ocorreu um erro ao buscar os backgrounds, ' + error.message });
     }
   }
@@ -42,10 +43,10 @@ export class BackgroundsController {
   async create(@Res() res, @Body() createBackgroundsDto: CreateBackgroundsDto) {
     try {
       const background = await this.backgroundsService.create(createBackgroundsDto);
-      return res.status(201).json(background);
+      return res.status(HttpStatus.CREATED).json(background);
     } catch (error) {
       return res
-        .status(500)
+        .status(HttpStatus.INTERNAL_SERVER_ERROR)
         .send({ message: 'Ocorreu um erro ao criar o background, ' + error.message });
     }
   }
@@ -60,13 +61,13 @@ export class BackgroundsController {
     try {
       const background = await this.backgroundsService.update(id, updateBackgroundsDto);
 
-      return res.status(200).json(background);
+      return res.status(HttpStatus.OK).json(background);
     } catch (error) {
       if (error instanceof NotFoundException) {
-        return res.status(404).send({ message: error.message });
+        return res.status(HttpStatus.NOT_FOUND).send({ message: error.message });
       }
       return res
-        .status(500)
+        .status(HttpStatus.INTERNAL_SERVER_ERROR)
         .send({ message: 'Ocorreu um erro ao atualizar o background, ' + error.message });
     }
   }
@@ -76,13 +77,13 @@ export class BackgroundsController {
   async remove(@Res() res, @Param('id') id: number) {
     try {
       await this.backgroundsService.remove({ id });
-      return res.status(200).send({ message: 'Background deletado' });
+      return res.status(HttpStatus.OK).send({ message: 'Background deletado' });
     } catch (error) {
       if (error instanceof NotFoundException) {
-        return res.status(404).send({ message: error.message });
+        return res.status(HttpStatus.NOT_FOUND).send({ message: error.message });
       }
       return res
-        .status(500)
+        .status(HttpStatus.INTERNAL_SERVER_ERROR)
         .send({ message: 'Ocorreu um erro ao deletar o background, ' + error.message });
     }
   }

@@ -18,13 +18,16 @@ ADD COLUMN     "userId" INTEGER NOT NULL;
 -- CreateTable
 CREATE TABLE "watchlist" (
     "id" SERIAL NOT NULL,
+    "animeId" INTEGER NOT NULL,
     "anime" TEXT NOT NULL,
     "thumbnailUrl" TEXT NOT NULL,
     "videoUrl" TEXT NOT NULL,
     "episodeId" INTEGER NOT NULL,
+    "episodeName" TEXT NOT NULL,
     "order" INTEGER NOT NULL,
     "userId" INTEGER NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT "watchlist_pkey" PRIMARY KEY ("id")
 );

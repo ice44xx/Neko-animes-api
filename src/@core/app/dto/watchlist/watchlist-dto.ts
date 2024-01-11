@@ -7,6 +7,9 @@ export class WatchListDto {
   @IsNumber()
   readonly userId?: number;
 
+  @IsNumber()
+  readonly animeId?: number;
+
   @IsString()
   readonly anime?: string;
 
@@ -18,6 +21,9 @@ export class WatchListDto {
 
   @IsNumber()
   readonly episodeId?: number;
+
+  @IsString()
+  readonly episodeName?: string;
 
   @IsNumber()
   readonly order?: number;

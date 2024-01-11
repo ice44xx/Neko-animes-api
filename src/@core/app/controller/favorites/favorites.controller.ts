@@ -2,6 +2,7 @@ import {
   Controller,
   Delete,
   Get,
+  HttpStatus,
   NotFoundException,
   Param,
   Post,
@@ -26,13 +27,13 @@ export class FavoritesController {
     try {
       const favoritesDto: FavoritesDto = { userId: req.user.id };
       const favorites = await this.favoritesService.findAllFavoritesUser(favoritesDto);
-      return res.status(200).json(favorites);
+      return res.status(HttpStatus.OK).json(favorites);
     } catch (error) {
       if (error instanceof UnauthorizedException) {
-        return res.status(401).send({ message: error.message });
+        return res.status(HttpStatus.UNAUTHORIZED).send({ message: error.message });
       }
       return res
-        .status(500)
+        .status(HttpStatus.INTERNAL_SERVER_ERROR)
         .send({ message: 'Ocorreu um erro ao buscar os favoritos, ' + error.message });
     }
   }
@@ -44,15 +45,15 @@ export class FavoritesController {
     const favoritesDto: FavoritesDto = { userId: currentUser.id, animeId: animeId };
     try {
       const favorites = await this.favoritesService.create(favoritesDto);
-      return res.status(201).json(favorites);
+      return res.status(HttpStatus.CREATED).json(favorites);
     } catch (error) {
       if (error instanceof UnauthorizedException) {
-        return res.status(401).send({ message: error.message });
+        return res.status(HttpStatus.UNAUTHORIZED).send({ message: error.message });
       } else if (error instanceof NotFoundException) {
-        return res.status(404).send({ message: error.message });
+        return res.status(HttpStatus.NOT_FOUND).send({ message: error.message });
       }
       return res
-        .status(500)
+        .status(HttpStatus.INTERNAL_SERVER_ERROR)
         .send({ message: 'Ocorreu um erro ao criar o favorito, ' + error.message });
     }
   }
@@ -64,15 +65,15 @@ export class FavoritesController {
     const favoritesDto: FavoritesDto = { userId: currentUser.id, animeId: animeId };
     try {
       await this.favoritesService.remove(favoritesDto);
-      return res.status(200).json({ message: 'Favorito removido com sucesso!' });
+      return res.status(HttpStatus.OK).json({ message: 'Favorito removido com sucesso!' });
     } catch (error) {
       if (error instanceof UnauthorizedException) {
-        return res.status(401).send({ message: error.message });
+        return res.status(HttpStatus.UNAUTHORIZED).send({ message: error.message });
       } else if (error instanceof NotFoundException) {
-        return res.status(404).send({ message: error.message });
+        return res.status(HttpStatus.NOT_FOUND).send({ message: error.message });
       }
       return res
-        .status(500)
+        .status(HttpStatus.INTERNAL_SERVER_ERROR)
         .send({ message: 'Ocorreu um erro ao remover dos favoritos, ' + error.message });
     }
   }

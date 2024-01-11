@@ -4,6 +4,7 @@ import {
   Controller,
   Delete,
   Get,
+  HttpStatus,
   NotFoundException,
   Param,
   Post,
@@ -27,10 +28,10 @@ export class ClassificationsController {
   async findAll(@Res() res) {
     try {
       const classification = await this.classificationsService.findAll();
-      return res.status(200).json(classification);
+      return res.status(HttpStatus.OK).json(classification);
     } catch (error) {
       return res
-        .status(500)
+        .status(HttpStatus.INTERNAL_SERVER_ERROR)
         .send({ message: 'Ocorreu um erro ao buscar as classificações, ' + error.message });
     }
   }
@@ -40,13 +41,13 @@ export class ClassificationsController {
   async findByName(@Res() res, @Param('name') name: string) {
     try {
       const classification = await this.classificationsService.findByName({ name });
-      return res.status(200).json(classification);
+      return res.status(HttpStatus.OK).json(classification);
     } catch (error) {
       if (error instanceof NotFoundException) {
-        return res.status(404).send({ message: error.message });
+        return res.status(HttpStatus.NOT_FOUND).send({ message: error.message });
       }
       return res
-        .status(500)
+        .status(HttpStatus.INTERNAL_SERVER_ERROR)
         .send({ message: `Ocorreu um erro ao buscar a classificação ${name}, ` + error.message });
     }
   }
@@ -56,13 +57,13 @@ export class ClassificationsController {
   async create(@Res() res, @Body() createClassificationsDto: CreateClassificationsDto) {
     try {
       const classification = await this.classificationsService.create(createClassificationsDto);
-      return res.status(201).json(classification);
+      return res.status(HttpStatus.CREATED).json(classification);
     } catch (error) {
       if (error instanceof ConflictException) {
-        return res.status(409).send({ message: error.message });
+        return res.status(HttpStatus.CONFLICT).send({ message: error.message });
       }
       return res
-        .status(500)
+        .status(HttpStatus.INTERNAL_SERVER_ERROR)
         .send({ message: 'Ocorreu um erro ao criar a classificação, ' + error.message });
     }
   }
@@ -76,15 +77,15 @@ export class ClassificationsController {
   ) {
     try {
       const classification = await this.classificationsService.update(id, updateClassificationsDto);
-      return res.status(200).json(classification);
+      return res.status(HttpStatus.OK).json(classification);
     } catch (error) {
       if (error instanceof NotFoundException) {
-        return res.status(404).send({ message: error.message });
+        return res.status(HttpStatus.NOT_FOUND).send({ message: error.message });
       } else if (error instanceof ConflictException) {
-        return res.status(409).send({ message: error.message });
+        return res.status(HttpStatus.CONFLICT).send({ message: error.message });
       }
       return res
-        .status(500)
+        .status(HttpStatus.INTERNAL_SERVER_ERROR)
         .send({ message: 'Ocorreu um erro ao atualizar a classificação, ' + error.message });
     }
   }
@@ -94,13 +95,13 @@ export class ClassificationsController {
   async remove(@Res() res, @Param('id') id: number) {
     try {
       await this.classificationsService.remove({ id });
-      return res.status(200).send({ message: 'Classificação deletada com sucesso' });
+      return res.status(HttpStatus.OK).send({ message: 'Classificação deletada com sucesso' });
     } catch (error) {
       if (error instanceof NotFoundException) {
-        return res.status(404).send({ message: error.message });
+        return res.status(HttpStatus.NOT_FOUND).send({ message: error.message });
       }
       return res
-        .status(500)
+        .status(HttpStatus.INTERNAL_SERVER_ERROR)
         .send({ message: 'Ocorreu um erro ao deletar a classificação, ' + error.message });
     }
   }

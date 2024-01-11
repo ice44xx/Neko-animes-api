@@ -3,6 +3,7 @@ import {
   Controller,
   Delete,
   Get,
+  HttpStatus,
   NotFoundException,
   Param,
   Post,
@@ -26,13 +27,13 @@ export class BackgroundsAuthController {
   async findAll(@Res() res) {
     try {
       const backgroundsAuth = await this.backgroundsAuthService.findAll();
-      return res.status(200).json(backgroundsAuth);
+      return res.status(HttpStatus.OK).json(backgroundsAuth);
     } catch (error) {
       if (error instanceof NotFoundException) {
-        return res.status(404).send({ message: error.message });
+        return res.status(HttpStatus.NOT_FOUND).send({ message: error.message });
       }
       return res
-        .status(500)
+        .status(HttpStatus.INTERNAL_SERVER_ERROR)
         .send({ message: 'Ocorreu um erro ao buscar os backgrounds, ' + error.message });
     }
   }
@@ -42,10 +43,10 @@ export class BackgroundsAuthController {
   async create(@Res() res, @Body() createBackgroundsAuthDto: CreateBackgroundsAuthDto) {
     try {
       const backgroundsAuth = await this.backgroundsAuthService.create(createBackgroundsAuthDto);
-      return res.status(201).json(backgroundsAuth);
+      return res.status(HttpStatus.CREATED).json(backgroundsAuth);
     } catch (error) {
       return res
-        .status(500)
+        .status(HttpStatus.INTERNAL_SERVER_ERROR)
         .send({ message: 'Ocorreu um erro ao criar o background, ' + error.message });
     }
   }
@@ -63,13 +64,13 @@ export class BackgroundsAuthController {
         updateBackgroundsAuthDto,
       );
 
-      return res.status(200).json(backgroundsAuth);
+      return res.status(HttpStatus.OK).json(backgroundsAuth);
     } catch (error) {
       if (error instanceof NotFoundException) {
-        return res.status(404).send({ message: error.message });
+        return res.status(HttpStatus.NOT_FOUND).send({ message: error.message });
       }
       return res
-        .status(500)
+        .status(HttpStatus.INTERNAL_SERVER_ERROR)
         .send({ message: 'Ocorreu um erro ao atualizar o background, ' + error.message });
     }
   }
@@ -79,13 +80,13 @@ export class BackgroundsAuthController {
   async remove(@Res() res, @Param('id') id: number) {
     try {
       await this.backgroundsAuthService.remove({ id });
-      return res.status(200).send({ message: 'Background deletado' });
+      return res.status(HttpStatus.OK).send({ message: 'Background deletado' });
     } catch (error) {
       if (error instanceof NotFoundException) {
-        return res.status(404).send({ message: error.message });
+        return res.status(HttpStatus.NOT_FOUND).send({ message: error.message });
       }
       return res
-        .status(500)
+        .status(HttpStatus.INTERNAL_SERVER_ERROR)
         .send({ message: 'Ocorreu um erro ao deletar o background, ' + error.message });
     }
   }

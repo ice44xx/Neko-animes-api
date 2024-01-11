@@ -1,4 +1,4 @@
-import { Controller, Post, Body, Get, Res } from '@nestjs/common';
+import { Controller, Post, Body, Get, Res, HttpStatus } from '@nestjs/common';
 import { RolesService } from '../../services/users/roles.service';
 import { CreateRolesDto } from '../../dto/users/create-roles-dto';
 import { ApiTags } from '@nestjs/swagger';
@@ -14,9 +14,11 @@ export class RolesController {
   async findAll(@Res() res) {
     try {
       const roles = await this.rolesService.findAll();
-      return res.status(200).json(roles);
+      return res.status(HttpStatus.OK).json(roles);
     } catch (error) {
-      return res.status(500).send('Ocorreu um erro ao buscar as roles, ' + error.message);
+      return res
+        .status(HttpStatus.INTERNAL_SERVER_ERROR)
+        .send('Ocorreu um erro ao buscar as roles, ' + error.message);
     }
   }
 
@@ -25,9 +27,11 @@ export class RolesController {
   async create(@Res() res, @Body() createRolesDto: CreateRolesDto) {
     try {
       const roles = await this.rolesService.create(createRolesDto);
-      return res.status(201).json(roles);
+      return res.status(HttpStatus.CREATED).json(roles);
     } catch (error) {
-      return res.status(500).send('Ocorreu um erro ao criar a role, ' + error.message);
+      return res
+        .status(HttpStatus.INTERNAL_SERVER_ERROR)
+        .send('Ocorreu um erro ao criar a role, ' + error.message);
     }
   }
 }

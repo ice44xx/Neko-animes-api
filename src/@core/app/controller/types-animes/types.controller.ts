@@ -4,6 +4,7 @@ import {
   Controller,
   Delete,
   Get,
+  HttpStatus,
   NotFoundException,
   Param,
   Post,
@@ -27,10 +28,10 @@ export class TypesAnimesController {
   async findAll(@Res() res) {
     try {
       const type = await this.typesAnimesService.findAll();
-      return res.status(200).json(type);
+      return res.status(HttpStatus.OK).json(type);
     } catch (error) {
       return res
-        .status(500)
+        .status(HttpStatus.INTERNAL_SERVER_ERROR)
         .send({ message: 'Ocorreu um erro ao buscar os tipos, ' + error.message });
     }
   }
@@ -40,13 +41,13 @@ export class TypesAnimesController {
   async findByName(@Res() res, @Param('name') name: string) {
     try {
       const type = await this.typesAnimesService.findByName({ name });
-      return res.status(200).json(type);
+      return res.status(HttpStatus.OK).json(type);
     } catch (error) {
       if (error instanceof NotFoundException) {
-        return res.status(404).send({ message: error.message });
+        return res.status(HttpStatus.NOT_FOUND).send({ message: error.message });
       }
       return res
-        .status(500)
+        .status(HttpStatus.INTERNAL_SERVER_ERROR)
         .send({ message: `Ocorreu um erro ao buscar o tipo ${name}, ` + error.message });
     }
   }
@@ -56,12 +57,14 @@ export class TypesAnimesController {
   async create(@Res() res, @Body() createTypesAnimesDto: CreateTypesAnimesDto) {
     try {
       const type = await this.typesAnimesService.create(createTypesAnimesDto);
-      return res.status(201).json(type);
+      return res.status(HttpStatus.CREATED).json(type);
     } catch (error) {
       if (error instanceof ConflictException) {
-        return res.status(409).send({ message: error.message });
+        return res.status(HttpStatus.CONFLICT).send({ message: error.message });
       }
-      return res.status(500).send({ message: 'Ocorreu um erro ao criar o tipo, ' + error.message });
+      return res
+        .status(HttpStatus.INTERNAL_SERVER_ERROR)
+        .send({ message: 'Ocorreu um erro ao criar o tipo, ' + error.message });
     }
   }
 
@@ -74,15 +77,15 @@ export class TypesAnimesController {
   ) {
     try {
       const type = await this.typesAnimesService.update(id, createTypesAnimesDto);
-      return res.status(200).json(type);
+      return res.status(HttpStatus.OK).json(type);
     } catch (error) {
       if (error instanceof NotFoundException) {
-        return res.status(404).send({ message: error.message });
+        return res.status(HttpStatus.NOT_FOUND).send({ message: error.message });
       } else if (error instanceof ConflictException) {
-        return res.status(409).send({ message: error.message });
+        return res.status(HttpStatus.CONFLICT).send({ message: error.message });
       }
       return res
-        .status(500)
+        .status(HttpStatus.INTERNAL_SERVER_ERROR)
         .send({ message: 'Ocorreu um erro ao atualizar o tipo, ' + error.message });
     }
   }
@@ -92,13 +95,13 @@ export class TypesAnimesController {
   async remove(@Res() res, @Param('id') id: number) {
     try {
       await this.typesAnimesService.remove({ id });
-      return res.status(200).send({ message: 'tipo deletado com sucesso' });
+      return res.status(HttpStatus.OK).send({ message: 'tipo deletado com sucesso' });
     } catch (error) {
       if (error instanceof NotFoundException) {
-        return res.status(404).send({ message: error.message });
+        return res.status(HttpStatus.NOT_FOUND).send({ message: error.message });
       }
       return res
-        .status(500)
+        .status(HttpStatus.INTERNAL_SERVER_ERROR)
         .send({ message: 'Ocorreu um erro ao deletar o tipo, ' + error.message });
     }
   }

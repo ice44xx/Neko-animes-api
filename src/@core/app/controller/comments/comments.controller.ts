@@ -3,6 +3,7 @@ import {
   Controller,
   Delete,
   Get,
+  HttpStatus,
   NotFoundException,
   Param,
   Post,
@@ -29,13 +30,13 @@ export class CommentsController {
   async findAllByEpisode(@Res() res, @Param('episodeId') episodeId: number) {
     try {
       const comments = await this.commentsService.findAllByEpisode(episodeId);
-      return res.status(200).json(comments);
+      return res.status(HttpStatus.OK).json(comments);
     } catch (error) {
       if (error instanceof NotFoundException) {
-        return res.status(404).send({ message: error.message });
+        return res.status(HttpStatus.NOT_FOUND).send({ message: error.message });
       }
       return res
-        .status(500)
+        .status(HttpStatus.INTERNAL_SERVER_ERROR)
         .send({ message: 'Ocorreu um erro ao buscar os comentários, ' + error.message });
     }
   }
@@ -45,13 +46,13 @@ export class CommentsController {
   async findAllByUser(@Res() res, @Param('userId') userId: number) {
     try {
       const comments = await this.commentsService.findByUser(userId);
-      return res.status(200).json(comments);
+      return res.status(HttpStatus.OK).json(comments);
     } catch (error) {
       if (error instanceof NotFoundException) {
-        return res.status(404).send({ message: error.message });
+        return res.status(HttpStatus.NOT_FOUND).send({ message: error.message });
       }
       return res
-        .status(500)
+        .status(HttpStatus.INTERNAL_SERVER_ERROR)
         .send({ message: 'Ocorreu um erro ao buscar os comentários do usuário, ' + error.message });
     }
   }
@@ -67,15 +68,15 @@ export class CommentsController {
       const currentUser = req.user.id;
       const comment = await this.commentsService.create(currentUser, createCommentsDto);
 
-      return res.status(201).json(comment);
+      return res.status(HttpStatus.CREATED).json(comment);
     } catch (error) {
       if (error instanceof UnauthorizedException) {
-        return res.status(401).send({ message: error.message });
+        return res.status(HttpStatus.UNAUTHORIZED).send({ message: error.message });
       } else if (error instanceof NotFoundException) {
-        return res.status(404).send({ message: error.message });
+        return res.status(HttpStatus.NOT_FOUND).send({ message: error.message });
       }
       return res
-        .status(500)
+        .status(HttpStatus.INTERNAL_SERVER_ERROR)
         .send({ message: 'Ocorreu um erro ao criar o comentário, ' + error.message });
     }
   }
@@ -92,15 +93,15 @@ export class CommentsController {
       const currentUser = req.user.id;
       const comment = await this.commentsService.update(currentUser, id, updateCommentsDto);
 
-      return res.status(200).json(comment);
+      return res.status(HttpStatus.OK).json(comment);
     } catch (error) {
       if (error instanceof UnauthorizedException) {
-        return res.status(401).send({ message: error.message });
+        return res.status(HttpStatus.UNAUTHORIZED).send({ message: error.message });
       } else if (error instanceof NotFoundException) {
-        return res.status(404).send({ message: error.message });
+        return res.status(HttpStatus.NOT_FOUND).send({ message: error.message });
       }
       return res
-        .status(500)
+        .status(HttpStatus.INTERNAL_SERVER_ERROR)
         .send({ message: 'Ocorreu um erro ao atualizar o comentário, ' + error.message });
     }
   }
@@ -112,15 +113,15 @@ export class CommentsController {
       const currentUser = req.user.id;
       await this.commentsService.remove({ userId: currentUser, id });
 
-      return res.status(200).send({ mesage: 'Comentário removido!' });
+      return res.status(HttpStatus.OK).send({ mesage: 'Comentário removido!' });
     } catch (error) {
       if (error instanceof UnauthorizedException) {
-        return res.status(401).send({ message: error.message });
+        return res.status(HttpStatus.UNAUTHORIZED).send({ message: error.message });
       } else if (error instanceof NotFoundException) {
-        return res.status(404).send({ message: error.message });
+        return res.status(HttpStatus.NOT_FOUND).send({ message: error.message });
       }
       return res
-        .status(500)
+        .status(HttpStatus.INTERNAL_SERVER_ERROR)
         .send({ message: 'Ocorreu um erro ao deletar o comentário, ' + error.message });
     }
   }

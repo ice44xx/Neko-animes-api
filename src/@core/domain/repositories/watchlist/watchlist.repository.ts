@@ -10,8 +10,15 @@ export class WatchlistRepository {
     return this.prisma.watchList.findMany({
       where: { userId },
       take: 10,
-      orderBy: {
-        createdAt: 'desc',
+      orderBy: [{ updatedAt: 'desc' }, { createdAt: 'desc' }],
+    });
+  }
+
+  async findByEpisodeId(userId: number, episodeId: number) {
+    return this.prisma.watchList.findFirst({
+      where: {
+        userId,
+        episodeId,
       },
     });
   }
@@ -22,6 +29,16 @@ export class WatchlistRepository {
 
   async create(data: Prisma.WatchListCreateInput) {
     return this.prisma.watchList.create({ data });
+  }
+
+  async update(id: number, data: Prisma.WatchListUpdateInput) {
+    return this.prisma.watchList.update({
+      where: { id },
+      data: {
+        ...data,
+        updatedAt: new Date(),
+      },
+    });
   }
 
   async remove(id: number) {
