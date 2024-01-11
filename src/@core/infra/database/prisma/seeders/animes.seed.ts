@@ -101,7 +101,7 @@ export async function createAnimes() {
       feature: true,
       categoryNames: ['ação', 'fantasia'],
       type: 'series',
-      dubbed: 'leg',
+      dubbed: 'dub',
       classificationName: 'shounen',
     },
     {
@@ -115,7 +115,7 @@ export async function createAnimes() {
       feature: true,
       categoryNames: ['ação', 'fantasia'],
       type: 'series',
-      dubbed: 'leg',
+      dubbed: 'dub',
       classificationName: 'shounen',
     },
     {
@@ -129,7 +129,7 @@ export async function createAnimes() {
       feature: true,
       categoryNames: ['ação', 'fantasia'],
       type: 'series',
-      dubbed: 'leg',
+      dubbed: 'dub',
       classificationName: 'shounen',
     },
     {

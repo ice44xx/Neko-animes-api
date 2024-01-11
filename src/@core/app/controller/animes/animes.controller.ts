@@ -75,6 +75,19 @@ export class AnimesController {
   }
 
   @Public()
+  @Get('dub')
+  async findTopDub(@Res() res) {
+    try {
+      const animes = await this.animesService.findTopDub();
+      return res.status(HttpStatus.OK).json(animes);
+    } catch (error) {
+      return res
+        .status(HttpStatus.INTERNAL_SERVER_ERROR)
+        .send({ message: 'Ocorreu um erro ao buscar os animes dublados, ' + error.message });
+    }
+  }
+
+  @Public()
   @Get(':name')
   async findByName(@Res() res, @Param('name') name: string) {
     try {
