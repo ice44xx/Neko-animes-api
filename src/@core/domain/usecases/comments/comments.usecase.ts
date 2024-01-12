@@ -14,6 +14,10 @@ export class CommentsUseCase {
     private readonly usersRepository: UsersRepository,
   ) {}
 
+  async findAll() {
+    return await this.commentsRepository.findAll();
+  }
+
   async findAllByEpisode(episodeId: number) {
     const episode = await this.episodesRepository.findById(episodeId);
 

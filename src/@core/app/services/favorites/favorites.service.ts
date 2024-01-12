@@ -10,11 +10,11 @@ export class FavoritesService {
     return await this.favoritesUseCase.findAllFavoritesUser({ userId });
   }
 
-  async create(favoritesDto: FavoritesDto) {
-    return await this.favoritesUseCase.create(favoritesDto);
+  async create({ userId, animeId }: FavoritesDto) {
+    return await this.favoritesUseCase.create({ userId, animeId });
   }
 
-  async remove(favoritesDto: FavoritesDto) {
-    return await this.favoritesUseCase.remove(favoritesDto);
+  async remove({ userId, animeId }: FavoritesDto) {
+    return await this.favoritesUseCase.remove({ userId, animeId });
   }
 }

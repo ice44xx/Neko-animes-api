@@ -22,12 +22,25 @@ export class WatchlistUseCase {
       throw new UnauthorizedException('Credenciais inválidas');
     }
 
-    const newWatchlist = await this.watchlistRepository.create({
-      ...createWatchListDto,
-      user: { connect: { id: userId } },
-    });
+    const existingWatchlistItem = await this.watchlistRepository.findByEpisodeId(
+      userId,
+      createWatchListDto.episodeId,
+    );
 
-    return newWatchlist;
+    if (existingWatchlistItem) {
+      const updatedWatchlistItem = await this.watchlistRepository.update(existingWatchlistItem.id, {
+        ...createWatchListDto,
+      });
+
+      return updatedWatchlistItem;
+    } else {
+      const newWatchlist = await this.watchlistRepository.create({
+        ...createWatchListDto,
+        user: { connect: { id: userId } },
+      });
+
+      return newWatchlist;
+    }
   }
 
   async remove({ userId, id }: WatchListDto) {

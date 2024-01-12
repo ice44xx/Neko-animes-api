@@ -24,6 +24,10 @@ export class AnimesService {
     return await this.animesUseCase.findTopLikes();
   }
 
+  async findTopDub() {
+    return await this.animesUseCase.findTopDub();
+  }
+
   async findByName({ name }: AnimesDto) {
     return await this.animesUseCase.findByName({ name });
   }

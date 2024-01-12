@@ -3,6 +3,7 @@ import {
   Controller,
   Delete,
   Get,
+  HttpStatus,
   NotFoundException,
   Param,
   Post,
@@ -26,11 +27,11 @@ export class EpisodesController {
   async findAll(@Res() res) {
     try {
       const episodes = await this.episodesService.findAll();
-      return res.status(200).json(episodes);
+      return res.status(HttpStatus.OK).json(episodes);
     } catch (error) {
       return res
-        .status(500)
-        .send({ message: 'Ocorreu um erro ao buscar todos os episódios, ' + error.message });
+        .status(HttpStatus.INTERNAL_SERVER_ERROR)
+        .json({ message: 'Ocorreu um erro ao buscar todos os episódios, ' + error.message });
     }
   }
 
@@ -39,14 +40,14 @@ export class EpisodesController {
   async findByAnimeName(@Res() res, @Param('name') name: string) {
     try {
       const episode = await this.episodesService.findByAnimeName(name);
-      return res.status(200).json(episode);
+      return res.status(HttpStatus.OK).json(episode);
     } catch (error) {
       if (error instanceof NotFoundException) {
-        return res.status(404).send({ message: error.message });
+        return res.status(HttpStatus.NOT_FOUND).json({ message: error.message });
       }
       return res
-        .status(500)
-        .send({ message: `Ocorreu um erro ao buscar o episódio ${name}, ` + error.message });
+        .status(HttpStatus.INTERNAL_SERVER_ERROR)
+        .json({ message: `Ocorreu um erro ao buscar o episódio ${name}, ` + error.message });
     }
   }
 
@@ -55,14 +56,14 @@ export class EpisodesController {
   async findByAnimeId(@Res() res, @Param('id') id: number) {
     try {
       const episode = await this.episodesService.findByAnimeId(id);
-      return res.status(200).json(episode);
+      return res.status(HttpStatus.OK).json(episode);
     } catch (error) {
       if (error instanceof NotFoundException) {
-        return res.status(404).send({ message: error.message });
+        return res.status(HttpStatus.NOT_FOUND).json({ message: error.message });
       }
       return res
-        .status(500)
-        .send({ message: `Ocorreu um erro ao buscar o episódio ${id}, ` + error.message });
+        .status(HttpStatus.INTERNAL_SERVER_ERROR)
+        .json({ message: `Ocorreu um erro ao buscar o episódio ${id}, ` + error.message });
     }
   }
 
@@ -71,14 +72,14 @@ export class EpisodesController {
   async findById(@Res() res, @Param('id') id: number) {
     try {
       const episode = await this.episodesService.findById({ id });
-      return res.status(200).json(episode);
+      return res.status(HttpStatus.OK).json(episode);
     } catch (error) {
       if (error instanceof NotFoundException) {
-        return res.status(404).send({ message: error.message });
+        return res.status(HttpStatus.NOT_FOUND).json({ message: error.message });
       }
       return res
-        .status(500)
-        .send({ message: `Ocorreu um erro ao buscar o episódio ${id}, ` + error.message });
+        .status(HttpStatus.INTERNAL_SERVER_ERROR)
+        .json({ message: `Ocorreu um erro ao buscar o episódio ${id}, ` + error.message });
     }
   }
 
@@ -87,14 +88,14 @@ export class EpisodesController {
   async create(@Res() res, @Body() createEpisodesDto: CreateEpisodesDto) {
     try {
       const episode = await this.episodesService.create(createEpisodesDto);
-      return res.status(201).json(episode);
+      return res.status(HttpStatus.CREATED).json(episode);
     } catch (error) {
       if (error instanceof NotFoundException) {
-        return res.status(404).send({ message: error.message });
+        return res.status(HttpStatus.NOT_FOUND).json({ message: error.message });
       }
       return res
-        .status(500)
-        .send({ message: 'Ocorreu um erro ao criar o episódio, ' + error.message });
+        .status(HttpStatus.INTERNAL_SERVER_ERROR)
+        .json({ message: 'Ocorreu um erro ao criar o episódio, ' + error.message });
     }
   }
 
@@ -107,14 +108,14 @@ export class EpisodesController {
   ) {
     try {
       const episode = await this.episodesService.update(episodeId, updateEpisodesDto);
-      return res.status(200).json(episode);
+      return res.status(HttpStatus.OK).json(episode);
     } catch (error) {
       if (error instanceof NotFoundException) {
-        return res.status(404).send({ message: error.message });
+        return res.status(HttpStatus.NOT_FOUND).json({ message: error.message });
       }
       return res
-        .status(500)
-        .send({ message: 'Ocorreu um erro ao atualizar o episódio, ' + error.message });
+        .status(HttpStatus.INTERNAL_SERVER_ERROR)
+        .json({ message: 'Ocorreu um erro ao atualizar o episódio, ' + error.message });
     }
   }
 
@@ -123,11 +124,11 @@ export class EpisodesController {
   async remove(@Res() res, @Param('id') id: number) {
     try {
       await this.episodesService.remove({ id });
-      return res.status(200).json({ message: 'Episódio deletado com sucesso!' });
+      return res.status(HttpStatus.OK).json({ message: 'Episódio deletado com sucesso!' });
     } catch (error) {
       return res
-        .status(500)
-        .send({ message: 'Ocorreu um erro ao deletar o episódio, ' + error.message });
+        .status(HttpStatus.INTERNAL_SERVER_ERROR)
+        .json({ message: 'Ocorreu um erro ao deletar o episódio, ' + error.message });
     }
   }
 }

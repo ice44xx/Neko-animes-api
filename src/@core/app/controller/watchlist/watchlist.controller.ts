@@ -3,6 +3,7 @@ import {
   Controller,
   Delete,
   Get,
+  HttpStatus,
   NotFoundException,
   Param,
   Post,
@@ -28,14 +29,14 @@ export class WatchlistController {
       const currentUser = req.user.id;
       const watchlist = await this.watchlistService.findLastTen(currentUser);
 
-      return res.status(200).json(watchlist);
+      return res.status(HttpStatus.OK).json(watchlist);
     } catch (error) {
       if (error instanceof UnauthorizedException) {
-        return res.status(401).send({ message: error.message });
+        return res.status(HttpStatus.UNAUTHORIZED).json({ message: error.message });
       }
       return res
-        .status(500)
-        .send({ message: 'Ocorreu um erro ao buscar a lista, ' + error.message });
+        .status(HttpStatus.INTERNAL_SERVER_ERROR)
+        .json({ message: 'Ocorreu um erro ao buscar a lista, ' + error.message });
     }
   }
 
@@ -50,14 +51,14 @@ export class WatchlistController {
       const currentUser = req.user.id;
       const watchlist = await this.watchlistService.create(currentUser, createWatchlistDto);
 
-      return res.status(201).json(watchlist);
+      return res.status(HttpStatus.CREATED).json(watchlist);
     } catch (error) {
       if (error instanceof UnauthorizedException) {
-        return res.status(401).send({ message: error.message });
+        return res.status(HttpStatus.UNAUTHORIZED).json({ message: error.message });
       }
       return res
-        .status(500)
-        .send({ message: 'Ocorreu um erro ao criar a lista, ' + error.message });
+        .status(HttpStatus.INTERNAL_SERVER_ERROR)
+        .json({ message: 'Ocorreu um erro ao criar a lista, ' + error.message });
     }
   }
 
@@ -68,16 +69,16 @@ export class WatchlistController {
       const currentUser = req.user.id;
       await this.watchlistService.remove({ userId: currentUser, id });
 
-      return res.status(200).send({ message: 'Lista removida!' });
+      return res.status(HttpStatus.OK).json({ message: 'Lista removida!' });
     } catch (error) {
       if (error instanceof UnauthorizedException) {
-        return res.status(401).send({ message: error.message });
+        return res.status(HttpStatus.UNAUTHORIZED).json({ message: error.message });
       } else if (error instanceof NotFoundException) {
-        return res.status(404).send({ message: error.message });
+        return res.status(404).json({ message: error.message });
       }
       return res
-        .status(500)
-        .send({ message: 'Ocorreu um erro ao remover a lista, ' + error.message });
+        .status(HttpStatus.INTERNAL_SERVER_ERROR)
+        .json({ message: 'Ocorreu um erro ao remover a lista, ' + error.message });
     }
   }
 }

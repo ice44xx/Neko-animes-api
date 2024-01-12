@@ -290,6 +290,46 @@ export class AnimesRepository {
     return formattedLikes;
   }
 
+  async findTopDub() {
+    return await this.prisma.animes.findMany({
+      where: {
+        dubbeds: {
+          id: 1,
+        },
+      },
+      select: {
+        id: true,
+        name: true,
+        synopsis: true,
+        thumbnailUrl: true,
+        background: true,
+        feature: true,
+        dubbeds: {
+          select: {
+            name: true,
+          },
+        },
+        types: {
+          select: {
+            name: true,
+          },
+        },
+        classifications: {
+          select: {
+            name: true,
+          },
+        },
+        categories: {
+          select: {
+            name: true,
+          },
+        },
+      },
+      take: 10,
+      orderBy: [{ updatedAt: 'desc' }, { createdAt: 'desc' }],
+    });
+  }
+
   async findByName(name: string) {
     const anime = await this.prisma.animes.findMany({
       where: {

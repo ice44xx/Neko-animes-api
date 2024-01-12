@@ -4,6 +4,7 @@ import {
   Controller,
   Delete,
   Get,
+  HttpStatus,
   NotFoundException,
   Param,
   Post,
@@ -27,9 +28,11 @@ export class SeasonsController {
   async findAll(@Res() res) {
     try {
       const seasons = await this.seasonsService.findAll();
-      return res.status(200).json(seasons);
+      return res.status(HttpStatus.OK).json(seasons);
     } catch (error) {
-      return res.status(500).send({ message: 'Ocorreu um erro ao buscar todas temporadas' });
+      return res
+        .status(HttpStatus.INTERNAL_SERVER_ERROR)
+        .json({ message: 'Ocorreu um erro ao buscar todas temporadas' });
     }
   }
 
@@ -38,9 +41,11 @@ export class SeasonsController {
   async findByName(@Res() res, @Param('name') name: string) {
     try {
       const seasons = await this.seasonsService.findByName({ name });
-      return res.status(200).json(seasons);
+      return res.status(HttpStatus.OK).json(seasons);
     } catch (error) {
-      return res.status(500).send({ message: `Ocorreu um erro ao buscar a temporda ${name} ` });
+      return res
+        .status(HttpStatus.INTERNAL_SERVER_ERROR)
+        .json({ message: `Ocorreu um erro ao buscar a temporda ${name} ` });
     }
   }
 
@@ -49,16 +54,16 @@ export class SeasonsController {
   async create(@Res() res, @Body() createSeasonsDto: CreateSeasonsDto) {
     try {
       const season = await this.seasonsService.create(createSeasonsDto);
-      return res.status(201).json(season);
+      return res.status(HttpStatus.CREATED).json(season);
     } catch (error) {
       if (error instanceof NotFoundException) {
-        return res.status(404).send({ message: error.message });
+        return res.status(HttpStatus.NOT_FOUND).json({ message: error.message });
       } else if (error instanceof ConflictException) {
-        return res.status(409).send({ message: error.message });
+        return res.status(HttpStatus.CONFLICT).json({ message: error.message });
       }
       return res
-        .status(500)
-        .send({ message: 'Ocorreu um erro ao criar a temporada, ' + error.message });
+        .status(HttpStatus.INTERNAL_SERVER_ERROR)
+        .json({ message: 'Ocorreu um erro ao criar a temporada, ' + error.message });
     }
   }
 
@@ -71,14 +76,14 @@ export class SeasonsController {
   ) {
     try {
       const season = await this.seasonsService.update(seasonId, updateSeasonsDto);
-      return res.status(200).json(season);
+      return res.status(HttpStatus.OK).json(season);
     } catch (error) {
       if (error instanceof NotFoundException) {
-        return res.status(404).send({ message: error.message });
+        return res.status(HttpStatus.NOT_FOUND).json({ message: error.message });
       }
       return res
-        .status(500)
-        .send({ message: 'Ocorreu um erro ao atualizar a temporada, ' + error.message });
+        .status(HttpStatus.INTERNAL_SERVER_ERROR)
+        .json({ message: 'Ocorreu um erro ao atualizar a temporada, ' + error.message });
     }
   }
 
@@ -87,14 +92,14 @@ export class SeasonsController {
   async remove(@Res() res, @Param('id') id: number) {
     try {
       await this.seasonsService.remove({ id });
-      return res.status(200).send({ message: 'Temporada deletada!' });
+      return res.status(HttpStatus.OK).json({ message: 'Temporada deletada!' });
     } catch (error) {
       if (error instanceof NotFoundException) {
-        return res.status(404).send({ message: error.message });
+        return res.status(HttpStatus.NOT_FOUND).json({ message: error.message });
       }
       return res
-        .status(500)
-        .send({ message: 'Ocorreu um erro ao deletar a temporada, ' + error.message });
+        .status(HttpStatus.INTERNAL_SERVER_ERROR)
+        .json({ message: 'Ocorreu um erro ao deletar a temporada, ' + error.message });
     }
   }
 }

@@ -4,6 +4,7 @@ import {
   Controller,
   Delete,
   Get,
+  HttpStatus,
   NotFoundException,
   Param,
   Post,
@@ -27,11 +28,11 @@ export class CategoriesController {
   async findAll(@Res() res) {
     try {
       const categories = await this.categoriesService.findAll();
-      return res.status(200).json(categories);
+      return res.status(HttpStatus.OK).json(categories);
     } catch (error) {
       return res
-        .status(500)
-        .send({ message: 'Ocorreu um erro ao buscar as categorias, ' + error.message });
+        .status(HttpStatus.INTERNAL_SERVER_ERROR)
+        .json({ message: 'Ocorreu um erro ao buscar as categorias, ' + error.message });
     }
   }
 
@@ -40,14 +41,14 @@ export class CategoriesController {
   async findByName(@Res() res, @Param('name') name: string) {
     try {
       const categories = await this.categoriesService.findByName({ name });
-      return res.status(200).json(categories);
+      return res.status(HttpStatus.OK).json(categories);
     } catch (error) {
       if (error instanceof NotFoundException) {
-        return res.status(404).send({ message: error.message });
+        return res.status(HttpStatus.NOT_FOUND).json({ message: error.message });
       }
       return res
-        .status(500)
-        .send({ message: `Ocorreu um erro ao buscar a categoria ${name}, ` + error.message });
+        .status(HttpStatus.INTERNAL_SERVER_ERROR)
+        .json({ message: `Ocorreu um erro ao buscar a categoria ${name}, ` + error.message });
     }
   }
 
@@ -56,14 +57,14 @@ export class CategoriesController {
   async create(@Res() res, @Body() createCategoriesDto: CreateCategoriesDto) {
     try {
       const category = await this.categoriesService.create(createCategoriesDto);
-      return res.status(201).json(category);
+      return res.status(HttpStatus.CREATED).json(category);
     } catch (error) {
       if (error instanceof ConflictException) {
-        return res.status(409).send({ message: error.message });
+        return res.status(HttpStatus.CONFLICT).json({ message: error.message });
       }
       return res
-        .status(500)
-        .send({ message: 'Ocorreu um erro ao criar a categoria, ' + error.message });
+        .status(HttpStatus.INTERNAL_SERVER_ERROR)
+        .json({ message: 'Ocorreu um erro ao criar a categoria, ' + error.message });
     }
   }
 
@@ -76,16 +77,16 @@ export class CategoriesController {
   ) {
     try {
       const category = await this.categoriesService.update(id, updateCategoriesDto);
-      return res.status(200).json(category);
+      return res.status(HttpStatus.OK).json(category);
     } catch (error) {
       if (error instanceof NotFoundException) {
-        return res.status(404).send({ message: error.message });
+        return res.status(HttpStatus.NOT_FOUND).json({ message: error.message });
       } else if (error instanceof ConflictException) {
-        return res.status(409).send({ message: error.message });
+        return res.status(HttpStatus.CONFLICT).json({ message: error.message });
       }
       return res
-        .status(500)
-        .send({ message: 'Ocorreu um erro ao atualizar a categoria, ' + error.message });
+        .status(HttpStatus.INTERNAL_SERVER_ERROR)
+        .json({ message: 'Ocorreu um erro ao atualizar a categoria, ' + error.message });
     }
   }
 
@@ -94,14 +95,14 @@ export class CategoriesController {
   async remove(@Res() res, @Param('id') id: number) {
     try {
       await this.categoriesService.remove({ id });
-      return res.status(200).send({ message: 'Categoria deletada com sucesso' });
+      return res.status(HttpStatus.OK).json({ message: 'Categoria deletada com sucesso' });
     } catch (error) {
       if (error instanceof NotFoundException) {
-        return res.status(404).send({ message: error.message });
+        return res.status(HttpStatus.NOT_FOUND).json({ message: error.message });
       }
       return res
-        .status(500)
-        .send({ message: 'Ocorreu um erro ao deletar a categoria, ' + error.message });
+        .status(HttpStatus.INTERNAL_SERVER_ERROR)
+        .json({ message: 'Ocorreu um erro ao deletar a categoria, ' + error.message });
     }
   }
 }

@@ -34,6 +34,10 @@ export class AnimesUseCase {
     return await this.animesRepository.findTopLikes();
   }
 
+  async findTopDub() {
+    return await this.animesRepository.findTopDub();
+  }
+
   async findByName({ name }: AnimesDto) {
     const anime = await this.animesRepository.findByName(name);
 

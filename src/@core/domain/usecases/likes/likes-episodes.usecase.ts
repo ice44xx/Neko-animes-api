@@ -74,6 +74,6 @@ export class LikesEpisodesUseCase {
       throw new NotFoundException('Like não encontrado');
     }
 
-    await this.likesEpisodesRepository.remove(episodeId);
+    await this.likesEpisodesRepository.remove(userId, episodeId);
   }
 }

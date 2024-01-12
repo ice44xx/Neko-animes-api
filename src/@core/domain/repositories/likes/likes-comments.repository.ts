@@ -6,6 +6,21 @@ import { Prisma } from '@prisma/client';
 export class LikesCommentsRepository {
   constructor(private readonly prisma: PrismaService) {}
 
+  async findAllLikesUser(usersId: number) {
+    const likes = await this.prisma.likesComments.findMany({
+      where: { usersId },
+      select: {
+        comments: true,
+        like: true,
+      },
+    });
+
+    return likes.map((like) => ({
+      commentId: like.comments.id,
+      like: like.like,
+    }));
+  }
+
   async findOne(userId: number, commentId: number) {
     return this.prisma.likesComments.findFirst({
       where: {
@@ -19,7 +34,7 @@ export class LikesCommentsRepository {
     return this.prisma.likesComments.create({ data });
   }
 
-  async remove(id: number) {
-    return this.prisma.likesComments.delete({ where: { id } });
+  async remove(usersId: number, commentId: number) {
+    return this.prisma.likesComments.deleteMany({ where: { usersId, commentsId: commentId } });
   }
 }

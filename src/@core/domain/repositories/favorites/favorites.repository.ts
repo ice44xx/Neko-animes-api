@@ -44,7 +44,7 @@ export class FavoritesRepository {
     return this.prisma.favorites.create({ data });
   }
 
-  async remove(animeId: number) {
-    return this.prisma.favorites.deleteMany({ where: { animesId: animeId } });
+  async remove(userId: number, animeId: number) {
+    return this.prisma.favorites.deleteMany({ where: { userId, animesId: animeId } });
   }
 }

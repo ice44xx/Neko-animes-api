@@ -6,12 +6,85 @@ import { Prisma } from '@prisma/client';
 export class CommentsRepository {
   constructor(private readonly prisma: PrismaService) {}
 
-  async findAllByEpisode(episodesId: number) {
-    return this.prisma.comments.findMany({ where: { episodesId } });
+  async findAll() {
+    const comments = await this.prisma.comments.findMany({
+      where: {},
+      select: {
+        id: true,
+        text: true,
+        createdAt: true,
+        likes: true,
+        episodesId: true,
+        users: {
+          select: {
+            id: true,
+            userName: true,
+            profile: true,
+          },
+        },
+      },
+    });
+
+    const formattedLikes = comments.map((comment) => ({
+      ...comment,
+      likes: comment.likes.length,
+    }));
+
+    return formattedLikes;
   }
 
-  async findByUser(usersId: number) {
-    return this.prisma.comments.findMany({ where: { usersId } });
+  async findAllByEpisode(episodeId: number) {
+    const comments = await this.prisma.comments.findMany({
+      where: { episodes: { id: episodeId } },
+      select: {
+        id: true,
+        text: true,
+        createdAt: true,
+        likes: true,
+        episodesId: true,
+        users: {
+          select: {
+            id: true,
+            userName: true,
+            profile: true,
+          },
+        },
+      },
+    });
+
+    const formattedLikes = comments.map((comment) => ({
+      ...comment,
+      likes: comment.likes.length,
+    }));
+
+    return formattedLikes;
+  }
+
+  async findByUser(userId: number) {
+    const comments = await this.prisma.comments.findMany({
+      where: { users: { id: userId } },
+      select: {
+        id: true,
+        text: true,
+        createdAt: true,
+        likes: true,
+        episodesId: true,
+        users: {
+          select: {
+            id: true,
+            userName: true,
+            profile: true,
+          },
+        },
+      },
+    });
+
+    const formattedLikes = comments.map((comment) => ({
+      ...comment,
+      likes: comment.likes.length,
+    }));
+
+    return formattedLikes;
   }
 
   async findById(id: number) {
