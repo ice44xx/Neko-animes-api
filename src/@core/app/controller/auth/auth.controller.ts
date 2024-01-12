@@ -27,11 +27,11 @@ export class AuthController {
       return res.status(HttpStatus.OK).json(loginData);
     } catch (error) {
       if (error instanceof UnauthorizedException) {
-        return res.status(HttpStatus.UNAUTHORIZED).send({ message: error.message });
+        return res.status(HttpStatus.UNAUTHORIZED).json({ message: error.message });
       }
       return res
         .status(HttpStatus.INTERNAL_SERVER_ERROR)
-        .send({ message: 'Ocorreu um erro ao fazer login' } + error.message);
+        .json({ message: 'Ocorreu um erro ao fazer login' } + error.message);
     }
   }
 }

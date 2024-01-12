@@ -31,7 +31,7 @@ export class DubbedsController {
     } catch (error) {
       return res
         .status(HttpStatus.INTERNAL_SERVER_ERROR)
-        .send({ message: 'Ocorreu um erro ao buscar o dubbed, ' + error.message });
+        .json({ message: 'Ocorreu um erro ao buscar o dubbed, ' + error.message });
     }
   }
 
@@ -43,11 +43,11 @@ export class DubbedsController {
       return res.status(HttpStatus.OK).json(dubbed);
     } catch (error) {
       if (error instanceof NotFoundException) {
-        return res.status(HttpStatus.NOT_FOUND).send({ message: error.message });
+        return res.status(HttpStatus.NOT_FOUND).json({ message: error.message });
       }
       return res
         .status(HttpStatus.INTERNAL_SERVER_ERROR)
-        .send({ message: `Ocorreu um erro ao buscar o dubbed ${name}, ` + error.message });
+        .json({ message: `Ocorreu um erro ao buscar o dubbed ${name}, ` + error.message });
     }
   }
 
@@ -59,11 +59,11 @@ export class DubbedsController {
       return res.status(HttpStatus.CREATED).json(dubbed);
     } catch (error) {
       if (error instanceof ConflictException) {
-        return res.status(HttpStatus.CONFLICT).send({ message: error.message });
+        return res.status(HttpStatus.CONFLICT).json({ message: error.message });
       }
       return res
         .status(HttpStatus.INTERNAL_SERVER_ERROR)
-        .send({ message: 'Ocorreu um erro ao criar o dubbed, ' + error.message });
+        .json({ message: 'Ocorreu um erro ao criar o dubbed, ' + error.message });
     }
   }
 
@@ -75,13 +75,13 @@ export class DubbedsController {
       return res.status(HttpStatus.OK).json(dubbed);
     } catch (error) {
       if (error instanceof NotFoundException) {
-        return res.status(HttpStatus.NOT_FOUND).send({ message: error.message });
+        return res.status(HttpStatus.NOT_FOUND).json({ message: error.message });
       } else if (error instanceof ConflictException) {
-        return res.status(HttpStatus.CONFLICT).send({ message: error.message });
+        return res.status(HttpStatus.CONFLICT).json({ message: error.message });
       }
       return res
         .status(HttpStatus.INTERNAL_SERVER_ERROR)
-        .send({ message: 'Ocorreu um erro ao atualizar o dubbed, ' + error.message });
+        .json({ message: 'Ocorreu um erro ao atualizar o dubbed, ' + error.message });
     }
   }
 
@@ -90,14 +90,14 @@ export class DubbedsController {
   async remove(@Res() res, @Param('id') id: number) {
     try {
       await this.dubbedsService.remove({ id });
-      return res.status(HttpStatus.OK).send({ message: 'Dubbed deletado com sucesso' });
+      return res.status(HttpStatus.OK).json({ message: 'Dubbed deletado com sucesso' });
     } catch (error) {
       if (error instanceof NotFoundException) {
-        return res.status(HttpStatus.NOT_FOUND).send({ message: error.message });
+        return res.status(HttpStatus.NOT_FOUND).json({ message: error.message });
       }
       return res
         .status(HttpStatus.INTERNAL_SERVER_ERROR)
-        .send({ message: 'Ocorreu um erro ao deletar o dubbed, ' + error.message });
+        .json({ message: 'Ocorreu um erro ao deletar o dubbed, ' + error.message });
     }
   }
 }

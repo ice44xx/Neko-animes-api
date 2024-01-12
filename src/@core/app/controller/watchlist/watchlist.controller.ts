@@ -32,11 +32,11 @@ export class WatchlistController {
       return res.status(HttpStatus.OK).json(watchlist);
     } catch (error) {
       if (error instanceof UnauthorizedException) {
-        return res.status(HttpStatus.UNAUTHORIZED).send({ message: error.message });
+        return res.status(HttpStatus.UNAUTHORIZED).json({ message: error.message });
       }
       return res
         .status(HttpStatus.INTERNAL_SERVER_ERROR)
-        .send({ message: 'Ocorreu um erro ao buscar a lista, ' + error.message });
+        .json({ message: 'Ocorreu um erro ao buscar a lista, ' + error.message });
     }
   }
 
@@ -54,11 +54,11 @@ export class WatchlistController {
       return res.status(HttpStatus.CREATED).json(watchlist);
     } catch (error) {
       if (error instanceof UnauthorizedException) {
-        return res.status(HttpStatus.UNAUTHORIZED).send({ message: error.message });
+        return res.status(HttpStatus.UNAUTHORIZED).json({ message: error.message });
       }
       return res
         .status(HttpStatus.INTERNAL_SERVER_ERROR)
-        .send({ message: 'Ocorreu um erro ao criar a lista, ' + error.message });
+        .json({ message: 'Ocorreu um erro ao criar a lista, ' + error.message });
     }
   }
 
@@ -69,16 +69,16 @@ export class WatchlistController {
       const currentUser = req.user.id;
       await this.watchlistService.remove({ userId: currentUser, id });
 
-      return res.status(HttpStatus.OK).send({ message: 'Lista removida!' });
+      return res.status(HttpStatus.OK).json({ message: 'Lista removida!' });
     } catch (error) {
       if (error instanceof UnauthorizedException) {
-        return res.status(HttpStatus.UNAUTHORIZED).send({ message: error.message });
+        return res.status(HttpStatus.UNAUTHORIZED).json({ message: error.message });
       } else if (error instanceof NotFoundException) {
-        return res.status(404).send({ message: error.message });
+        return res.status(404).json({ message: error.message });
       }
       return res
         .status(HttpStatus.INTERNAL_SERVER_ERROR)
-        .send({ message: 'Ocorreu um erro ao remover a lista, ' + error.message });
+        .json({ message: 'Ocorreu um erro ao remover a lista, ' + error.message });
     }
   }
 }

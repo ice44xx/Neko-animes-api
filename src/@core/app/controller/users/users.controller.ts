@@ -39,7 +39,7 @@ export class UsersController {
     } catch (error) {
       return res
         .status(HttpStatus.INTERNAL_SERVER_ERROR)
-        .send({ message: 'Ocorreu um erro ao buscar o usuário, ' + error.message });
+        .json({ message: 'Ocorreu um erro ao buscar o usuário, ' + error.message });
     }
   }
 
@@ -51,11 +51,11 @@ export class UsersController {
       return res.status(HttpStatus.OK).json(user);
     } catch (error) {
       if (error instanceof NotFoundException) {
-        return res.status(HttpStatus.UNAUTHORIZED).send({ message: error.message });
+        return res.status(HttpStatus.UNAUTHORIZED).json({ message: error.message });
       }
       return res
         .status(HttpStatus.INTERNAL_SERVER_ERROR)
-        .send({ message: `Ocorreu um erro ao buscar o usuário ${id}, ` + error.message });
+        .json({ message: `Ocorreu um erro ao buscar o usuário ${id}, ` + error.message });
     }
   }
 
@@ -67,11 +67,11 @@ export class UsersController {
       return res.status(HttpStatus.OK).json(user);
     } catch (error) {
       if (error instanceof NotFoundException) {
-        return res.status(404).send({ message: error.message });
+        return res.status(HttpStatus.NOT_FOUND).json({ message: error.message });
       }
       return res
         .status(HttpStatus.INTERNAL_SERVER_ERROR)
-        .send({ message: `Ocorreu um erro ao buscar o usuário ${name}, ` + error.message });
+        .json({ message: `Ocorreu um erro ao buscar o usuário ${name}, ` + error.message });
     }
   }
 
@@ -84,13 +84,13 @@ export class UsersController {
       return res.status(HttpStatus.OK).json(user);
     } catch (error) {
       if (error instanceof UnauthorizedException) {
-        return res.status(HttpStatus.UNAUTHORIZED).send({ message: error.message });
+        return res.status(HttpStatus.UNAUTHORIZED).json({ message: error.message });
       } else if (error instanceof ConflictException) {
-        return res.status(HttpStatus.UNAUTHORIZED).send({ message: error.message });
+        return res.status(HttpStatus.UNAUTHORIZED).json({ message: error.message });
       }
       return res
         .status(HttpStatus.INTERNAL_SERVER_ERROR)
-        .send({ message: 'Ocorreu um erro ao buscar o usuário, ' + error.message });
+        .json({ message: 'Ocorreu um erro ao buscar o usuário, ' + error.message });
     }
   }
 
@@ -102,11 +102,11 @@ export class UsersController {
       return res.status(HttpStatus.CREATED).json(user);
     } catch (error) {
       if (error instanceof ConflictException) {
-        return res.status(HttpStatus.CONFLICT).send({ message: error.message });
+        return res.status(HttpStatus.CONFLICT).json({ message: error.message });
       }
       return res
         .status(HttpStatus.INTERNAL_SERVER_ERROR)
-        .send({ message: 'Ocorreu um erro ao criar o usuário, ' + error.message });
+        .json({ message: 'Ocorreu um erro ao criar o usuário, ' + error.message });
     }
   }
 
@@ -119,13 +119,13 @@ export class UsersController {
       return res.status(HttpStatus.OK).json(user);
     } catch (error) {
       if (error instanceof ConflictException) {
-        return res.status(HttpStatus.CONFLICT).send({ message: error.message });
+        return res.status(HttpStatus.CONFLICT).json({ message: error.message });
       } else if (error instanceof UnauthorizedException) {
-        return res.status(HttpStatus.UNAUTHORIZED).send({ message: error.message });
+        return res.status(HttpStatus.UNAUTHORIZED).json({ message: error.message });
       }
       return res
         .status(HttpStatus.INTERNAL_SERVER_ERROR)
-        .send({ message: 'Ocorreu um erro ao atualizar o usuário, ' + error.message });
+        .json({ message: 'Ocorreu um erro ao atualizar o usuário, ' + error.message });
     }
   }
 
@@ -142,13 +142,13 @@ export class UsersController {
       return res.status(HttpStatus.OK).json(user);
     } catch (error) {
       if (error instanceof ConflictException) {
-        return res.status(HttpStatus.CONFLICT).send({ message: error.message });
+        return res.status(HttpStatus.CONFLICT).json({ message: error.message });
       } else if (error instanceof UnauthorizedException) {
-        return res.status(HttpStatus.UNAUTHORIZED).send({ message: error.message });
+        return res.status(HttpStatus.UNAUTHORIZED).json({ message: error.message });
       }
       return res
         .status(HttpStatus.INTERNAL_SERVER_ERROR)
-        .send({ message: 'Ocorreu um erro ao atualizar o usuário, ' + error.message });
+        .json({ message: 'Ocorreu um erro ao atualizar o usuário, ' + error.message });
     }
   }
 
@@ -158,14 +158,14 @@ export class UsersController {
     try {
       const currentUser = req.user;
       await this.usersService.remove(currentUser);
-      return res.status(HttpStatus.OK).send({ message: 'Usuário deletado com sucesso' });
+      return res.status(HttpStatus.OK).json({ message: 'Usuário deletado com sucesso' });
     } catch (error) {
       if (error instanceof UnauthorizedException) {
-        return res.status(HttpStatus.UNAUTHORIZED).send({ message: error.message });
+        return res.status(HttpStatus.UNAUTHORIZED).json({ message: error.message });
       }
       return res
         .status(HttpStatus.INTERNAL_SERVER_ERROR)
-        .send({ message: 'Ocorreu um erro ao deletar o usuário, ' + error.message });
+        .json({ message: 'Ocorreu um erro ao deletar o usuário, ' + error.message });
     }
   }
 
@@ -182,13 +182,13 @@ export class UsersController {
       return res.status(HttpStatus.OK).json(user);
     } catch (error) {
       if (error instanceof UnauthorizedException) {
-        return res.status(HttpStatus.UNAUTHORIZED).send({ message: error.message });
+        return res.status(HttpStatus.UNAUTHORIZED).json({ message: error.message });
       } else if (error instanceof ConflictException) {
-        return res.status(HttpStatus.UNAUTHORIZED).send({ message: error.message });
+        return res.status(HttpStatus.UNAUTHORIZED).json({ message: error.message });
       }
       return res
         .status(HttpStatus.INTERNAL_SERVER_ERROR)
-        .send({ message: 'Ocorreu um erro ao criar o usuário, ' + error.message });
+        .json({ message: 'Ocorreu um erro ao criar o usuário, ' + error.message });
     }
   }
 
@@ -200,11 +200,11 @@ export class UsersController {
       return res.status(HttpStatus.CREATED).json(user);
     } catch (error) {
       if (error instanceof ConflictException) {
-        return res.status(HttpStatus.CONFLICT).send({ message: error.message });
+        return res.status(HttpStatus.CONFLICT).json({ message: error.message });
       }
       return res
         .status(HttpStatus.INTERNAL_SERVER_ERROR)
-        .send({ message: 'Ocorreu um erro ao criar o administrador, ' + error.message });
+        .json({ message: 'Ocorreu um erro ao criar o administrador, ' + error.message });
     }
   }
 
@@ -216,13 +216,13 @@ export class UsersController {
       return res.status(HttpStatus.OK).json(user);
     } catch (error) {
       if (error instanceof ConflictException) {
-        return res.status(HttpStatus.CONFLICT).send({ message: error.message });
+        return res.status(HttpStatus.CONFLICT).json({ message: error.message });
       } else if (error instanceof UnauthorizedException) {
-        return res.status(HttpStatus.UNAUTHORIZED).send({ message: error.message });
+        return res.status(HttpStatus.UNAUTHORIZED).json({ message: error.message });
       }
       return res
         .status(HttpStatus.INTERNAL_SERVER_ERROR)
-        .send({ message: 'Ocorreu um erro ao atualizar o administrador, ' + error.message });
+        .json({ message: 'Ocorreu um erro ao atualizar o administrador, ' + error.message });
     }
   }
 
@@ -231,14 +231,14 @@ export class UsersController {
   async deleteAdmin(@Param('userId') userId: number, @Res() res) {
     try {
       await this.usersService.remove({ id: userId });
-      return res.status(HttpStatus.OK).send({ message: 'Usuário deletado com sucesso' });
+      return res.status(HttpStatus.OK).json({ message: 'Usuário deletado com sucesso' });
     } catch (error) {
       if (error instanceof UnauthorizedException) {
-        return res.status(HttpStatus.UNAUTHORIZED).send({ message: error.message });
+        return res.status(HttpStatus.UNAUTHORIZED).json({ message: error.message });
       }
       return res
         .status(HttpStatus.INTERNAL_SERVER_ERROR)
-        .send({ message: 'Ocorreu um erro ao deletar o usuário, ' + error.message });
+        .json({ message: 'Ocorreu um erro ao deletar o usuário, ' + error.message });
     }
   }
 }

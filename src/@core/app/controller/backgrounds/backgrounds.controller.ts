@@ -30,11 +30,11 @@ export class BackgroundsController {
       return res.status(HttpStatus.OK).json(backgrounds);
     } catch (error) {
       if (error instanceof NotFoundException) {
-        return res.status(HttpStatus.NOT_FOUND).send({ message: error.message });
+        return res.status(HttpStatus.NOT_FOUND).json({ message: error.message });
       }
       return res
         .status(HttpStatus.INTERNAL_SERVER_ERROR)
-        .send({ message: 'Ocorreu um erro ao buscar os backgrounds, ' + error.message });
+        .json({ message: 'Ocorreu um erro ao buscar os backgrounds, ' + error.message });
     }
   }
 
@@ -47,7 +47,7 @@ export class BackgroundsController {
     } catch (error) {
       return res
         .status(HttpStatus.INTERNAL_SERVER_ERROR)
-        .send({ message: 'Ocorreu um erro ao criar o background, ' + error.message });
+        .json({ message: 'Ocorreu um erro ao criar o background, ' + error.message });
     }
   }
 
@@ -64,11 +64,11 @@ export class BackgroundsController {
       return res.status(HttpStatus.OK).json(background);
     } catch (error) {
       if (error instanceof NotFoundException) {
-        return res.status(HttpStatus.NOT_FOUND).send({ message: error.message });
+        return res.status(HttpStatus.NOT_FOUND).json({ message: error.message });
       }
       return res
         .status(HttpStatus.INTERNAL_SERVER_ERROR)
-        .send({ message: 'Ocorreu um erro ao atualizar o background, ' + error.message });
+        .json({ message: 'Ocorreu um erro ao atualizar o background, ' + error.message });
     }
   }
 
@@ -77,14 +77,14 @@ export class BackgroundsController {
   async remove(@Res() res, @Param('id') id: number) {
     try {
       await this.backgroundsService.remove({ id });
-      return res.status(HttpStatus.OK).send({ message: 'Background deletado' });
+      return res.status(HttpStatus.OK).json({ message: 'Background deletado' });
     } catch (error) {
       if (error instanceof NotFoundException) {
-        return res.status(HttpStatus.NOT_FOUND).send({ message: error.message });
+        return res.status(HttpStatus.NOT_FOUND).json({ message: error.message });
       }
       return res
         .status(HttpStatus.INTERNAL_SERVER_ERROR)
-        .send({ message: 'Ocorreu um erro ao deletar o background, ' + error.message });
+        .json({ message: 'Ocorreu um erro ao deletar o background, ' + error.message });
     }
   }
 }

@@ -30,11 +30,11 @@ export class LikesEpisodesController {
       return res.status(HttpStatus.OK).json(likes);
     } catch (error) {
       if (error instanceof UnauthorizedException) {
-        return res.status(HttpStatus.UNAUTHORIZED).send({ message: error.message });
+        return res.status(HttpStatus.UNAUTHORIZED).json({ message: error.message });
       }
       return res
         .status(HttpStatus.INTERNAL_SERVER_ERROR)
-        .send({ message: 'Ocorreu um erro ao buscar os likes, ' + error.message });
+        .json({ message: 'Ocorreu um erro ao buscar os likes, ' + error.message });
     }
   }
 
@@ -44,16 +44,16 @@ export class LikesEpisodesController {
     try {
       const createLike: LikesEpisodesDto = { userId: req.user.id, episodeId: episodeId };
       const like = await this.likesEpisodesService.create(createLike);
-      return res.status(HttpStatus.CREATED).send({ message: 'Like adicionado ao episódio!', like });
+      return res.status(HttpStatus.CREATED).json({ message: 'Like adicionado ao episódio!', like });
     } catch (error) {
       if (error instanceof UnauthorizedException) {
-        return res.status(HttpStatus.UNAUTHORIZED).send({ message: error.message });
+        return res.status(HttpStatus.UNAUTHORIZED).json({ message: error.message });
       } else if (error instanceof NotFoundException) {
-        return res.status(HttpStatus.NOT_FOUND).send({ message: error.message });
+        return res.status(HttpStatus.NOT_FOUND).json({ message: error.message });
       }
       return res
         .status(HttpStatus.INTERNAL_SERVER_ERROR)
-        .send({ message: 'Ocorreu um erro ao criar o like, ' + error.message });
+        .json({ message: 'Ocorreu um erro ao criar o like, ' + error.message });
     }
   }
 
@@ -63,16 +63,16 @@ export class LikesEpisodesController {
     try {
       const removeLike: LikesEpisodesDto = { userId: req.user.id, episodeId: episodeId };
       await this.likesEpisodesService.remove(removeLike);
-      return res.status(HttpStatus.OK).send({ message: 'Like removido' });
+      return res.status(HttpStatus.OK).json({ message: 'Like removido' });
     } catch (error) {
       if (error instanceof UnauthorizedException) {
-        return res.status(HttpStatus.UNAUTHORIZED).send({ message: error.message });
+        return res.status(HttpStatus.UNAUTHORIZED).json({ message: error.message });
       } else if (error instanceof NotFoundException) {
-        return res.status(HttpStatus.NOT_FOUND).send({ message: error.message });
+        return res.status(HttpStatus.NOT_FOUND).json({ message: error.message });
       }
       return res
         .status(HttpStatus.INTERNAL_SERVER_ERROR)
-        .send({ message: 'Ocorreu um erro ao remover o like, ' + error.message });
+        .json({ message: 'Ocorreu um erro ao remover o like, ' + error.message });
     }
   }
 }

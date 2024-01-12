@@ -32,7 +32,7 @@ export class CategoriesController {
     } catch (error) {
       return res
         .status(HttpStatus.INTERNAL_SERVER_ERROR)
-        .send({ message: 'Ocorreu um erro ao buscar as categorias, ' + error.message });
+        .json({ message: 'Ocorreu um erro ao buscar as categorias, ' + error.message });
     }
   }
 
@@ -44,11 +44,11 @@ export class CategoriesController {
       return res.status(HttpStatus.OK).json(categories);
     } catch (error) {
       if (error instanceof NotFoundException) {
-        return res.status(HttpStatus.NOT_FOUND).send({ message: error.message });
+        return res.status(HttpStatus.NOT_FOUND).json({ message: error.message });
       }
       return res
         .status(HttpStatus.INTERNAL_SERVER_ERROR)
-        .send({ message: `Ocorreu um erro ao buscar a categoria ${name}, ` + error.message });
+        .json({ message: `Ocorreu um erro ao buscar a categoria ${name}, ` + error.message });
     }
   }
 
@@ -60,11 +60,11 @@ export class CategoriesController {
       return res.status(HttpStatus.CREATED).json(category);
     } catch (error) {
       if (error instanceof ConflictException) {
-        return res.status(HttpStatus.CONFLICT).send({ message: error.message });
+        return res.status(HttpStatus.CONFLICT).json({ message: error.message });
       }
       return res
         .status(HttpStatus.INTERNAL_SERVER_ERROR)
-        .send({ message: 'Ocorreu um erro ao criar a categoria, ' + error.message });
+        .json({ message: 'Ocorreu um erro ao criar a categoria, ' + error.message });
     }
   }
 
@@ -80,13 +80,13 @@ export class CategoriesController {
       return res.status(HttpStatus.OK).json(category);
     } catch (error) {
       if (error instanceof NotFoundException) {
-        return res.status(HttpStatus.NOT_FOUND).send({ message: error.message });
+        return res.status(HttpStatus.NOT_FOUND).json({ message: error.message });
       } else if (error instanceof ConflictException) {
-        return res.status(HttpStatus.CONFLICT).send({ message: error.message });
+        return res.status(HttpStatus.CONFLICT).json({ message: error.message });
       }
       return res
         .status(HttpStatus.INTERNAL_SERVER_ERROR)
-        .send({ message: 'Ocorreu um erro ao atualizar a categoria, ' + error.message });
+        .json({ message: 'Ocorreu um erro ao atualizar a categoria, ' + error.message });
     }
   }
 
@@ -95,14 +95,14 @@ export class CategoriesController {
   async remove(@Res() res, @Param('id') id: number) {
     try {
       await this.categoriesService.remove({ id });
-      return res.status(HttpStatus.OK).send({ message: 'Categoria deletada com sucesso' });
+      return res.status(HttpStatus.OK).json({ message: 'Categoria deletada com sucesso' });
     } catch (error) {
       if (error instanceof NotFoundException) {
-        return res.status(HttpStatus.NOT_FOUND).send({ message: error.message });
+        return res.status(HttpStatus.NOT_FOUND).json({ message: error.message });
       }
       return res
         .status(HttpStatus.INTERNAL_SERVER_ERROR)
-        .send({ message: 'Ocorreu um erro ao deletar a categoria, ' + error.message });
+        .json({ message: 'Ocorreu um erro ao deletar a categoria, ' + error.message });
     }
   }
 }

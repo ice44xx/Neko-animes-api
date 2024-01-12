@@ -31,7 +31,7 @@ export class AnimesController {
     } catch (error) {
       return res
         .status(HttpStatus.INTERNAL_SERVER_ERROR)
-        .send({ message: 'Ocorreu um erro ao buscar os animes, ' + error.message });
+        .json({ message: 'Ocorreu um erro ao buscar os animes, ' + error.message });
     }
   }
 
@@ -44,7 +44,7 @@ export class AnimesController {
     } catch (error) {
       return res
         .status(HttpStatus.INTERNAL_SERVER_ERROR)
-        .send({ message: 'Ocorreu um erro ao buscar os animes em destaques, ' + error.message });
+        .json({ message: 'Ocorreu um erro ao buscar os animes em destaques, ' + error.message });
     }
   }
 
@@ -57,7 +57,7 @@ export class AnimesController {
     } catch (error) {
       return res
         .status(HttpStatus.INTERNAL_SERVER_ERROR)
-        .send({ message: 'Ocorreu um erro ao buscar os animes lançamentos, ' + error.message });
+        .json({ message: 'Ocorreu um erro ao buscar os animes lançamentos, ' + error.message });
     }
   }
 
@@ -70,7 +70,7 @@ export class AnimesController {
     } catch (error) {
       return res
         .status(HttpStatus.INTERNAL_SERVER_ERROR)
-        .send({ message: 'Ocorreu um erro ao buscar os animes top likes, ' + error.message });
+        .json({ message: 'Ocorreu um erro ao buscar os animes top likes, ' + error.message });
     }
   }
 
@@ -83,7 +83,7 @@ export class AnimesController {
     } catch (error) {
       return res
         .status(HttpStatus.INTERNAL_SERVER_ERROR)
-        .send({ message: 'Ocorreu um erro ao buscar os animes dublados, ' + error.message });
+        .json({ message: 'Ocorreu um erro ao buscar os animes dublados, ' + error.message });
     }
   }
 
@@ -95,11 +95,11 @@ export class AnimesController {
       return res.status(HttpStatus.OK).json(anime);
     } catch (error) {
       if (error instanceof NotFoundException) {
-        return res.status(HttpStatus.NOT_FOUND).send({ message: error.message });
+        return res.status(HttpStatus.NOT_FOUND).json({ message: error.message });
       }
       return res
         .status(HttpStatus.INTERNAL_SERVER_ERROR)
-        .send({ message: `Ocorreu um erro ao buscar o anime ${name}, ` } + error.message);
+        .json({ message: `Ocorreu um erro ao buscar o anime ${name}, ` } + error.message);
     }
   }
 
@@ -111,11 +111,11 @@ export class AnimesController {
       return res.status(HttpStatus.OK).json(anime);
     } catch (error) {
       if (error instanceof NotFoundException) {
-        return res.status(HttpStatus.NOT_FOUND).send({ message: error.message });
+        return res.status(HttpStatus.NOT_FOUND).json({ message: error.message });
       }
       return res
         .status(HttpStatus.INTERNAL_SERVER_ERROR)
-        .send({ message: `Ocorreu um erro ao buscar o anime ${id}, ` + error.message });
+        .json({ message: `Ocorreu um erro ao buscar o anime ${id}, ` + error.message });
     }
   }
 
@@ -127,11 +127,11 @@ export class AnimesController {
       return res.status(HttpStatus.CREATED).json(anime);
     } catch (error) {
       if (error instanceof NotFoundException) {
-        return res.status(HttpStatus.NOT_FOUND).send({ message: error.message });
+        return res.status(HttpStatus.NOT_FOUND).json({ message: error.message });
       }
       return res
         .status(HttpStatus.INTERNAL_SERVER_ERROR)
-        .send({ message: 'Ocorreu um erro ao criar o anime, ' + error.message });
+        .json({ message: 'Ocorreu um erro ao criar o anime, ' + error.message });
     }
   }
 
@@ -147,11 +147,11 @@ export class AnimesController {
       return res.status(HttpStatus.OK).json(anime);
     } catch (error) {
       if (error instanceof NotFoundException) {
-        return res.status(HttpStatus.NOT_FOUND).send({ message: error.message });
+        return res.status(HttpStatus.NOT_FOUND).json({ message: error.message });
       }
       return res
         .status(HttpStatus.INTERNAL_SERVER_ERROR)
-        .send({ message: 'Ocorreu um erro ao atualizar o anime, ' + error.message });
+        .json({ message: 'Ocorreu um erro ao atualizar o anime, ' + error.message });
     }
   }
 
@@ -160,14 +160,14 @@ export class AnimesController {
   async remove(@Res() res, @Param('id') id: number) {
     try {
       await this.animesService.remove({ id });
-      return res.status(HttpStatus.OK).send({ message: 'Anime deletado com sucesso' });
+      return res.status(HttpStatus.OK).json({ message: 'Anime deletado com sucesso' });
     } catch (error) {
       if (error instanceof NotFoundException) {
-        return res.status(HttpStatus.NOT_FOUND).send({ message: error.message });
+        return res.status(HttpStatus.NOT_FOUND).json({ message: error.message });
       }
       return res
         .status(HttpStatus.INTERNAL_SERVER_ERROR)
-        .send({ message: 'Ocorreu um erro ao deletar o anime, ' + error.message });
+        .json({ message: 'Ocorreu um erro ao deletar o anime, ' + error.message });
     }
   }
 }

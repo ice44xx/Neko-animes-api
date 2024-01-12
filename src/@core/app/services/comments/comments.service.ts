@@ -8,6 +8,10 @@ import { UpdateCommentsDto } from '../../dto/comments/update-comments-dto';
 export class CommentsService {
   constructor(private readonly commentsUseCase: CommentsUseCase) {}
 
+  async findAll() {
+    return await this.commentsUseCase.findAll();
+  }
+
   async findAllByEpisode(episodeId: number) {
     return await this.commentsUseCase.findAllByEpisode(episodeId);
   }

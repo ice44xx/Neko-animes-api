@@ -25,35 +25,51 @@ import { ApiTags } from '@nestjs/swagger';
 export class CommentsController {
   constructor(private readonly commentsService: CommentsService) {}
 
+  @Roles(UserType.Admin)
+  @Get()
+  async findAll(@Res() res) {
+    try {
+      const comments = await this.commentsService.findAll();
+      return res.status(HttpStatus.OK).json(comments);
+    } catch (error) {
+      if (error instanceof NotFoundException) {
+        return res.status(HttpStatus.NOT_FOUND).json({ message: error.message });
+      }
+      return res
+        .status(HttpStatus.INTERNAL_SERVER_ERROR)
+        .json({ message: 'Ocorreu um erro ao buscar os comentários, ' + error.message });
+    }
+  }
+
   @Public()
-  @Get(':episodeId')
+  @Get('episode/:episodeId')
   async findAllByEpisode(@Res() res, @Param('episodeId') episodeId: number) {
     try {
       const comments = await this.commentsService.findAllByEpisode(episodeId);
       return res.status(HttpStatus.OK).json(comments);
     } catch (error) {
       if (error instanceof NotFoundException) {
-        return res.status(HttpStatus.NOT_FOUND).send({ message: error.message });
+        return res.status(HttpStatus.NOT_FOUND).json({ message: error.message });
       }
       return res
         .status(HttpStatus.INTERNAL_SERVER_ERROR)
-        .send({ message: 'Ocorreu um erro ao buscar os comentários, ' + error.message });
+        .json({ message: 'Ocorreu um erro ao buscar os comentários, ' + error.message });
     }
   }
 
   @Roles(UserType.Admin)
-  @Get('/user/:userId')
+  @Get('user/:userId')
   async findAllByUser(@Res() res, @Param('userId') userId: number) {
     try {
       const comments = await this.commentsService.findByUser(userId);
       return res.status(HttpStatus.OK).json(comments);
     } catch (error) {
       if (error instanceof NotFoundException) {
-        return res.status(HttpStatus.NOT_FOUND).send({ message: error.message });
+        return res.status(HttpStatus.NOT_FOUND).json({ message: error.message });
       }
       return res
         .status(HttpStatus.INTERNAL_SERVER_ERROR)
-        .send({ message: 'Ocorreu um erro ao buscar os comentários do usuário, ' + error.message });
+        .json({ message: 'Ocorreu um erro ao buscar os comentários do usuário, ' + error.message });
     }
   }
 
@@ -71,13 +87,13 @@ export class CommentsController {
       return res.status(HttpStatus.CREATED).json(comment);
     } catch (error) {
       if (error instanceof UnauthorizedException) {
-        return res.status(HttpStatus.UNAUTHORIZED).send({ message: error.message });
+        return res.status(HttpStatus.UNAUTHORIZED).json({ message: error.message });
       } else if (error instanceof NotFoundException) {
-        return res.status(HttpStatus.NOT_FOUND).send({ message: error.message });
+        return res.status(HttpStatus.NOT_FOUND).json({ message: error.message });
       }
       return res
         .status(HttpStatus.INTERNAL_SERVER_ERROR)
-        .send({ message: 'Ocorreu um erro ao criar o comentário, ' + error.message });
+        .json({ message: 'Ocorreu um erro ao criar o comentário, ' + error.message });
     }
   }
 
@@ -96,13 +112,13 @@ export class CommentsController {
       return res.status(HttpStatus.OK).json(comment);
     } catch (error) {
       if (error instanceof UnauthorizedException) {
-        return res.status(HttpStatus.UNAUTHORIZED).send({ message: error.message });
+        return res.status(HttpStatus.UNAUTHORIZED).json({ message: error.message });
       } else if (error instanceof NotFoundException) {
-        return res.status(HttpStatus.NOT_FOUND).send({ message: error.message });
+        return res.status(HttpStatus.NOT_FOUND).json({ message: error.message });
       }
       return res
         .status(HttpStatus.INTERNAL_SERVER_ERROR)
-        .send({ message: 'Ocorreu um erro ao atualizar o comentário, ' + error.message });
+        .json({ message: 'Ocorreu um erro ao atualizar o comentário, ' + error.message });
     }
   }
 
@@ -113,16 +129,16 @@ export class CommentsController {
       const currentUser = req.user.id;
       await this.commentsService.remove({ userId: currentUser, id });
 
-      return res.status(HttpStatus.OK).send({ mesage: 'Comentário removido!' });
+      return res.status(HttpStatus.OK).json({ mesage: 'Comentário removido!' });
     } catch (error) {
       if (error instanceof UnauthorizedException) {
-        return res.status(HttpStatus.UNAUTHORIZED).send({ message: error.message });
+        return res.status(HttpStatus.UNAUTHORIZED).json({ message: error.message });
       } else if (error instanceof NotFoundException) {
-        return res.status(HttpStatus.NOT_FOUND).send({ message: error.message });
+        return res.status(HttpStatus.NOT_FOUND).json({ message: error.message });
       }
       return res
         .status(HttpStatus.INTERNAL_SERVER_ERROR)
-        .send({ message: 'Ocorreu um erro ao deletar o comentário, ' + error.message });
+        .json({ message: 'Ocorreu um erro ao deletar o comentário, ' + error.message });
     }
   }
 }

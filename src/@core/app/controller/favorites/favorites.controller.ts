@@ -30,11 +30,11 @@ export class FavoritesController {
       return res.status(HttpStatus.OK).json(favorites);
     } catch (error) {
       if (error instanceof UnauthorizedException) {
-        return res.status(HttpStatus.UNAUTHORIZED).send({ message: error.message });
+        return res.status(HttpStatus.UNAUTHORIZED).json({ message: error.message });
       }
       return res
         .status(HttpStatus.INTERNAL_SERVER_ERROR)
-        .send({ message: 'Ocorreu um erro ao buscar os favoritos, ' + error.message });
+        .json({ message: 'Ocorreu um erro ao buscar os favoritos, ' + error.message });
     }
   }
 
@@ -48,13 +48,13 @@ export class FavoritesController {
       return res.status(HttpStatus.CREATED).json(favorites);
     } catch (error) {
       if (error instanceof UnauthorizedException) {
-        return res.status(HttpStatus.UNAUTHORIZED).send({ message: error.message });
+        return res.status(HttpStatus.UNAUTHORIZED).json({ message: error.message });
       } else if (error instanceof NotFoundException) {
-        return res.status(HttpStatus.NOT_FOUND).send({ message: error.message });
+        return res.status(HttpStatus.NOT_FOUND).json({ message: error.message });
       }
       return res
         .status(HttpStatus.INTERNAL_SERVER_ERROR)
-        .send({ message: 'Ocorreu um erro ao criar o favorito, ' + error.message });
+        .json({ message: 'Ocorreu um erro ao criar o favorito, ' + error.message });
     }
   }
 
@@ -68,13 +68,13 @@ export class FavoritesController {
       return res.status(HttpStatus.OK).json({ message: 'Favorito removido com sucesso!' });
     } catch (error) {
       if (error instanceof UnauthorizedException) {
-        return res.status(HttpStatus.UNAUTHORIZED).send({ message: error.message });
+        return res.status(HttpStatus.UNAUTHORIZED).json({ message: error.message });
       } else if (error instanceof NotFoundException) {
-        return res.status(HttpStatus.NOT_FOUND).send({ message: error.message });
+        return res.status(HttpStatus.NOT_FOUND).json({ message: error.message });
       }
       return res
         .status(HttpStatus.INTERNAL_SERVER_ERROR)
-        .send({ message: 'Ocorreu um erro ao remover dos favoritos, ' + error.message });
+        .json({ message: 'Ocorreu um erro ao remover dos favoritos, ' + error.message });
     }
   }
 }

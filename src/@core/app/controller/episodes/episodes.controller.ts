@@ -31,7 +31,7 @@ export class EpisodesController {
     } catch (error) {
       return res
         .status(HttpStatus.INTERNAL_SERVER_ERROR)
-        .send({ message: 'Ocorreu um erro ao buscar todos os episódios, ' + error.message });
+        .json({ message: 'Ocorreu um erro ao buscar todos os episódios, ' + error.message });
     }
   }
 
@@ -43,11 +43,11 @@ export class EpisodesController {
       return res.status(HttpStatus.OK).json(episode);
     } catch (error) {
       if (error instanceof NotFoundException) {
-        return res.status(HttpStatus.NOT_FOUND).send({ message: error.message });
+        return res.status(HttpStatus.NOT_FOUND).json({ message: error.message });
       }
       return res
         .status(HttpStatus.INTERNAL_SERVER_ERROR)
-        .send({ message: `Ocorreu um erro ao buscar o episódio ${name}, ` + error.message });
+        .json({ message: `Ocorreu um erro ao buscar o episódio ${name}, ` + error.message });
     }
   }
 
@@ -59,11 +59,11 @@ export class EpisodesController {
       return res.status(HttpStatus.OK).json(episode);
     } catch (error) {
       if (error instanceof NotFoundException) {
-        return res.status(HttpStatus.NOT_FOUND).send({ message: error.message });
+        return res.status(HttpStatus.NOT_FOUND).json({ message: error.message });
       }
       return res
         .status(HttpStatus.INTERNAL_SERVER_ERROR)
-        .send({ message: `Ocorreu um erro ao buscar o episódio ${id}, ` + error.message });
+        .json({ message: `Ocorreu um erro ao buscar o episódio ${id}, ` + error.message });
     }
   }
 
@@ -75,11 +75,11 @@ export class EpisodesController {
       return res.status(HttpStatus.OK).json(episode);
     } catch (error) {
       if (error instanceof NotFoundException) {
-        return res.status(HttpStatus.NOT_FOUND).send({ message: error.message });
+        return res.status(HttpStatus.NOT_FOUND).json({ message: error.message });
       }
       return res
         .status(HttpStatus.INTERNAL_SERVER_ERROR)
-        .send({ message: `Ocorreu um erro ao buscar o episódio ${id}, ` + error.message });
+        .json({ message: `Ocorreu um erro ao buscar o episódio ${id}, ` + error.message });
     }
   }
 
@@ -91,11 +91,11 @@ export class EpisodesController {
       return res.status(HttpStatus.CREATED).json(episode);
     } catch (error) {
       if (error instanceof NotFoundException) {
-        return res.status(HttpStatus.NOT_FOUND).send({ message: error.message });
+        return res.status(HttpStatus.NOT_FOUND).json({ message: error.message });
       }
       return res
         .status(HttpStatus.INTERNAL_SERVER_ERROR)
-        .send({ message: 'Ocorreu um erro ao criar o episódio, ' + error.message });
+        .json({ message: 'Ocorreu um erro ao criar o episódio, ' + error.message });
     }
   }
 
@@ -111,11 +111,11 @@ export class EpisodesController {
       return res.status(HttpStatus.OK).json(episode);
     } catch (error) {
       if (error instanceof NotFoundException) {
-        return res.status(HttpStatus.NOT_FOUND).send({ message: error.message });
+        return res.status(HttpStatus.NOT_FOUND).json({ message: error.message });
       }
       return res
         .status(HttpStatus.INTERNAL_SERVER_ERROR)
-        .send({ message: 'Ocorreu um erro ao atualizar o episódio, ' + error.message });
+        .json({ message: 'Ocorreu um erro ao atualizar o episódio, ' + error.message });
     }
   }
 
@@ -128,7 +128,7 @@ export class EpisodesController {
     } catch (error) {
       return res
         .status(HttpStatus.INTERNAL_SERVER_ERROR)
-        .send({ message: 'Ocorreu um erro ao deletar o episódio, ' + error.message });
+        .json({ message: 'Ocorreu um erro ao deletar o episódio, ' + error.message });
     }
   }
 }
