@@ -6,6 +6,7 @@ import {
   Request,
   Res,
   UnauthorizedException,
+  Body,
 } from '@nestjs/common';
 import { LocalAuthGuard } from 'src/@core/infra/auth/guards/local-auth.guard';
 import { AuthRequest } from 'src/@core/infra/auth/models/auth-request';

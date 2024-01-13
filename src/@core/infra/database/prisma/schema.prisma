@@ -214,3 +214,11 @@ model BackgroundsAuth {
 
   @@map("backgrounds-auth")
 }
+
+model Codes {
+  id        Int      @id @default(autoincrement())
+  code      Int
+  createdAt DateTime @default(now())
+
+  @@map("codes")
+}
