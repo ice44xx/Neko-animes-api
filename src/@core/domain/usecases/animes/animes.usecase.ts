@@ -59,18 +59,18 @@ export class AnimesUseCase {
   }
 
   async create(createAnimesDto: CreateAnimesDto) {
-    const { classificationName, categoryNames, name, type, dubbed, ...animeData } = createAnimesDto;
+    const { classifications, categoryNames, name, types, dubbeds, ...animeData } = createAnimesDto;
 
-    const typesAnimes = await this.typesAnimesRepository.findByName(type);
-    const dubbeds = await this.dubbedsRepository.findByName(dubbed);
-    const classification = await this.classificationsRepository.findByName(classificationName);
+    const typesAnimes = await this.typesAnimesRepository.findByName(types);
+    const dubbed = await this.dubbedsRepository.findByName(dubbeds);
+    const classification = await this.classificationsRepository.findByName(classifications);
     const formattedName = name.charAt(0).toUpperCase() + name.slice(1);
 
     if (!classification) {
       throw new NotFoundException('Esta classificação não existe');
     }
 
-    if (!dubbeds) {
+    if (!dubbed) {
       throw new NotFoundException('Este dubbed não existe');
     }
 
@@ -88,13 +88,13 @@ export class AnimesUseCase {
       ...animeData,
       name: formattedName,
       types: {
-        connect: { name: type },
+        connect: { name: types },
       },
       dubbeds: {
-        connect: { name: dubbed },
+        connect: { name: dubbeds },
       },
       classifications: {
-        connect: { name: classificationName },
+        connect: { name: classifications },
       },
       categories: {
         connect: categories.map((category) => ({ name: category.name })),
@@ -107,19 +107,20 @@ export class AnimesUseCase {
       thumbnailUrl: anime.thumbnailUrl,
       background: anime.background,
       feature: anime.feature,
-      type: type,
-      classification: classificationName,
+      types: types,
+      dubbeds: dubbeds,
+      classifications: classifications,
       categories: categoryNames,
       createdAt: anime.createdAt,
     };
   }
 
   async update(animeId: number, updateAnimesDto: UpdateAnimesDto) {
-    const { classificationName, categoryNames, name, type, dubbed, ...animeData } = updateAnimesDto;
+    const { classifications, categoryNames, name, types, dubbeds, ...animeData } = updateAnimesDto;
 
-    const typesAnimes = await this.typesAnimesRepository.findByName(type);
-    const dubbeds = await this.dubbedsRepository.findByName(dubbed);
-    const classification = await this.classificationsRepository.findByName(classificationName);
+    const typesAnimes = await this.typesAnimesRepository.findByName(types);
+    const dubbed = await this.dubbedsRepository.findByName(dubbeds);
+    const classification = await this.classificationsRepository.findByName(classifications);
     const formattedName = name.charAt(0).toUpperCase() + name.slice(1);
 
     const existingAnime = await this.animesRepository.findById(animeId);
@@ -132,7 +133,7 @@ export class AnimesUseCase {
       throw new NotFoundException('Esta classificação não existe');
     }
 
-    if (!dubbeds) {
+    if (!dubbed) {
       throw new NotFoundException('Este dubbed não existe');
     }
 
@@ -150,13 +151,13 @@ export class AnimesUseCase {
       ...animeData,
       name: formattedName,
       types: {
-        connect: { name: type },
+        connect: { name: types },
       },
       dubbeds: {
-        connect: { name: dubbed },
+        connect: { name: dubbeds },
       },
       classifications: {
-        connect: { name: classificationName },
+        connect: { name: classifications },
       },
       categories: {
         set: categories.map((category) => ({ name: category.name })),
@@ -170,9 +171,9 @@ export class AnimesUseCase {
       thumbnailUrl: animeUpdate.thumbnailUrl,
       background: animeUpdate.background,
       feature: animeUpdate.feature,
-      type: type,
-      dubbed: dubbed,
-      classification: classificationName,
+      types: types,
+      dubbeds: dubbeds,
+      classifications: classifications,
       categories: categoryNames,
     };
   }

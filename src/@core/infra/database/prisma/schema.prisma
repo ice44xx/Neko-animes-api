@@ -46,6 +46,7 @@ model Animes {
   thumbnailUrl      String
   background        String?
   feature           Boolean         @default(false)
+  status            String
   categories        Categories[]
   likes             LikesAnimes[]
   favorites         Favorites[]

@@ -15,6 +15,7 @@ export async function createAnimes() {
       background:
         'https://res.cloudinary.com/doupbxhfd/image/upload/v1704387480/Thumbnails/backgrounds/jujutsu_bjtr4u.webp',
       feature: true,
+      status: 'Em lançamento',
       categoryNames: ['terror', 'aventura'],
       type: 'series',
       dubbed: 'leg',
@@ -29,6 +30,7 @@ export async function createAnimes() {
       background:
         'https://res.cloudinary.com/doupbxhfd/image/upload/v1704387480/Thumbnails/backgrounds/kono_fzph0b.webp',
       feature: true,
+      status: 'Em lançamento',
       categoryNames: ['fantasia', 'comédia'],
       type: 'series',
       dubbed: 'leg',
@@ -43,6 +45,7 @@ export async function createAnimes() {
       background:
         'https://res.cloudinary.com/doupbxhfd/image/upload/v1704387480/Thumbnails/backgrounds/drstone_bhm1xs.webp',
       feature: true,
+      status: 'Em lançamento',
       categoryNames: ['sci-fi', 'drama'],
       type: 'series',
       dubbed: 'leg',
@@ -57,6 +60,7 @@ export async function createAnimes() {
       background:
         'https://res.cloudinary.com/doupbxhfd/image/upload/v1704387480/Thumbnails/backgrounds/chainsaw_ngu1qd.webp',
       feature: true,
+      status: 'Em lançamento',
       categoryNames: ['ação', 'terror'],
       type: 'series',
       dubbed: 'leg',
@@ -71,6 +75,7 @@ export async function createAnimes() {
       background:
         'https://res.cloudinary.com/doupbxhfd/image/upload/v1704387481/Thumbnails/backgrounds/spy_m9luro.webp',
       feature: true,
+      status: 'Em lançamento',
       categoryNames: ['comédia', 'drama'],
       type: 'series',
       dubbed: 'leg',
@@ -85,6 +90,7 @@ export async function createAnimes() {
       background:
         'https://res.cloudinary.com/doupbxhfd/image/upload/v1704387480/Thumbnails/backgrounds/oshi_xfgqgh.webp',
       feature: true,
+      status: 'Em lançamento',
       categoryNames: ['drama', 'aventura'],
       type: 'series',
       dubbed: 'leg',
@@ -99,6 +105,7 @@ export async function createAnimes() {
       background:
         'https://res.cloudinary.com/doupbxhfd/image/upload/v1704387480/Thumbnails/backgrounds/overlord_qxe9jz.webp',
       feature: true,
+      status: 'Em lançamento',
       categoryNames: ['ação', 'fantasia'],
       type: 'series',
       dubbed: 'dub',
@@ -113,6 +120,7 @@ export async function createAnimes() {
       background:
         'https://res.cloudinary.com/doupbxhfd/image/upload/v1704387480/Thumbnails/backgrounds/boku_jdq1u2.webp',
       feature: true,
+      status: 'Em lançamento',
       categoryNames: ['ação', 'fantasia'],
       type: 'series',
       dubbed: 'dub',
@@ -127,6 +135,7 @@ export async function createAnimes() {
       background:
         'https://res.cloudinary.com/doupbxhfd/image/upload/v1704387480/Thumbnails/backgrounds/mashle_tvpc17.webp',
       feature: true,
+      status: 'Completo',
       categoryNames: ['ação', 'fantasia'],
       type: 'series',
       dubbed: 'dub',
@@ -141,6 +150,7 @@ export async function createAnimes() {
       background:
         'https://res.cloudinary.com/doupbxhfd/image/upload/v1704387480/Thumbnails/backgrounds/kaguya_i0y0sr.webp',
       feature: true,
+      status: 'Em lançamento',
       categoryNames: ['comédia', 'romance'],
       type: 'movies',
       dubbed: 'leg',
@@ -155,6 +165,7 @@ export async function createAnimes() {
       background:
         'https://res.cloudinary.com/doupbxhfd/image/upload/v1705193098/Thumbnails/backgrounds/nier-automata_ldgnm0.webp',
       feature: true,
+      status: 'Completo',
       categoryNames: ['ação', 'drama', 'sci-fi'],
       type: 'series',
       dubbed: 'leg',
@@ -183,6 +194,7 @@ export async function createAnimes() {
             thumbnailUrl: animeData.thumbnailUrl,
             background: animeData.background,
             feature: animeData.feature,
+            status: animeData.status,
             types: {
               connect: {
                 name: animeData.type,
