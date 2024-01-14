@@ -36,6 +36,19 @@ export class EpisodesController {
   }
 
   @Public()
+  @Get('newest')
+  async findTop10Newest(@Res() res) {
+    try {
+      const episodes = await this.episodesService.findTop10Newest();
+      return res.status(HttpStatus.OK).json(episodes);
+    } catch (error) {
+      return res
+        .status(HttpStatus.INTERNAL_SERVER_ERROR)
+        .json({ message: 'Ocorreu um erro ao buscar os top 10 episódios, ' + error.message });
+    }
+  }
+
+  @Public()
   @Get('name/:name')
   async findByAnimeName(@Res() res, @Param('name') name: string) {
     try {

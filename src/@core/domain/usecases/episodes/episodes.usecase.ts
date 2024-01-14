@@ -16,10 +16,14 @@ export class EpisodesUseCase {
     return await this.episodesRepository.findAll();
   }
 
+  async findTop10Newest() {
+    return await this.episodesRepository.findTop10Newest();
+  }
+
   async findByAnimeName(name: string) {
     const episode = await this.episodesRepository.findByAnimeName(name);
 
-    if (!episode) {
+    if (!episode || episode.length === 0) {
       throw new NotFoundException('Anime não encontrado');
     }
     return episode;
@@ -28,7 +32,7 @@ export class EpisodesUseCase {
   async findByAnimeId(id: number) {
     const episode = await this.episodesRepository.findByAnimeId(id);
 
-    if (!episode) {
+    if (!episode || episode.length === 0) {
       throw new NotFoundException('Anime não encontrado');
     }
     return episode;

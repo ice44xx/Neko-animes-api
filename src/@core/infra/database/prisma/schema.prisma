@@ -138,6 +138,8 @@ model Episodes {
   seasonsId    Int
   likes        LikesEpisodes[]
   comments     Comments[]
+  createdAt    DateTime        @default(now())
+  updatedAt    DateTime        @default(now())
 
   @@map("episodes")
 }

@@ -41,7 +41,7 @@ export class AnimesUseCase {
   async findByName({ name }: AnimesDto) {
     const anime = await this.animesRepository.findByName(name);
 
-    if (!anime) {
+    if (!anime || anime.length === 0) {
       throw new NotFoundException(`Anime ${name} não encontrado`);
     }
 
