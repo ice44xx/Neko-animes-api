@@ -5,6 +5,8 @@ CREATE TABLE "episodes" (
     "url" TEXT NOT NULL,
     "episodeOrder" INTEGER NOT NULL,
     "seasonsId" INTEGER NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT "episodes_pkey" PRIMARY KEY ("id")
 );

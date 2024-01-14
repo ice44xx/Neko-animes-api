@@ -18,6 +18,7 @@ import { AuthModule } from 'src/@core/app/modules/auth/auth.module';
 import { TypesAnimesModule } from 'src/@core/app/modules/types-animes/types.module';
 import { BackgroundsAuthModule } from 'src/@core/app/modules/backgrounds-auth/backgrounds-auth.module';
 import { DubbedsModule } from 'src/@core/app/modules/dubbeds/dubbeds.module';
+import { CodesModule } from 'src/@core/app/modules/codes/codes.module';
 
 @Module({
   imports: [
@@ -39,6 +40,7 @@ import { DubbedsModule } from 'src/@core/app/modules/dubbeds/dubbeds.module';
     RolesModule,
     UsersModule,
     WatchlistModule,
+    CodesModule,
   ],
   providers: [PrismaService],
 })

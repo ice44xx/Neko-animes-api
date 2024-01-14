@@ -44,6 +44,7 @@ export class SeasonsRepository {
             name: true,
             synopsis: true,
             thumbnailUrl: true,
+            status: true,
           },
         },
         episodes: {

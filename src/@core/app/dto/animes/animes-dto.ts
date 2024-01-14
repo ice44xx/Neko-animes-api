@@ -13,17 +13,23 @@ export class AnimesDto {
   @IsString()
   readonly thumbnailUrl?: string;
 
+  @IsString()
+  readonly background?: string;
+
   @IsBoolean()
   readonly feature?: boolean;
 
   @IsString()
-  readonly type?: string;
+  readonly status?: string;
 
   @IsString()
-  readonly dubbed?: string;
+  readonly types?: string;
 
   @IsString()
-  readonly classificationName?: string;
+  readonly dubbeds?: string;
+
+  @IsString()
+  readonly classifications?: string;
 
   @IsArray()
   readonly categoryNames?: string[];

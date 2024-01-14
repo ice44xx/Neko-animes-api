@@ -24,6 +24,7 @@ import { UpdateUsersPasswordDto } from '../../dto/users/update-users-password-dt
 import { CreateAdminsDto } from '../../dto/users/create-admins-dto';
 import { UpdateAdminsDto } from '../../dto/users/update-admins-dto';
 import { UpdateUsersProfileDto } from '../../dto/users/update-user-profile-dto';
+import { UpdatePasswordByEmailDto } from '../../dto/users/update-password-email-dto';
 
 @ApiTags('Usuários')
 @Controller('users')
@@ -188,7 +189,31 @@ export class UsersController {
       }
       return res
         .status(HttpStatus.INTERNAL_SERVER_ERROR)
-        .json({ message: 'Ocorreu um erro ao criar o usuário, ' + error.message });
+        .json({ message: 'Ocorreu um erro ao atualizar a senha do usuário, ' + error.message });
+    }
+  }
+
+  @Public()
+  @Put('forget-password')
+  async updatePasswordbyEmail(
+    @Res() res,
+    @Body() updatePasswordByEmailDto: UpdatePasswordByEmailDto,
+  ) {
+    try {
+      await this.usersService.updatePasswordbyEmail(
+        updatePasswordByEmailDto.email,
+        updatePasswordByEmailDto,
+      );
+      return res.status(HttpStatus.OK).json({ message: 'Senha atualizada com sucesso' });
+    } catch (error) {
+      if (error instanceof UnauthorizedException) {
+        return res.status(HttpStatus.UNAUTHORIZED).json({ message: error.message });
+      } else if (error instanceof ConflictException) {
+        return res.status(HttpStatus.UNAUTHORIZED).json({ message: error.message });
+      }
+      return res
+        .status(HttpStatus.INTERNAL_SERVER_ERROR)
+        .json({ message: 'Ocorreu um erro ao atualiar a senha do usuário, ' + error.message });
     }
   }
 

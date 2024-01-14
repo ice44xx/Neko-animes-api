@@ -14,6 +14,7 @@ import { UsersDto } from 'src/@core/app/dto/users/users-dtos';
 import { CreateAdminsDto } from 'src/@core/app/dto/users/create-admins-dto';
 import { UpdateAdminsDto } from 'src/@core/app/dto/users/update-admins-dto';
 import { UpdateUsersProfileDto } from 'src/@core/app/dto/users/update-user-profile-dto';
+import { UpdatePasswordByEmailDto } from 'src/@core/app/dto/users/update-password-email-dto';
 
 @Injectable()
 export class UsersUseCase {
@@ -39,7 +40,7 @@ export class UsersUseCase {
   async findByUserName({ userName }: UsersDto) {
     const user = await this.usersRepository.findByUserName(userName);
 
-    if (!user) {
+    if (!user || user.length === 0) {
       throw new NotFoundException('Usuário não encontrado');
     }
 
@@ -152,6 +153,19 @@ export class UsersUseCase {
     const hashedNewPassword = await bcrypt.hash(updateUsersPasswordDto.newPassword, saltRounds);
 
     await this.usersRepository.update(userId, { password: hashedNewPassword });
+  }
+
+  async updatePasswordbyEmail(email: string, updatePasswordByEmailDto: UpdatePasswordByEmailDto) {
+    const user = await this.usersRepository.findByEmail(email);
+
+    if (!user) {
+      throw new UnauthorizedException('E-mail inválido');
+    }
+
+    const saltRounds = 10;
+    const hashedNewPassword = await bcrypt.hash(updatePasswordByEmailDto.newPassword, saltRounds);
+
+    await this.usersRepository.update(user.id, { password: hashedNewPassword });
   }
 
   async createAdmin(createAdminsDto: CreateAdminsDto) {

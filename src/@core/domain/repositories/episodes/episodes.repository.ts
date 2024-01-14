@@ -57,6 +57,28 @@ export class EpisodesRepository {
     return formattedLikes;
   }
 
+  async findTop10Newest() {
+    return await this.prisma.episodes.findMany({
+      where: {},
+      select: {
+        id: true,
+        name: true,
+        episodeOrder: true,
+        url: true,
+        createdAt: true,
+        updatedAt: true,
+        seasons: {
+          select: {
+            animeId: true,
+            anime: true,
+          },
+        },
+      },
+      take: 10,
+      orderBy: [{ updatedAt: 'desc' }, { createdAt: 'desc' }],
+    });
+  }
+
   async findByAnimeName(name: string) {
     const episodes = await this.prisma.episodes.findMany({
       where: {

@@ -15,6 +15,7 @@ export class AnimesRepository {
         thumbnailUrl: true,
         background: true,
         feature: true,
+        status: true,
         dubbeds: {
           select: {
             name: true,
@@ -94,6 +95,7 @@ export class AnimesRepository {
         thumbnailUrl: true,
         background: true,
         feature: true,
+        status: true,
         dubbeds: {
           select: {
             name: true,
@@ -163,6 +165,7 @@ export class AnimesRepository {
         thumbnailUrl: true,
         background: true,
         feature: true,
+        status: true,
         dubbeds: {
           select: {
             name: true,
@@ -229,6 +232,7 @@ export class AnimesRepository {
         thumbnailUrl: true,
         background: true,
         feature: true,
+        status: true,
         dubbeds: {
           select: {
             name: true,
@@ -304,6 +308,7 @@ export class AnimesRepository {
         thumbnailUrl: true,
         background: true,
         feature: true,
+        status: true,
         dubbeds: {
           select: {
             name: true,
@@ -342,6 +347,7 @@ export class AnimesRepository {
         thumbnailUrl: true,
         background: true,
         feature: true,
+        status: true,
         dubbeds: {
           select: {
             name: true,
@@ -421,6 +427,7 @@ export class AnimesRepository {
         thumbnailUrl: true,
         background: true,
         feature: true,
+        status: true,
         dubbeds: {
           select: {
             name: true,

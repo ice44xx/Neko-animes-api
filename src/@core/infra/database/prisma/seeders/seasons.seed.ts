@@ -14,6 +14,16 @@ export async function createSeasons() {
       order: 2,
       animeId: 1,
     },
+    {
+      name: 'Temporada 1 Mashle',
+      order: 1,
+      animeId: 9,
+    },
+    {
+      name: 'Temporada 1 Nier',
+      order: 1,
+      animeId: 11,
+    },
   ];
 
   for (const seasonData of seasonsToCreate) {
