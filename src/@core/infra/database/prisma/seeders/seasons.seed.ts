@@ -24,6 +24,31 @@ export async function createSeasons() {
       order: 1,
       animeId: 11,
     },
+    {
+      name: 'Temporada 1 Spy x Family',
+      order: 1,
+      animeId: 5,
+    },
+    {
+      name: 'Temporada 1 Overlord',
+      order: 1,
+      animeId: 7,
+    },
+    {
+      name: 'Temporada 2 Overlord',
+      order: 2,
+      animeId: 7,
+    },
+    {
+      name: 'Temporada 3 Overlord',
+      order: 3,
+      animeId: 7,
+    },
+    {
+      name: 'Temporada 1 Chainsaw man',
+      order: 1,
+      animeId: 4,
+    },
   ];
 
   for (const seasonData of seasonsToCreate) {

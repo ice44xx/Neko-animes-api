@@ -74,7 +74,7 @@ export class EpisodesRepository {
           },
         },
       },
-      take: 10,
+      take: 12,
       orderBy: [{ updatedAt: 'desc' }, { createdAt: 'desc' }],
     });
   }
