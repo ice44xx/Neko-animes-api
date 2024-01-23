@@ -16,6 +16,10 @@ export class SeasonsService {
     return this.seasonsUseCase.findByName({ name });
   }
 
+  async findById({ id }: SeasonsDto) {
+    return this.seasonsUseCase.findById({ id });
+  }
+
   async create(createSeasonsDto: CreateSeasonsDto) {
     return this.seasonsUseCase.create(createSeasonsDto);
   }

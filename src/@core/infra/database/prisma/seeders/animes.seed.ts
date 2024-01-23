@@ -17,7 +17,7 @@ export async function createAnimes() {
       feature: true,
       status: 'Em lançamento',
       categoryNames: ['terror', 'aventura'],
-      type: 'series',
+      type: 'seriado',
       dubbed: 'leg',
       classificationName: 'seinen',
     },
@@ -32,7 +32,7 @@ export async function createAnimes() {
       feature: true,
       status: 'Em lançamento',
       categoryNames: ['fantasia', 'comédia'],
-      type: 'series',
+      type: 'seriado',
       dubbed: 'leg',
       classificationName: 'shounen',
     },
@@ -47,7 +47,7 @@ export async function createAnimes() {
       feature: true,
       status: 'Em lançamento',
       categoryNames: ['sci-fi', 'drama'],
-      type: 'series',
+      type: 'seriado',
       dubbed: 'leg',
       classificationName: 'shounen',
     },
@@ -62,7 +62,7 @@ export async function createAnimes() {
       feature: true,
       status: 'Em lançamento',
       categoryNames: ['ação', 'terror'],
-      type: 'series',
+      type: 'seriado',
       dubbed: 'leg',
       classificationName: 'shounen',
     },
@@ -77,7 +77,7 @@ export async function createAnimes() {
       feature: true,
       status: 'Em lançamento',
       categoryNames: ['comédia', 'drama'],
-      type: 'series',
+      type: 'seriado',
       dubbed: 'leg',
       classificationName: 'shounen',
     },
@@ -92,7 +92,7 @@ export async function createAnimes() {
       feature: true,
       status: 'Em lançamento',
       categoryNames: ['drama', 'aventura'],
-      type: 'series',
+      type: 'seriado',
       dubbed: 'leg',
       classificationName: 'shounen',
     },
@@ -107,7 +107,7 @@ export async function createAnimes() {
       feature: true,
       status: 'Em lançamento',
       categoryNames: ['ação', 'fantasia'],
-      type: 'series',
+      type: 'seriado',
       dubbed: 'dub',
       classificationName: 'shounen',
     },
@@ -122,7 +122,7 @@ export async function createAnimes() {
       feature: true,
       status: 'Em lançamento',
       categoryNames: ['ação', 'fantasia'],
-      type: 'series',
+      type: 'seriado',
       dubbed: 'dub',
       classificationName: 'shounen',
     },
@@ -137,7 +137,7 @@ export async function createAnimes() {
       feature: true,
       status: 'Completo',
       categoryNames: ['ação', 'fantasia'],
-      type: 'series',
+      type: 'seriado',
       dubbed: 'dub',
       classificationName: 'shounen',
     },
@@ -152,7 +152,7 @@ export async function createAnimes() {
       feature: true,
       status: 'Em lançamento',
       categoryNames: ['comédia', 'romance'],
-      type: 'movies',
+      type: 'seriado',
       dubbed: 'leg',
       classificationName: 'seinen',
     },
@@ -167,9 +167,129 @@ export async function createAnimes() {
       feature: true,
       status: 'Completo',
       categoryNames: ['ação', 'drama', 'sci-fi'],
-      type: 'series',
+      type: 'seriado',
       dubbed: 'leg',
       classificationName: 'seinen',
+    },
+    {
+      name: 'One Piece Red',
+      synopsis:
+        'Com a Marinha assistindo de perto, o local se enche de fãs de Uta – incluindo piratas animados e os Chapéus de Palha liderados por Luffy, que vieram para curtir sua performance – todos aguardam ansiosamente a voz que o mundo inteiro estava esperando.',
+      thumbnailUrl:
+        'https://res.cloudinary.com/doupbxhfd/image/upload/v1705811790/Thumbnails/one_piece_red_r0mcmk.webp',
+      background:
+        'https://res.cloudinary.com/doupbxhfd/image/upload/v1705816916/Thumbnails/backgrounds/one_piece_red_c6rvrv.webp',
+      feature: false,
+      status: 'Completo',
+      categoryNames: ['ação', 'aventura', 'comédia'],
+      type: 'filme',
+      dubbed: 'leg',
+      classificationName: 'shounen',
+    },
+    {
+      name: 'One Piece Strong World',
+      synopsis:
+        'East Blue em crise? A notícia atinge os Piratas do Chapéu de Palha ao longo de sua jornada. Com suas cidades natais enfrentando um aperto, Luffy e seus amigos colocam suas aventuras em espera e decidem voltar para East Blue.',
+      thumbnailUrl:
+        'https://res.cloudinary.com/doupbxhfd/image/upload/v1705811791/Thumbnails/one_piece_strong_world_ij50do.webp',
+      background:
+        'https://res.cloudinary.com/doupbxhfd/image/upload/v1705816916/Thumbnails/backgrounds/one_piece_strong_loi0cj.webp',
+      feature: false,
+      status: 'Completo',
+      categoryNames: ['ação', 'aventura', 'comédia'],
+      type: 'filme',
+      dubbed: 'leg',
+      classificationName: 'shounen',
+    },
+    {
+      name: 'Suzume',
+      synopsis:
+        'Uma garota de 17 anos chamada Suzume descobre uma porta misteriosa nas montanhas, e logo outras começam a aparecer por todo o Japão. Quando abertas, elas trazem desastre e destruição, e apenas Suzume pode fechá-las novamente.',
+      thumbnailUrl:
+        'https://res.cloudinary.com/doupbxhfd/image/upload/v1705811790/Thumbnails/suzume_o1m6ie.webp',
+      background:
+        'https://res.cloudinary.com/doupbxhfd/image/upload/v1705816916/Thumbnails/backgrounds/suzume_mzbcjp.webp',
+      feature: false,
+      status: 'Completo',
+      categoryNames: ['drama', 'aventura'],
+      type: 'filme',
+      dubbed: 'leg',
+      classificationName: 'shoujo',
+    },
+    {
+      name: 'Jujutsu Kaisen 0',
+      synopsis:
+        'O jovem Yuta Okkotsu ganha o controle de um espírito extremamente poderoso, então um grupo de feiticeiros o matriculam na Tokyo Prefectural Jujutsu High School, para ajudá-lo a controlar esse poder e também para ficar de olho nele.',
+      thumbnailUrl:
+        'https://res.cloudinary.com/doupbxhfd/image/upload/v1705811790/Thumbnails/jujutsu_0_jlrlqd.webp',
+      background:
+        'https://res.cloudinary.com/doupbxhfd/image/upload/v1705816916/Thumbnails/backgrounds/jujutsu_0_uyouqx.webp',
+      feature: false,
+      status: 'Completo',
+      categoryNames: ['ação', 'aventura', 'terror'],
+      type: 'filme',
+      dubbed: 'leg',
+      classificationName: 'shounen',
+    },
+    {
+      name: 'Seishun Buta',
+      synopsis:
+        'A vida do estudante Sakuta Azusagawa tem uma reviravolta inesperada quando ele conhece a atriz adolescente Mai Sakurajima, vestida como uma coelhinha erótica e vagando por uma biblioteca sem ser notada por mais ninguém além de Sakuta.',
+      thumbnailUrl:
+        'https://res.cloudinary.com/doupbxhfd/image/upload/v1705811791/Thumbnails/seishan_buta_bqpo8w.webp',
+      background:
+        'https://res.cloudinary.com/doupbxhfd/image/upload/v1705816916/Thumbnails/backgrounds/seishaun_buta_hwrq5r.webp',
+      feature: false,
+      status: 'Completo',
+      categoryNames: ['comédia', 'drama', 'romance'],
+      type: 'filme',
+      dubbed: 'leg',
+      classificationName: 'shounen',
+    },
+    {
+      name: 'Sword Art Online: Ordinal Scale',
+      synopsis:
+        'Em um futuro próximo, uma batalha de máquinas altamente desenvolvidas está se delineando. O ano é 2026 e Augma, um novo dispositivo, acaba de ser criado para competir com o NerveGear e o Amusphere, seu sucessor.',
+      thumbnailUrl:
+        'https://res.cloudinary.com/doupbxhfd/image/upload/v1705811791/Thumbnails/sword_art_online_ordinal_scale_mc6jcf.webp',
+      background:
+        'https://res.cloudinary.com/doupbxhfd/image/upload/v1705816917/Thumbnails/backgrounds/sword_xkbd6m.webp',
+      feature: false,
+      status: 'Completo',
+      categoryNames: ['ação', 'fantasia'],
+      type: 'filme',
+      dubbed: 'leg',
+      classificationName: 'shounen',
+    },
+    {
+      name: 'Ooyukiumi no Kaina',
+      synopsis:
+        'Kaina  é um garoto que vive em Tenmaku e acaba conhecendo Liliha, a princesa de um pequeno país do Grande Oceano de Neve. Os dois criam um laço, que precisará superar as diversidades e conflitos entre as duas raças.',
+      thumbnailUrl:
+        'https://res.cloudinary.com/doupbxhfd/image/upload/v1705811790/Thumbnails/ooyukiumi_no_kaina_lypbbw.webp',
+      background:
+        'https://res.cloudinary.com/doupbxhfd/image/upload/v1705816916/Thumbnails/backgrounds/ooyukiumi_qxtwla.webp',
+      feature: false,
+      status: 'Completo',
+      categoryNames: ['fantasia', 'drama'],
+      type: 'filme',
+      dubbed: 'leg',
+      classificationName: 'shounen',
+    },
+    {
+      name: 'Tensei Shitara Slime Datta Ken',
+      synopsis:
+        'Em Raja, um pequeno país localizado a oeste de Tempest. Rimuru e seus companheiros se envolvem em uma longa conspiração que gira em torno do misterioso poder da rainha.',
+      thumbnailUrl:
+        'https://res.cloudinary.com/doupbxhfd/image/upload/v1705811791/Thumbnails/tensei_shitara_o3emos.webp',
+      background:
+        'https://res.cloudinary.com/doupbxhfd/image/upload/v1705816916/Thumbnails/backgrounds/datta_ken_fhu4vx.webp',
+      feature: false,
+      status: 'Completo',
+      categoryNames: ['fantasia', 'isekai', 'ecchi'],
+      type: 'filme',
+      dubbed: 'leg',
+      classificationName: 'shounen',
     },
   ];
 

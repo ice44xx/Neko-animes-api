@@ -17,7 +17,7 @@ export async function createCategories() {
     'Culinária',
     'Ecchi',
     'Rpg',
-    'Pós-apocalíptico',
+    'Apocalíptico',
     'Terror',
     'Suspense',
     'Romance',

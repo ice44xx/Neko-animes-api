@@ -9,7 +9,9 @@ export class BackgroundsAuthRepository {
   async findAll() {
     return this.prisma.backgroundsAuth.findMany({
       take: 6,
-      orderBy: [{ updatedAt: 'desc' }, { createdAt: 'desc' }],
+      orderBy: {
+        id: 'asc',
+      },
     });
   }
 

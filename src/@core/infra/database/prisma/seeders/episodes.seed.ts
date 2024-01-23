@@ -14,14 +14,14 @@ export async function createEpisodes() {
     },
     {
       id: 2,
-      name: 'Escapando da cidade E-2',
+      name: 'Escapando E-2',
       url: 'https://do0od.com/e/tahwsqbhfkl1',
       episodeOrder: 2,
       seasonId: 4,
     },
     {
       id: 3,
-      name: 'Tempo de descanso E-3',
+      name: 'Descanso E-3',
       url: 'https://do0od.com/e/2u0crgtlg545',
       episodeOrder: 3,
       seasonId: 4,
@@ -49,7 +49,7 @@ export async function createEpisodes() {
     },
     {
       id: 7,
-      name: 'Ações questionáveis E-7',
+      name: 'Questionáveis E-7',
       url: 'https://do0od.com/e/hh3ieeai7h34',
       episodeOrder: 7,
       seasonId: 4,
@@ -63,7 +63,7 @@ export async function createEpisodes() {
     },
     {
       id: 9,
-      name: 'Gula por conhecimento E-9',
+      name: 'Conhecimento E-9',
       url: 'https://do0od.com/e/kgha7qwjlzf0',
       episodeOrder: 9,
       seasonId: 4,
@@ -226,7 +226,7 @@ export async function createEpisodes() {
     },
     {
       id: 32,
-      name: 'Aprovados ou reprovados E-5',
+      name: 'Aprovados ? E-5',
       url: 'https://do0od.com/e/yehmv4a4irh3',
       episodeOrder: 5,
       seasonId: 5,
@@ -240,7 +240,7 @@ export async function createEpisodes() {
     },
     {
       id: 34,
-      name: 'Segundo filho do alvo E-7',
+      name: 'Segundo filho E-7',
       url: 'https://do0od.com/e/wa3zazqb6rhh',
       episodeOrder: 7,
       seasonId: 5,
@@ -876,6 +876,13 @@ export async function createEpisodes() {
       url: 'https://do0od.com/e/lif88ftcpw2q',
       episodeOrder: 12,
       seasonId: 9,
+    },
+    {
+      id: 125,
+      name: 'One Piece Film: Strong World',
+      url: 'https://do0od.com/e/01xim6rqcuwh8xvai24cgz7e9ytjo1a1',
+      episodeOrder: 1,
+      seasonId: 10,
     },
   ];
 

@@ -49,6 +49,11 @@ export async function createSeasons() {
       order: 1,
       animeId: 4,
     },
+    {
+      name: 'One Piece Film: Strong World',
+      order: 1,
+      animeId: 13,
+    },
   ];
 
   for (const seasonData of seasonsToCreate) {

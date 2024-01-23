@@ -212,6 +212,7 @@ export class EpisodesRepository {
               select: {
                 id: true,
                 name: true,
+                types: true,
                 thumbnailUrl: true,
               },
             },

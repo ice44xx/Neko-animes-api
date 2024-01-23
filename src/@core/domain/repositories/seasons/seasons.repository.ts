@@ -65,7 +65,20 @@ export class SeasonsRepository {
   }
 
   async findById(id: number) {
-    return this.prisma.seasons.findUnique({ where: { id } });
+    return this.prisma.seasons.findUnique({
+      where: { id },
+      select: {
+        id: true,
+        name: true,
+        order: true,
+        anime: {
+          select: {
+            id: true,
+            name: true,
+          },
+        },
+      },
+    });
   }
 
   async create(data: Prisma.SeasonsCreateInput) {

@@ -38,9 +38,13 @@ export class AnimesRepository {
         },
         likes: true,
         seasons: {
+          orderBy: {
+            order: 'asc',
+          },
           select: {
             id: true,
             name: true,
+            order: true,
             episodes: {
               select: {
                 id: true,
@@ -118,9 +122,13 @@ export class AnimesRepository {
         },
         likes: true,
         seasons: {
+          orderBy: {
+            order: 'asc',
+          },
           select: {
             id: true,
             name: true,
+            order: true,
             episodes: {
               select: {
                 id: true,
@@ -188,9 +196,13 @@ export class AnimesRepository {
         },
         likes: true,
         seasons: {
+          orderBy: {
+            order: 'asc',
+          },
           select: {
             id: true,
             name: true,
+            order: true,
             episodes: {
               select: {
                 id: true,
@@ -255,9 +267,13 @@ export class AnimesRepository {
         },
         likes: true,
         seasons: {
+          orderBy: {
+            order: 'asc',
+          },
           select: {
             id: true,
             name: true,
+            order: true,
             episodes: {
               select: {
                 id: true,
@@ -369,9 +385,13 @@ export class AnimesRepository {
           },
         },
         seasons: {
+          orderBy: {
+            order: 'asc',
+          },
           select: {
             id: true,
             name: true,
+            order: true,
             episodes: {
               select: {
                 id: true,
@@ -449,10 +469,17 @@ export class AnimesRepository {
           },
         },
         seasons: {
+          orderBy: {
+            order: 'asc',
+          },
           select: {
             id: true,
             name: true,
+            order: true,
             episodes: {
+              orderBy: {
+                episodeOrder: 'asc',
+              },
               select: {
                 id: true,
                 name: true,
