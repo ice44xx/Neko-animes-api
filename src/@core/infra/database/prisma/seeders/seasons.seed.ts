@@ -5,51 +5,61 @@ const prisma = new PrismaClient();
 export async function createSeasons() {
   const seasonsToCreate = [
     {
+      id: 1,
       name: 'Temporada 1 Jujutsu no Kaisen',
       order: 1,
       animeId: 1,
     },
     {
+      id: 2,
       name: 'Temporada 2 Jujutsu no Kaisen',
       order: 2,
       animeId: 1,
     },
     {
+      id: 3,
       name: 'Temporada 1 Mashle',
       order: 1,
       animeId: 9,
     },
     {
+      id: 4,
       name: 'Temporada 1 Nier',
       order: 1,
       animeId: 11,
     },
     {
+      id: 5,
       name: 'Temporada 1 Spy x Family',
       order: 1,
       animeId: 5,
     },
     {
+      id: 6,
       name: 'Temporada 1 Overlord',
       order: 1,
       animeId: 7,
     },
     {
+      id: 7,
       name: 'Temporada 2 Overlord',
       order: 2,
       animeId: 7,
     },
     {
+      id: 8,
       name: 'Temporada 3 Overlord',
       order: 3,
       animeId: 7,
     },
     {
+      id: 9,
       name: 'Temporada 1 Chainsaw man',
       order: 1,
       animeId: 4,
     },
     {
+      id: 10,
       name: 'One Piece Film: Strong World',
       order: 1,
       animeId: 13,
@@ -61,12 +71,12 @@ export async function createSeasons() {
       where: { id: seasonData.animeId },
     });
 
-    const existingSeason = await prisma.seasons.findMany({
-      where: { name: seasonData.name },
+    const existingSeason = await prisma.seasons.findUnique({
+      where: { id: seasonData.id },
     });
 
     if (existingAnime) {
-      if (existingSeason.length === 0) {
+      if (!existingSeason) {
         await prisma.seasons.create({
           data: {
             name: seasonData.name,

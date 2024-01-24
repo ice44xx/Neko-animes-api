@@ -891,12 +891,12 @@ export async function createEpisodes() {
       where: { id: episodesData.seasonId },
     });
 
-    const existingEpisodes = await prisma.episodes.findMany({
-      where: { name: episodesData.name },
+    const existingEpisodes = await prisma.episodes.findUnique({
+      where: { id: episodesData.id },
     });
 
     if (existingSeason) {
-      if (existingEpisodes.length === 0) {
+      if (!existingEpisodes) {
         await prisma.episodes.create({
           data: {
             name: episodesData.name,

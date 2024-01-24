@@ -7,6 +7,7 @@ const prisma = new PrismaClient();
 export async function createAnimes() {
   const animesToCreate = [
     {
+      id: 1,
       name: 'Jujutsu no kaisen',
       synopsis:
         'Sofrimento, arrependimento, vergonha: os sentimentos negativos dos humanos tornam-se Maldições, causando terríveis acidentes que podem levar até mesmo à morte. E pra piorar, Maldições só podem ser exorcizadas por outras Maldições.',
@@ -22,6 +23,7 @@ export async function createAnimes() {
       classificationName: 'seinen',
     },
     {
+      id: 2,
       name: 'Konosuba',
       synopsis:
         'Após um acidente de trânsito, a breve e desapontadora vida de Kazuma Sato deveria ter acabado, mas ele acorda e vê uma belíssima garota diante dele. Ela diz ser Aqua, uma deusa, e lhe pergunta se ele gostaria de ir para outro mundo, levando consigo apenas uma coisa deste mundo.',
@@ -37,6 +39,7 @@ export async function createAnimes() {
       classificationName: 'shounen',
     },
     {
+      id: 3,
       name: 'Dr.STONE',
       synopsis:
         'Maomao levava uma vida tranquila ao lado de seu pai, um boticário renomado. No entanto, sua vida muda da noite pro dia quando ela é vendida como uma simples serva no palácio do imperador.',
@@ -52,6 +55,7 @@ export async function createAnimes() {
       classificationName: 'shounen',
     },
     {
+      id: 4,
       name: 'Chainsaw Man',
       synopsis:
         'Denji é um adolescente que mora com Pochita, o Demônio da Motosserra. Por conta das dívidas que herdou de seu pai, ele vive na miséria, exterminando outros demônios com Pochita para pagar as contas. Até que, um dia, Denji é traído e morre.',
@@ -67,6 +71,7 @@ export async function createAnimes() {
       classificationName: 'shounen',
     },
     {
+      id: 5,
       name: 'SPY x FAMILY',
       synopsis:
         'Há décadas, as nações de Ostania e Westalis promovem uma guerra fria sem fim. Para investigar os movimentos do presidente de um importante partido político, Westalis mobiliza Twilight, seu melhor agente, a montar uma família falsa e se infiltrar nos eventos sociais promovidos pela escola do filho do político. ',
@@ -82,6 +87,7 @@ export async function createAnimes() {
       classificationName: 'shounen',
     },
     {
+      id: 6,
       name: 'Oshi No Ko',
       synopsis:
         'Gorou Honda, um ginecologista de um hospital na zona rural do Japão, que é um grande fã da idol Ai Hoshino. Ele fica perplexo quando a artista pausa a carreira, e mais ainda quando ela aparece em seu local de trabalho, grávida.',
@@ -97,6 +103,7 @@ export async function createAnimes() {
       classificationName: 'shounen',
     },
     {
+      id: 7,
       name: 'Overlord',
       synopsis:
         'Quando um MMORPG bastante popular anuncia que será desligado permanentemente, um jogador veterano se recusa a deslogar: Momonga. À medida que NPCs começam a desenvolver personalidades e mentes próprias, ele decide usar suas habilidades para se tornar o novo chefão do jogo.',
@@ -112,6 +119,7 @@ export async function createAnimes() {
       classificationName: 'shounen',
     },
     {
+      id: 8,
       name: 'Boku No Hero',
       synopsis:
         'Por toda a sua vida, Izuku sonhou ser um heroi — um objetivo ambicioso para qualquer um, mas especialmente desafiador para um garoto sem superpoderes. Isso mesmo: em um mundo onde 80% da população tem algum tipo de Dom especial.',
@@ -127,6 +135,7 @@ export async function createAnimes() {
       classificationName: 'shounen',
     },
     {
+      id: 9,
       name: 'Mashle',
       synopsis:
         'Em um mundo onde todos são capazes de usar magia, há uma floresta densa e escura, onde um jovem treina sem parar. Seu nome é Mash Burnedead, e ele guarda um segredo: ele não sabe usar magia. ',
@@ -142,6 +151,7 @@ export async function createAnimes() {
       classificationName: 'shounen',
     },
     {
+      id: 10,
       name: 'Kaguya-Sama LOVE IS WAR',
       synopsis:
         'Todos os jovens de elite com futuros brilhantes acabam indo parar na Academia Shuchiin. E ambos os líderes do conselho estudantil, Kaguya Shinomiya e Miyuki Shirogane, estão apaixonados um pelo outro.',
@@ -157,6 +167,7 @@ export async function createAnimes() {
       classificationName: 'seinen',
     },
     {
+      id: 11,
       name: 'NieR:Automata Ver1.1a',
       synopsis:
         'O ano é 5012. Uma súbita invasão de aliens e seus Seres Vivos Mecânicos quase exterminam a humanidade por completo. Os poucos sobreviventes se refugiam na Lua, organizando um contra-ataque para retomar o planeta, mas chegam a um impasse por conta da capacidade infinita de multiplicação dos Seres Vivos Mecânicos.',
@@ -172,6 +183,7 @@ export async function createAnimes() {
       classificationName: 'seinen',
     },
     {
+      id: 12,
       name: 'One Piece Red',
       synopsis:
         'Com a Marinha assistindo de perto, o local se enche de fãs de Uta – incluindo piratas animados e os Chapéus de Palha liderados por Luffy, que vieram para curtir sua performance – todos aguardam ansiosamente a voz que o mundo inteiro estava esperando.',
@@ -187,6 +199,7 @@ export async function createAnimes() {
       classificationName: 'shounen',
     },
     {
+      id: 13,
       name: 'One Piece Strong World',
       synopsis:
         'East Blue em crise? A notícia atinge os Piratas do Chapéu de Palha ao longo de sua jornada. Com suas cidades natais enfrentando um aperto, Luffy e seus amigos colocam suas aventuras em espera e decidem voltar para East Blue.',
@@ -202,6 +215,7 @@ export async function createAnimes() {
       classificationName: 'shounen',
     },
     {
+      id: 14,
       name: 'Suzume',
       synopsis:
         'Uma garota de 17 anos chamada Suzume descobre uma porta misteriosa nas montanhas, e logo outras começam a aparecer por todo o Japão. Quando abertas, elas trazem desastre e destruição, e apenas Suzume pode fechá-las novamente.',
@@ -217,6 +231,7 @@ export async function createAnimes() {
       classificationName: 'shoujo',
     },
     {
+      id: 15,
       name: 'Jujutsu Kaisen 0',
       synopsis:
         'O jovem Yuta Okkotsu ganha o controle de um espírito extremamente poderoso, então um grupo de feiticeiros o matriculam na Tokyo Prefectural Jujutsu High School, para ajudá-lo a controlar esse poder e também para ficar de olho nele.',
@@ -232,6 +247,7 @@ export async function createAnimes() {
       classificationName: 'shounen',
     },
     {
+      id: 16,
       name: 'Seishun Buta',
       synopsis:
         'A vida do estudante Sakuta Azusagawa tem uma reviravolta inesperada quando ele conhece a atriz adolescente Mai Sakurajima, vestida como uma coelhinha erótica e vagando por uma biblioteca sem ser notada por mais ninguém além de Sakuta.',
@@ -247,6 +263,7 @@ export async function createAnimes() {
       classificationName: 'shounen',
     },
     {
+      id: 17,
       name: 'Sword Art Online: Ordinal Scale',
       synopsis:
         'Em um futuro próximo, uma batalha de máquinas altamente desenvolvidas está se delineando. O ano é 2026 e Augma, um novo dispositivo, acaba de ser criado para competir com o NerveGear e o Amusphere, seu sucessor.',
@@ -262,6 +279,7 @@ export async function createAnimes() {
       classificationName: 'shounen',
     },
     {
+      id: 18,
       name: 'Ooyukiumi no Kaina',
       synopsis:
         'Kaina  é um garoto que vive em Tenmaku e acaba conhecendo Liliha, a princesa de um pequeno país do Grande Oceano de Neve. Os dois criam um laço, que precisará superar as diversidades e conflitos entre as duas raças.',
@@ -277,6 +295,7 @@ export async function createAnimes() {
       classificationName: 'shounen',
     },
     {
+      id: 19,
       name: 'Tensei Shitara Slime Datta Ken',
       synopsis:
         'Em Raja, um pequeno país localizado a oeste de Tempest. Rimuru e seus companheiros se envolvem em uma longa conspiração que gira em torno do misterioso poder da rainha.',
@@ -294,18 +313,17 @@ export async function createAnimes() {
   ];
 
   for (const animeData of animesToCreate) {
-    const existingAnime = await prisma.animes.findMany({
+    const existingAnime = await prisma.animes.findUnique({
       where: {
-        name: animeData.name,
+        id: animeData.id,
       },
     });
 
-    if (existingAnime.length === 0) {
+    if (!existingAnime) {
       const categories = animeData.categoryNames.map((categoryName) => ({
         where: { name: categoryName },
         create: { name: categoryName },
       }));
-
       try {
         await prisma.animes.create({
           data: {
