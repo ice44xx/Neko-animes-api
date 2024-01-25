@@ -14,7 +14,7 @@ export class CodesUseCase {
   async findByCode({ code }: CodesDto) {
     const codes = await this.codesRepository.findByCode(code);
 
-    if (!codes || codes.length === 0) {
+    if (!codes) {
       throw new NotFoundException('Código expirado');
     }
 
@@ -24,6 +24,16 @@ export class CodesUseCase {
   async create({ code }: CodesDto) {
     const newCode = await this.codesRepository.create({ code });
     return newCode;
+  }
+
+  async remove({ id }: CodesDto) {
+    const code = await this.codesRepository.findByCode(id);
+
+    if (!code) {
+      throw new NotFoundException(`Código ${id} não encontrado`);
+    }
+
+    await this.codesRepository.delete(id);
   }
 
   async deleteAfterDelay(id: number, delayMillis: number) {

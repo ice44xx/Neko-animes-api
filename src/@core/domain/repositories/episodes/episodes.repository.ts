@@ -12,8 +12,9 @@ export class EpisodesRepository {
       select: {
         id: true,
         name: true,
-        episodeOrder: true,
         url: true,
+        thumbnailUrl: true,
+        episodeOrder: true,
         likes: true,
         seasons: {
           select: {
@@ -63,8 +64,9 @@ export class EpisodesRepository {
       select: {
         id: true,
         name: true,
-        episodeOrder: true,
         url: true,
+        thumbnailUrl: true,
+        episodeOrder: true,
         createdAt: true,
         updatedAt: true,
         seasons: {
@@ -151,8 +153,9 @@ export class EpisodesRepository {
       select: {
         id: true,
         name: true,
-        episodeOrder: true,
         url: true,
+        thumbnailUrl: true,
+        episodeOrder: true,
         likes: true,
         seasons: {
           select: {
@@ -202,8 +205,9 @@ export class EpisodesRepository {
       select: {
         id: true,
         name: true,
-        episodeOrder: true,
         url: true,
+        thumbnailUrl: true,
+        episodeOrder: true,
         seasons: {
           select: {
             id: true,

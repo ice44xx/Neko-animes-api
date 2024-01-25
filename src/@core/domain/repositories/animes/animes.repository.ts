@@ -15,6 +15,7 @@ export class AnimesRepository {
         thumbnailUrl: true,
         background: true,
         feature: true,
+        year: true,
         status: true,
         dubbeds: {
           select: {
@@ -49,8 +50,9 @@ export class AnimesRepository {
               select: {
                 id: true,
                 name: true,
-                episodeOrder: true,
                 url: true,
+                thumbnailUrl: true,
+                episodeOrder: true,
                 likes: true,
                 comments: {
                   select: {
@@ -99,6 +101,7 @@ export class AnimesRepository {
         thumbnailUrl: true,
         background: true,
         feature: true,
+        year: true,
         status: true,
         dubbeds: {
           select: {
@@ -133,8 +136,9 @@ export class AnimesRepository {
               select: {
                 id: true,
                 name: true,
-                episodeOrder: true,
                 url: true,
+                thumbnailUrl: true,
+                episodeOrder: true,
                 likes: true,
               },
             },
@@ -173,6 +177,7 @@ export class AnimesRepository {
         thumbnailUrl: true,
         background: true,
         feature: true,
+        year: true,
         status: true,
         dubbeds: {
           select: {
@@ -207,8 +212,9 @@ export class AnimesRepository {
               select: {
                 id: true,
                 name: true,
-                episodeOrder: true,
                 url: true,
+                thumbnailUrl: true,
+                episodeOrder: true,
                 likes: true,
               },
             },
@@ -244,6 +250,7 @@ export class AnimesRepository {
         thumbnailUrl: true,
         background: true,
         feature: true,
+        year: true,
         status: true,
         dubbeds: {
           select: {
@@ -278,8 +285,9 @@ export class AnimesRepository {
               select: {
                 id: true,
                 name: true,
-                episodeOrder: true,
                 url: true,
+                thumbnailUrl: true,
+                episodeOrder: true,
                 likes: true,
               },
             },
@@ -324,6 +332,7 @@ export class AnimesRepository {
         thumbnailUrl: true,
         background: true,
         feature: true,
+        year: true,
         status: true,
         dubbeds: {
           select: {
@@ -363,6 +372,7 @@ export class AnimesRepository {
         thumbnailUrl: true,
         background: true,
         feature: true,
+        year: true,
         status: true,
         dubbeds: {
           select: {
@@ -396,8 +406,9 @@ export class AnimesRepository {
               select: {
                 id: true,
                 name: true,
-                episodeOrder: true,
                 url: true,
+                thumbnailUrl: true,
+                episodeOrder: true,
                 likes: true,
                 comments: {
                   select: {
@@ -447,6 +458,7 @@ export class AnimesRepository {
         thumbnailUrl: true,
         background: true,
         feature: true,
+        year: true,
         status: true,
         dubbeds: {
           select: {
@@ -483,8 +495,9 @@ export class AnimesRepository {
               select: {
                 id: true,
                 name: true,
-                episodeOrder: true,
                 url: true,
+                thumbnailUrl: true,
+                episodeOrder: true,
                 likes: true,
                 comments: {
                   select: {

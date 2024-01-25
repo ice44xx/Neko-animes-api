@@ -6,3 +6,5 @@ CREATE TABLE "codes" (
 
     CONSTRAINT "codes_pkey" PRIMARY KEY ("id")
 );
+
+

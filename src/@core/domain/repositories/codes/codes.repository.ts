@@ -11,11 +11,15 @@ export class CodesRepository {
   }
 
   async findByCode(code: number) {
-    return this.prisma.codes.findMany({ where: { code } });
+    return this.prisma.codes.findUnique({ where: { code } });
   }
 
   async create(data: Prisma.CodesCreateInput) {
     return this.prisma.codes.create({ data });
+  }
+
+  async deleteByCode(code: number) {
+    return this.prisma.codes.delete({ where: { code } });
   }
 
   async delete(id: number) {

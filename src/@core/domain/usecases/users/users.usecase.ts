@@ -15,12 +15,14 @@ import { CreateAdminsDto } from 'src/@core/app/dto/users/create-admins-dto';
 import { UpdateAdminsDto } from 'src/@core/app/dto/users/update-admins-dto';
 import { UpdateUsersProfileDto } from 'src/@core/app/dto/users/update-user-profile-dto';
 import { UpdatePasswordByEmailDto } from 'src/@core/app/dto/users/update-password-email-dto';
+import { CodesRepository } from '../../repositories/codes/codes.repository';
 
 @Injectable()
 export class UsersUseCase {
   constructor(
     private readonly usersRepository: UsersRepository,
     private readonly rolesRepository: RolesRepository,
+    private readonly codesRepository: CodesRepository,
   ) {}
 
   async findAll() {
@@ -156,6 +158,12 @@ export class UsersUseCase {
   }
 
   async updatePasswordbyEmail(email: string, updatePasswordByEmailDto: UpdatePasswordByEmailDto) {
+    const existingCode = await this.codesRepository.findByCode(updatePasswordByEmailDto.code);
+
+    if (!existingCode) {
+      throw new NotFoundException('Código expirado');
+    }
+
     const user = await this.usersRepository.findByEmail(email);
 
     if (!user) {
@@ -166,6 +174,7 @@ export class UsersUseCase {
     const hashedNewPassword = await bcrypt.hash(updatePasswordByEmailDto.newPassword, saltRounds);
 
     await this.usersRepository.update(user.id, { password: hashedNewPassword });
+    await this.codesRepository.deleteByCode(existingCode.code);
   }
 
   async createAdmin(createAdminsDto: CreateAdminsDto) {

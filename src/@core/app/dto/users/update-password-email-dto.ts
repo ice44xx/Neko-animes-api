@@ -1,7 +1,20 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsEmail, IsNotEmpty, IsString, Matches, MaxLength, MinLength } from 'class-validator';
+import {
+  IsEmail,
+  IsNotEmpty,
+  IsNumber,
+  IsString,
+  Matches,
+  MaxLength,
+  MinLength,
+} from 'class-validator';
 
 export class UpdatePasswordByEmailDto {
+  @ApiProperty({ description: 'Código recebido por email', example: '1234567' })
+  @IsNotEmpty({ message: 'O código é obrigatório' })
+  @IsNumber()
+  readonly code: number;
+
   @ApiProperty({ description: 'Endereço de email', example: 'example@example.com' })
   @IsNotEmpty({ message: 'O email é obrigatório' })
   @IsEmail({}, { message: 'O email fornecido é inválido' })

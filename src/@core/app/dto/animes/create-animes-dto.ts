@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsString, IsBoolean, IsArray, IsNotEmpty } from 'class-validator';
+import { IsString, IsBoolean, IsArray, IsNotEmpty, MaxLength } from 'class-validator';
 
 export class CreateAnimesDto {
   @ApiProperty({ description: 'Nome do anime' })
@@ -9,6 +9,7 @@ export class CreateAnimesDto {
 
   @ApiProperty({ description: 'Sinopse do anime' })
   @IsNotEmpty({ message: 'O synopsis é obrigatório' })
+  @MaxLength(345, { message: 'A sinopse não pode ter mais de 345 caracteres' })
   @IsString()
   readonly synopsis: string;
 
@@ -26,6 +27,11 @@ export class CreateAnimesDto {
   @IsNotEmpty({ message: 'O destaque é obrigatório' })
   @IsBoolean()
   readonly feature: boolean;
+
+  @ApiProperty({ description: 'Ano do anime' })
+  @IsNotEmpty({ message: 'O ano é obrigatório' })
+  @IsString()
+  readonly year: string;
 
   @ApiProperty({ description: 'Status do anime' })
   @IsNotEmpty({ message: 'O status é obrigatório' })

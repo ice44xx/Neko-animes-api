@@ -12,13 +12,14 @@ import { Public } from 'src/@core/infra/decorators/public-route.decorator';
 import { ApiTags } from '@nestjs/swagger';
 import { CodesServices } from '../../services/codes/codes.service';
 import { ResetPasswordDto } from '../../dto/auth/reset-password-dto';
+import { Roles, UserType } from 'src/@core/infra/decorators/roles.decorator';
 
 @ApiTags('Códigos de redefinição de senha')
 @Controller('codes')
 export class CodesController {
   constructor(private readonly codesService: CodesServices) {}
 
-  @Public()
+  @Roles(UserType.Admin)
   @Get()
   async findAll(@Res() res) {
     try {
@@ -43,7 +44,7 @@ export class CodesController {
       }
       return res
         .status(HttpStatus.INTERNAL_SERVER_ERROR)
-        .json({ message: 'Ocorreu um erro ao buscar os códigos, ' + error.message });
+        .json({ message: 'Ocorreu um erro ao buscar o código, ' + error.message });
     }
   }
 
