@@ -6,32 +6,32 @@ export async function createBackgroundsAuth() {
   const backgroundsAuthToAdd = [
     {
       id: 1,
-      url: 'https://res.cloudinary.com/doupbxhfd/image/upload/v1704237205/Register%20e%20Login/register_four_smuagf.jpg',
+      url: 'https://res.cloudinary.com/doupbxhfd/image/upload/v1706169360/Register%20e%20Login/3_v3asp4.webp',
       order: 1,
     },
     {
       id: 2,
-      url: 'https://res.cloudinary.com/doupbxhfd/image/upload/v1704237204/Register%20e%20Login/register_two_jfpq0b.webp',
+      url: 'https://res.cloudinary.com/doupbxhfd/image/upload/v1706169365/Register%20e%20Login/6_iojowm.webp',
       order: 2,
     },
     {
       id: 3,
-      url: 'https://res.cloudinary.com/doupbxhfd/image/upload/v1704237204/Register%20e%20Login/register_five_kp6qkj.jpg',
+      url: 'https://res.cloudinary.com/doupbxhfd/image/upload/v1706169362/Register%20e%20Login/5_suzowx.webp',
       order: 3,
     },
     {
       id: 4,
-      url: 'https://res.cloudinary.com/doupbxhfd/image/upload/v1704237204/Register%20e%20Login/register_one_fbijsm.webp',
+      url: 'https://res.cloudinary.com/doupbxhfd/image/upload/v1706169362/Register%20e%20Login/5_suzowx.webp',
       order: 4,
     },
     {
       id: 5,
-      url: 'https://res.cloudinary.com/doupbxhfd/image/upload/v1704237204/Register%20e%20Login/register_zwtrzq.webp',
+      url: 'https://res.cloudinary.com/doupbxhfd/image/upload/v1706169360/Register%20e%20Login/3_v3asp4.webp',
       order: 5,
     },
     {
       id: 6,
-      url: 'https://res.cloudinary.com/doupbxhfd/image/upload/v1704237204/Register%20e%20Login/register_third_pauqtx.webp',
+      url: 'https://res.cloudinary.com/doupbxhfd/image/upload/v1706169365/Register%20e%20Login/1_wnbs7w.webp',
       order: 6,
     },
   ];

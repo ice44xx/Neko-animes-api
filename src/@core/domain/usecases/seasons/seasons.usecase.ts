@@ -20,6 +20,10 @@ export class SeasonsUseCase {
     return this.seasonsRepository.findByName(name);
   }
 
+  async findById({ id }: SeasonsDto) {
+    return this.seasonsRepository.findById(id);
+  }
+
   async create({ name, animeId, ...seasonsData }: CreateSeasonsDto) {
     const nameLower = name.toLocaleLowerCase().trim();
 

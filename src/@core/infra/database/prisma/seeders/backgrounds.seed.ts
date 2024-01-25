@@ -6,22 +6,22 @@ export async function createBackgrounds() {
   const backgroundsToAdd = [
     {
       id: 1,
-      url: 'https://res.cloudinary.com/doupbxhfd/image/upload/v1690131720/Planos%20de%20fundo/cyber.webp',
+      url: 'https://res.cloudinary.com/doupbxhfd/image/upload/v1706169155/Planos%20de%20fundo/one_pice_hoxcoa.webp',
       order: 1,
     },
     {
       id: 2,
-      url: 'https://res.cloudinary.com/doupbxhfd/image/upload/v1690131720/Planos%20de%20fundo/demon.webp',
+      url: 'https://res.cloudinary.com/doupbxhfd/image/upload/v1706169160/Planos%20de%20fundo/Apotec%C3%A1ria_qssbta.webp',
       order: 2,
     },
     {
       id: 3,
-      url: 'https://res.cloudinary.com/doupbxhfd/image/upload/v1690131616/Planos%20de%20fundo/hashi.webp',
+      url: 'https://res.cloudinary.com/doupbxhfd/image/upload/v1706169155/Planos%20de%20fundo/solo_lv_evxybn.webp',
       order: 3,
     },
     {
       id: 4,
-      url: 'https://res.cloudinary.com/doupbxhfd/image/upload/v1690131615/Planos%20de%20fundo/jujutsu.webp',
+      url: 'https://res.cloudinary.com/doupbxhfd/image/upload/v1706169164/Planos%20de%20fundo/friren_wdki6z.webp',
       order: 4,
     },
   ];

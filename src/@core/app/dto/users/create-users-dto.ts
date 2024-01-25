@@ -1,5 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Transform } from 'class-transformer';
+import { IsNotFutureDateConstraint } from '../../../domain/validators/is-not-future-date.validator';
+import { IsNotTooOldDateConstraint } from '../../../domain/validators/is-not-too-old-date.validator';
 import {
   IsDate,
   IsEmail,
@@ -8,6 +10,7 @@ import {
   Matches,
   MaxLength,
   MinLength,
+  Validate,
 } from 'class-validator';
 
 export class CreateUsersDto {
@@ -25,6 +28,8 @@ export class CreateUsersDto {
   readonly email: string;
 
   @ApiProperty({ description: 'Data de nascimento', example: '1990-01-01' })
+  @Validate(IsNotFutureDateConstraint, { message: 'A data de nascimento não pode ser no futuro' })
+  @Validate(IsNotTooOldDateConstraint, { message: 'A data de nascimento deve ser depois de 1920' })
   @IsDate()
   @Transform(({ value }) => new Date(value))
   readonly birthday: Date;

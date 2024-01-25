@@ -12,6 +12,14 @@ export class UpdateEpisodesDto {
   @IsString()
   readonly url: string;
 
+  @ApiProperty({
+    description: 'URL da thumbnail',
+    example: 'https://example.com/jujutsu-no-kaizen.webp',
+  })
+  @IsNotEmpty({ message: 'A thumbnail é obrigatória' })
+  @IsString()
+  readonly thumbnailUrl: string;
+
   @ApiProperty({ description: 'Ordem do episódio na temporada', example: 1 })
   @IsNotEmpty({ message: 'A ordem é obrigatória' })
   @IsNumber()

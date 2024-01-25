@@ -10,7 +10,7 @@ export class BackgroundsRepository {
     return this.prisma.backgrounds.findMany({
       take: 5,
       orderBy: {
-        updatedAt: 'desc',
+        id: 'asc',
       },
     });
   }

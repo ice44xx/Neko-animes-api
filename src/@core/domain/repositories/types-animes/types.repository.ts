@@ -24,6 +24,7 @@ export class TypesAnimesRepository {
             name: true,
             synopsis: true,
             thumbnailUrl: true,
+            dubbeds: true,
           },
         },
       },

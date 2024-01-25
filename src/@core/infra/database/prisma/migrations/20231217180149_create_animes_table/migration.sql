@@ -6,6 +6,7 @@ CREATE TABLE "animes" (
     "thumbnailUrl" TEXT NOT NULL,
     "background" TEXT,
     "feature" BOOLEAN NOT NULL DEFAULT false,
+    "year" TEXT NOT NULL,
     "status" TEXT NOT NULL,
     "classificationsId" INTEGER NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,

@@ -49,6 +49,19 @@ export class SeasonsController {
     }
   }
 
+  @Public()
+  @Get('/id/:id')
+  async findById(@Res() res, @Param('id') id: number) {
+    try {
+      const seasons = await this.seasonsService.findById({ id });
+      return res.status(HttpStatus.OK).json(seasons);
+    } catch (error) {
+      return res
+        .status(HttpStatus.INTERNAL_SERVER_ERROR)
+        .json({ message: `Ocorreu um erro ao buscar a temporda ${id} ` });
+    }
+  }
+
   @Roles(UserType.Admin)
   @Post('create')
   async create(@Res() res, @Body() createSeasonsDto: CreateSeasonsDto) {

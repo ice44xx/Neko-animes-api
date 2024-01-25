@@ -10,6 +10,9 @@ export class EpisodesDto {
   @IsString()
   readonly url?: string;
 
+  @IsString()
+  readonly thumbnailUrl?: string;
+
   @IsNumber()
   readonly episodeOrder?: number;
 }

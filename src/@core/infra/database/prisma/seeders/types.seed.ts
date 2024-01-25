@@ -6,11 +6,11 @@ export async function createTypesAnimes() {
   const typesAnimesToCreate = [
     {
       id: 1,
-      name: 'Series',
+      name: 'Seriado',
     },
     {
       id: 2,
-      name: 'Movies',
+      name: 'Filme',
     },
   ];
 
