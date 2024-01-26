@@ -9,13 +9,6 @@ import { CommentsController } from '../../controller/comments/comments.controlle
 
 @Module({
   controllers: [CommentsController],
-  providers: [
-    PrismaService,
-    CommentsRepository,
-    CommentsService,
-    CommentsUseCase,
-    UsersRepository,
-    EpisodesRepository,
-  ],
+  providers: [PrismaService, CommentsRepository, CommentsService, CommentsUseCase, UsersRepository, EpisodesRepository],
 })
 export class CommentsModule {}

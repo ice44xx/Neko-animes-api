@@ -9,13 +9,6 @@ import { LikesCommentsController } from '../../controller/likes/likes-comments.c
 
 @Module({
   controllers: [LikesCommentsController],
-  providers: [
-    PrismaService,
-    LikesCommentsRepository,
-    LikesCommentsUseCase,
-    LikesCommentsService,
-    UsersRepository,
-    CommentsRepository,
-  ],
+  providers: [PrismaService, LikesCommentsRepository, LikesCommentsUseCase, LikesCommentsService, UsersRepository, CommentsRepository],
 })
 export class LikesCommentsModule {}

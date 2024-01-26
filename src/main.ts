@@ -1,11 +1,15 @@
+import fastifyCors from '@fastify/cors';
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { generateSeeds } from './@core/infra/database/prisma/seeders/generator.seed';
+import { FastifyAdapter, NestFastifyApplication } from '@nestjs/platform-fastify';
+import { EnvConfigService } from './@core/infra/env-config/env-config.service';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule, { cors: true });
+  const app = await NestFactory.create<NestFastifyApplication>(AppModule, new FastifyAdapter());
+  const envConfigService = app.get(EnvConfigService);
 
   app.useGlobalPipes(
     new ValidationPipe({
@@ -15,16 +19,18 @@ async function bootstrap() {
     }),
   );
 
-  app.enableCors();
+  app.register(fastifyCors, {
+    origin: true,
+    methods: ['GET', 'PUT', 'POST', 'OPTIONS'],
+    credentials: true,
+  });
 
-  const config = new DocumentBuilder()
-    .setTitle('Neko Animes')
-    .setDescription('Bem-vindo a Neko Animes Api')
-    .setVersion('1.0')
-    .build();
+  if (envConfigService.getNodeEnv() === 'development') {
+    const config = new DocumentBuilder().setTitle('Neko Animes').setDescription('Bem-vindo a Neko Animes Api').setVersion('1.0').build();
 
-  const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('api', app, document);
+    const document = SwaggerModule.createDocument(app, config);
+    SwaggerModule.setup('api', app, document);
+  }
 
   await app.listen(3000);
 

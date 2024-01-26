@@ -8,12 +8,6 @@ import { UsersRepository } from 'src/@core/domain/repositories/users/users.repos
 
 @Module({
   controllers: [WatchlistController],
-  providers: [
-    PrismaService,
-    WatchlistRepository,
-    WatchlistUseCase,
-    WatchListService,
-    UsersRepository,
-  ],
+  providers: [PrismaService, WatchlistRepository, WatchlistUseCase, WatchListService, UsersRepository],
 })
 export class WatchlistModule {}

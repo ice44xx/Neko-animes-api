@@ -7,11 +7,6 @@ import { ClassificationsUseCase } from 'src/@core/domain/usecases/classification
 
 @Module({
   controllers: [ClassificationsController],
-  providers: [
-    PrismaService,
-    ClassificationsService,
-    ClassificationsRepository,
-    ClassificationsUseCase,
-  ],
+  providers: [PrismaService, ClassificationsService, ClassificationsRepository, ClassificationsUseCase],
 })
 export class ClassificationsModule {}

@@ -9,13 +9,6 @@ import { LikesEpisodesController } from '../../controller/likes/likes-episodes.c
 
 @Module({
   controllers: [LikesEpisodesController],
-  providers: [
-    PrismaService,
-    LikesEpisodesService,
-    LikesEpisodesUseCase,
-    LikesEpisodesRepository,
-    UsersRepository,
-    EpisodesRepository,
-  ],
+  providers: [PrismaService, LikesEpisodesService, LikesEpisodesUseCase, LikesEpisodesRepository, UsersRepository, EpisodesRepository],
 })
 export class LikesEpisodesModule {}

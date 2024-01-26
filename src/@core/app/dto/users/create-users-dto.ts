@@ -2,16 +2,7 @@ import { ApiProperty } from '@nestjs/swagger';
 import { Transform } from 'class-transformer';
 import { IsNotFutureDateConstraint } from '../../../domain/validators/is-not-future-date.validator';
 import { IsNotTooOldDateConstraint } from '../../../domain/validators/is-not-too-old-date.validator';
-import {
-  IsDate,
-  IsEmail,
-  IsNotEmpty,
-  IsString,
-  Matches,
-  MaxLength,
-  MinLength,
-  Validate,
-} from 'class-validator';
+import { IsDate, IsEmail, IsNotEmpty, IsString, Matches, MaxLength, MinLength, Validate } from 'class-validator';
 
 export class CreateUsersDto {
   @ApiProperty({ description: 'Nome de usuário', example: 'john123' })

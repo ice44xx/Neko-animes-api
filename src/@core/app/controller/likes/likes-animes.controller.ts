@@ -1,15 +1,4 @@
-import {
-  Controller,
-  Delete,
-  Get,
-  HttpStatus,
-  NotFoundException,
-  Param,
-  Post,
-  Request,
-  Res,
-  UnauthorizedException,
-} from '@nestjs/common';
+import { Controller, Delete, Get, HttpStatus, NotFoundException, Param, Post, Request, Res, UnauthorizedException } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { LikesAnimesService } from '../../services/likes/likes-animes.service';
 import { AuthRequest } from 'src/@core/infra/auth/models/auth-request';
@@ -27,14 +16,12 @@ export class LikesAnimesController {
     try {
       const likesDto: LikesAnimesDto = { userId: req.user.id };
       const likes = await this.likesAnimesService.findAllLikesUser(likesDto);
-      return res.status(HttpStatus.OK).json(likes);
+      return res.status(HttpStatus.OK).send(likes);
     } catch (error) {
       if (error instanceof UnauthorizedException) {
-        return res.status(HttpStatus.UNAUTHORIZED).json({ message: error.message });
+        return res.status(HttpStatus.UNAUTHORIZED).send({ message: error.message });
       }
-      return res
-        .status(HttpStatus.INTERNAL_SERVER_ERROR)
-        .json({ message: 'Ocorreu um erro ao buscar os likes, ' + error.message });
+      return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({ message: 'Ocorreu um erro ao buscar os likes, ' + error.message });
     }
   }
 
@@ -44,16 +31,14 @@ export class LikesAnimesController {
     try {
       const createLike: LikesAnimesDto = { userId: req.user.id, animeId: animeId };
       const like = await this.likesAnimesService.create(createLike);
-      return res.status(HttpStatus.CREATED).json({ message: 'Like adicionado ao anime!', like });
+      return res.status(HttpStatus.CREATED).send({ message: 'Like adicionado ao anime!', like });
     } catch (error) {
       if (error instanceof UnauthorizedException) {
-        return res.status(HttpStatus.UNAUTHORIZED).json({ message: error.message });
+        return res.status(HttpStatus.UNAUTHORIZED).send({ message: error.message });
       } else if (error instanceof NotFoundException) {
-        return res.status(HttpStatus.NOT_FOUND).json({ message: error.message });
+        return res.status(HttpStatus.NOT_FOUND).send({ message: error.message });
       }
-      return res
-        .status(HttpStatus.INTERNAL_SERVER_ERROR)
-        .json({ message: 'Ocorreu um erro ao criar o like, ' + error.message });
+      return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({ message: 'Ocorreu um erro ao criar o like, ' + error.message });
     }
   }
 
@@ -63,16 +48,14 @@ export class LikesAnimesController {
     try {
       const removeLike: LikesAnimesDto = { userId: req.user.id, animeId: animeId };
       await this.likesAnimesService.remove(removeLike);
-      return res.status(HttpStatus.OK).json({ message: 'Like removido' });
+      return res.status(HttpStatus.OK).send({ message: 'Like removido' });
     } catch (error) {
       if (error instanceof UnauthorizedException) {
-        return res.status(HttpStatus.UNAUTHORIZED).json({ message: error.message });
+        return res.status(HttpStatus.UNAUTHORIZED).send({ message: error.message });
       } else if (error instanceof NotFoundException) {
-        return res.status(HttpStatus.NOT_FOUND).json({ message: error.message });
+        return res.status(HttpStatus.NOT_FOUND).send({ message: error.message });
       }
-      return res
-        .status(HttpStatus.INTERNAL_SERVER_ERROR)
-        .json({ message: 'Ocorreu um erro ao remover o like, ' + error.message });
+      return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({ message: 'Ocorreu um erro ao remover o like, ' + error.message });
     }
   }
 }

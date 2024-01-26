@@ -9,13 +9,6 @@ import { LikesAnimesController } from '../../controller/likes/likes-animes.contr
 
 @Module({
   controllers: [LikesAnimesController],
-  providers: [
-    PrismaService,
-    LikesAnimesRepository,
-    LikesAnimesUseCase,
-    LikesAnimesService,
-    UsersRepository,
-    AnimesRepository,
-  ],
+  providers: [PrismaService, LikesAnimesRepository, LikesAnimesUseCase, LikesAnimesService, UsersRepository, AnimesRepository],
 })
 export class LikesAnimesModule {}
