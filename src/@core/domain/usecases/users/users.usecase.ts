@@ -1,10 +1,5 @@
 import * as bcrypt from 'bcrypt';
-import {
-  ConflictException,
-  Injectable,
-  NotFoundException,
-  UnauthorizedException,
-} from '@nestjs/common';
+import { ConflictException, Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { UsersRepository } from '../../repositories/users/users.repository';
 import { RolesRepository } from '../../repositories/users/roles.repository';
 import { CreateUsersDto } from 'src/@core/app/dto/users/create-users-dto';
@@ -68,9 +63,7 @@ export class UsersUseCase {
 
     if (existingUser) throw new ConflictException('Usuário já existe');
 
-    const existingUserName = await this.usersRepository.findByUserNameUnique(
-      createUsersDto.userName,
-    );
+    const existingUserName = await this.usersRepository.findByUserNameUnique(createUsersDto.userName);
 
     if (existingUserName) throw new ConflictException('Username já em uso');
 
@@ -107,9 +100,7 @@ export class UsersUseCase {
       throw new ConflictException('Usuário já existe');
     }
 
-    const existingUserName = await this.usersRepository.findByUserNameUnique(
-      updateUsersDto.userName,
-    );
+    const existingUserName = await this.usersRepository.findByUserNameUnique(updateUsersDto.userName);
 
     if (existingUserName && existingUserName.id !== userId) {
       throw new ConflictException('Username já em uso');
@@ -186,9 +177,7 @@ export class UsersUseCase {
 
     if (existingUser) throw new ConflictException('Usuário já existe');
 
-    const existingUserName = await this.usersRepository.findByUserNameUnique(
-      createAdminsDto.userName,
-    );
+    const existingUserName = await this.usersRepository.findByUserNameUnique(createAdminsDto.userName);
 
     if (existingUserName) throw new ConflictException('Username já em uso');
 
@@ -221,9 +210,7 @@ export class UsersUseCase {
 
     if (existingUser) throw new ConflictException('Usuário já existe');
 
-    const existingUserName = await this.usersRepository.findByUserNameUnique(
-      updateAdminsDto.userName,
-    );
+    const existingUserName = await this.usersRepository.findByUserNameUnique(updateAdminsDto.userName);
 
     if (existingUserName) throw new ConflictException('Username já em uso');
 

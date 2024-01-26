@@ -22,10 +22,7 @@ export class WatchlistUseCase {
       throw new UnauthorizedException('Credenciais inválidas');
     }
 
-    const existingWatchlistItem = await this.watchlistRepository.findByEpisodeId(
-      userId,
-      createWatchListDto.episodeId,
-    );
+    const existingWatchlistItem = await this.watchlistRepository.findByEpisodeId(userId, createWatchListDto.episodeId);
 
     if (existingWatchlistItem) {
       const updatedWatchlistItem = await this.watchlistRepository.update(existingWatchlistItem.id, {

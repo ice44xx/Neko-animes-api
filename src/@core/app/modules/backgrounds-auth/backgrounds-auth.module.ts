@@ -7,11 +7,6 @@ import { BackgroundsAuthController } from '../../controller/backgrounds-auth/bac
 
 @Module({
   controllers: [BackgroundsAuthController],
-  providers: [
-    PrismaService,
-    BackgroundsAuthRepository,
-    BackgroundsAuthUseCase,
-    BackgroundsAuthService,
-  ],
+  providers: [PrismaService, BackgroundsAuthRepository, BackgroundsAuthUseCase, BackgroundsAuthService],
 })
 export class BackgroundsAuthModule {}

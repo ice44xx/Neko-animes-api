@@ -14,11 +14,9 @@ export class RolesController {
   async findAll(@Res() res) {
     try {
       const roles = await this.rolesService.findAll();
-      return res.status(HttpStatus.OK).json(roles);
+      return res.status(HttpStatus.OK).send(roles);
     } catch (error) {
-      return res
-        .status(HttpStatus.INTERNAL_SERVER_ERROR)
-        .json('Ocorreu um erro ao buscar as roles, ' + error.message);
+      return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send('Ocorreu um erro ao buscar as roles, ' + error.message);
     }
   }
 
@@ -27,11 +25,9 @@ export class RolesController {
   async create(@Res() res, @Body() createRolesDto: CreateRolesDto) {
     try {
       const roles = await this.rolesService.create(createRolesDto);
-      return res.status(HttpStatus.CREATED).json(roles);
+      return res.status(HttpStatus.CREATED).send(roles);
     } catch (error) {
-      return res
-        .status(HttpStatus.INTERNAL_SERVER_ERROR)
-        .json('Ocorreu um erro ao criar a role, ' + error.message);
+      return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send('Ocorreu um erro ao criar a role, ' + error.message);
     }
   }
 }

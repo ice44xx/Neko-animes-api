@@ -9,14 +9,7 @@ import { CodesRepository } from 'src/@core/domain/repositories/codes/codes.repos
 
 @Module({
   controllers: [UsersController],
-  providers: [
-    PrismaService,
-    UsersService,
-    UsersRepository,
-    UsersUseCase,
-    RolesRepository,
-    CodesRepository,
-  ],
+  providers: [PrismaService, UsersService, UsersRepository, UsersUseCase, RolesRepository, CodesRepository],
   exports: [UsersService],
 })
 export class UsersModule {}

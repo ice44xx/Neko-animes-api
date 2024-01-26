@@ -9,13 +9,6 @@ import { AnimesRepository } from 'src/@core/domain/repositories/animes/animes.re
 
 @Module({
   controllers: [FavoritesController],
-  providers: [
-    PrismaService,
-    FavoritesService,
-    FavoritesRepository,
-    FavoritesUseCase,
-    UsersRepository,
-    AnimesRepository,
-  ],
+  providers: [PrismaService, FavoritesService, FavoritesRepository, FavoritesUseCase, UsersRepository, AnimesRepository],
 })
 export class FavoritesModule {}

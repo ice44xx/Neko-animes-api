@@ -29,10 +29,7 @@ export class BackgroundsAuthUseCase {
       throw new NotFoundException('Background não encontrado');
     }
 
-    const updateBackgroundAuth = await this.backgroundsAuthRepository.update(
-      id,
-      updateBackgroundsDto,
-    );
+    const updateBackgroundAuth = await this.backgroundsAuthRepository.update(id, updateBackgroundsDto);
 
     return updateBackgroundAuth;
   }

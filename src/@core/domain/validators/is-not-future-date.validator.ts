@@ -1,8 +1,4 @@
-import {
-  ValidatorConstraint,
-  ValidatorConstraintInterface,
-  ValidationArguments,
-} from 'class-validator';
+import { ValidatorConstraint, ValidatorConstraintInterface, ValidationArguments } from 'class-validator';
 
 @ValidatorConstraint({ name: 'isNotFutureDate', async: false })
 export class IsNotFutureDateConstraint implements ValidatorConstraintInterface {

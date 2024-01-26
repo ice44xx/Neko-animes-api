@@ -8,12 +8,6 @@ import { EpisodesController } from '../../controller/episodes/episodes.controlle
 
 @Module({
   controllers: [EpisodesController],
-  providers: [
-    PrismaService,
-    EpisodesService,
-    EpisodesUseCase,
-    EpisodesRepository,
-    SeasonsRepository,
-  ],
+  providers: [PrismaService, EpisodesService, EpisodesUseCase, EpisodesRepository, SeasonsRepository],
 })
 export class EpisodesModule {}

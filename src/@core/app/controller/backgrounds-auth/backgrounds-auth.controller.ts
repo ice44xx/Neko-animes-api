@@ -1,15 +1,4 @@
-import {
-  Body,
-  Controller,
-  Delete,
-  Get,
-  HttpStatus,
-  NotFoundException,
-  Param,
-  Post,
-  Put,
-  Res,
-} from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpStatus, NotFoundException, Param, Post, Put, Res } from '@nestjs/common';
 import { Roles, UserType } from 'src/@core/infra/decorators/roles.decorator';
 import { Public } from 'src/@core/infra/decorators/public-route.decorator';
 import { ApiTags } from '@nestjs/swagger';
@@ -27,14 +16,12 @@ export class BackgroundsAuthController {
   async findAll(@Res() res) {
     try {
       const backgroundsAuth = await this.backgroundsAuthService.findAll();
-      return res.status(HttpStatus.OK).json(backgroundsAuth);
+      return res.status(HttpStatus.OK).send(backgroundsAuth);
     } catch (error) {
       if (error instanceof NotFoundException) {
-        return res.status(HttpStatus.NOT_FOUND).json({ message: error.message });
+        return res.status(HttpStatus.NOT_FOUND).send({ message: error.message });
       }
-      return res
-        .status(HttpStatus.INTERNAL_SERVER_ERROR)
-        .json({ message: 'Ocorreu um erro ao buscar os backgrounds, ' + error.message });
+      return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({ message: 'Ocorreu um erro ao buscar os backgrounds, ' + error.message });
     }
   }
 
@@ -43,35 +30,24 @@ export class BackgroundsAuthController {
   async create(@Res() res, @Body() createBackgroundsAuthDto: CreateBackgroundsAuthDto) {
     try {
       const backgroundsAuth = await this.backgroundsAuthService.create(createBackgroundsAuthDto);
-      return res.status(HttpStatus.CREATED).json(backgroundsAuth);
+      return res.status(HttpStatus.CREATED).send(backgroundsAuth);
     } catch (error) {
-      return res
-        .status(HttpStatus.INTERNAL_SERVER_ERROR)
-        .json({ message: 'Ocorreu um erro ao criar o background, ' + error.message });
+      return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({ message: 'Ocorreu um erro ao criar o background, ' + error.message });
     }
   }
 
   @Roles(UserType.Admin)
   @Put(':id')
-  async update(
-    @Res() res,
-    @Param('id') id: number,
-    @Body() updateBackgroundsAuthDto: UpdateBackgroundsAuthDto,
-  ) {
+  async update(@Res() res, @Param('id') id: number, @Body() updateBackgroundsAuthDto: UpdateBackgroundsAuthDto) {
     try {
-      const backgroundsAuth = await this.backgroundsAuthService.update(
-        id,
-        updateBackgroundsAuthDto,
-      );
+      const backgroundsAuth = await this.backgroundsAuthService.update(id, updateBackgroundsAuthDto);
 
-      return res.status(HttpStatus.OK).json(backgroundsAuth);
+      return res.status(HttpStatus.OK).send(backgroundsAuth);
     } catch (error) {
       if (error instanceof NotFoundException) {
-        return res.status(HttpStatus.NOT_FOUND).json({ message: error.message });
+        return res.status(HttpStatus.NOT_FOUND).send({ message: error.message });
       }
-      return res
-        .status(HttpStatus.INTERNAL_SERVER_ERROR)
-        .json({ message: 'Ocorreu um erro ao atualizar o background, ' + error.message });
+      return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({ message: 'Ocorreu um erro ao atualizar o background, ' + error.message });
     }
   }
 
@@ -80,14 +56,12 @@ export class BackgroundsAuthController {
   async remove(@Res() res, @Param('id') id: number) {
     try {
       await this.backgroundsAuthService.remove({ id });
-      return res.status(HttpStatus.OK).json({ message: 'Background deletado' });
+      return res.status(HttpStatus.OK).send({ message: 'Background deletado' });
     } catch (error) {
       if (error instanceof NotFoundException) {
-        return res.status(HttpStatus.NOT_FOUND).json({ message: error.message });
+        return res.status(HttpStatus.NOT_FOUND).send({ message: error.message });
       }
-      return res
-        .status(HttpStatus.INTERNAL_SERVER_ERROR)
-        .json({ message: 'Ocorreu um erro ao deletar o background, ' + error.message });
+      return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({ message: 'Ocorreu um erro ao deletar o background, ' + error.message });
     }
   }
 }

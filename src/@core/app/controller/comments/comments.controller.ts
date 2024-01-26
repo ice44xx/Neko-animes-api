@@ -30,14 +30,12 @@ export class CommentsController {
   async findAll(@Res() res) {
     try {
       const comments = await this.commentsService.findAll();
-      return res.status(HttpStatus.OK).json(comments);
+      return res.status(HttpStatus.OK).send(comments);
     } catch (error) {
       if (error instanceof NotFoundException) {
-        return res.status(HttpStatus.NOT_FOUND).json({ message: error.message });
+        return res.status(HttpStatus.NOT_FOUND).send({ message: error.message });
       }
-      return res
-        .status(HttpStatus.INTERNAL_SERVER_ERROR)
-        .json({ message: 'Ocorreu um erro ao buscar os comentários, ' + error.message });
+      return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({ message: 'Ocorreu um erro ao buscar os comentários, ' + error.message });
     }
   }
 
@@ -46,14 +44,12 @@ export class CommentsController {
   async findAllByEpisode(@Res() res, @Param('episodeId') episodeId: number) {
     try {
       const comments = await this.commentsService.findAllByEpisode(episodeId);
-      return res.status(HttpStatus.OK).json(comments);
+      return res.status(HttpStatus.OK).send(comments);
     } catch (error) {
       if (error instanceof NotFoundException) {
-        return res.status(HttpStatus.NOT_FOUND).json({ message: error.message });
+        return res.status(HttpStatus.NOT_FOUND).send({ message: error.message });
       }
-      return res
-        .status(HttpStatus.INTERNAL_SERVER_ERROR)
-        .json({ message: 'Ocorreu um erro ao buscar os comentários, ' + error.message });
+      return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({ message: 'Ocorreu um erro ao buscar os comentários, ' + error.message });
     }
   }
 
@@ -62,63 +58,50 @@ export class CommentsController {
   async findAllByUser(@Res() res, @Param('userId') userId: number) {
     try {
       const comments = await this.commentsService.findByUser(userId);
-      return res.status(HttpStatus.OK).json(comments);
+      return res.status(HttpStatus.OK).send(comments);
     } catch (error) {
       if (error instanceof NotFoundException) {
-        return res.status(HttpStatus.NOT_FOUND).json({ message: error.message });
+        return res.status(HttpStatus.NOT_FOUND).send({ message: error.message });
       }
       return res
         .status(HttpStatus.INTERNAL_SERVER_ERROR)
-        .json({ message: 'Ocorreu um erro ao buscar os comentários do usuário, ' + error.message });
+        .send({ message: 'Ocorreu um erro ao buscar os comentários do usuário, ' + error.message });
     }
   }
 
   @Roles(UserType.User)
   @Post('create')
-  async create(
-    @Request() req: AuthRequest,
-    @Res() res,
-    @Body() createCommentsDto: CreateCommentsDto,
-  ) {
+  async create(@Request() req: AuthRequest, @Res() res, @Body() createCommentsDto: CreateCommentsDto) {
     try {
       const currentUser = req.user.id;
       const comment = await this.commentsService.create(currentUser, createCommentsDto);
 
-      return res.status(HttpStatus.CREATED).json(comment);
+      return res.status(HttpStatus.CREATED).send(comment);
     } catch (error) {
       if (error instanceof UnauthorizedException) {
-        return res.status(HttpStatus.UNAUTHORIZED).json({ message: error.message });
+        return res.status(HttpStatus.UNAUTHORIZED).send({ message: error.message });
       } else if (error instanceof NotFoundException) {
-        return res.status(HttpStatus.NOT_FOUND).json({ message: error.message });
+        return res.status(HttpStatus.NOT_FOUND).send({ message: error.message });
       }
-      return res
-        .status(HttpStatus.INTERNAL_SERVER_ERROR)
-        .json({ message: 'Ocorreu um erro ao criar o comentário, ' + error.message });
+      return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({ message: 'Ocorreu um erro ao criar o comentário, ' + error.message });
     }
   }
 
   @Roles(UserType.User)
   @Put(':id')
-  async update(
-    @Request() req: AuthRequest,
-    @Param('id') id: number,
-    @Res() res,
-    @Body() updateCommentsDto: UpdateCommentsDto,
-  ) {
+  async update(@Request() req: AuthRequest, @Param('id') id: number, @Res() res, @Body() updateCommentsDto: UpdateCommentsDto) {
     try {
       const currentUser = req.user.id;
       const comment = await this.commentsService.update(currentUser, id, updateCommentsDto);
 
-      return res.status(HttpStatus.OK).json(comment);
+      return res.status(HttpStatus.OK).send(comment);
     } catch (error) {
       if (error instanceof UnauthorizedException) {
-        return res.status(HttpStatus.UNAUTHORIZED).json({ message: error.message });
+        return res.status(HttpStatus.UNAUTHORIZED).send({ message: error.message });
       } else if (error instanceof NotFoundException) {
-        return res.status(HttpStatus.NOT_FOUND).json({ message: error.message });
+        return res.status(HttpStatus.NOT_FOUND).send({ message: error.message });
       }
-      return res
-        .status(HttpStatus.INTERNAL_SERVER_ERROR)
-        .json({ message: 'Ocorreu um erro ao atualizar o comentário, ' + error.message });
+      return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({ message: 'Ocorreu um erro ao atualizar o comentário, ' + error.message });
     }
   }
 
@@ -129,16 +112,14 @@ export class CommentsController {
       const currentUser = req.user.id;
       await this.commentsService.remove({ userId: currentUser, id });
 
-      return res.status(HttpStatus.OK).json({ mesage: 'Comentário removido!' });
+      return res.status(HttpStatus.OK).send({ mesage: 'Comentário removido!' });
     } catch (error) {
       if (error instanceof UnauthorizedException) {
-        return res.status(HttpStatus.UNAUTHORIZED).json({ message: error.message });
+        return res.status(HttpStatus.UNAUTHORIZED).send({ message: error.message });
       } else if (error instanceof NotFoundException) {
-        return res.status(HttpStatus.NOT_FOUND).json({ message: error.message });
+        return res.status(HttpStatus.NOT_FOUND).send({ message: error.message });
       }
-      return res
-        .status(HttpStatus.INTERNAL_SERVER_ERROR)
-        .json({ message: 'Ocorreu um erro ao deletar o comentário, ' + error.message });
+      return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({ message: 'Ocorreu um erro ao deletar o comentário, ' + error.message });
     }
   }
 }

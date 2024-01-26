@@ -1,15 +1,4 @@
-import {
-  Controller,
-  Delete,
-  Get,
-  HttpStatus,
-  NotFoundException,
-  Param,
-  Post,
-  Request,
-  Res,
-  UnauthorizedException,
-} from '@nestjs/common';
+import { Controller, Delete, Get, HttpStatus, NotFoundException, Param, Post, Request, Res, UnauthorizedException } from '@nestjs/common';
 import { FavoritesService } from '../../services/favorites/favorites.service';
 import { Roles, UserType } from 'src/@core/infra/decorators/roles.decorator';
 import { AuthRequest } from 'src/@core/infra/auth/models/auth-request';
@@ -27,14 +16,12 @@ export class FavoritesController {
     try {
       const favoritesDto: FavoritesDto = { userId: req.user.id };
       const favorites = await this.favoritesService.findAllFavoritesUser(favoritesDto);
-      return res.status(HttpStatus.OK).json(favorites);
+      return res.status(HttpStatus.OK).send(favorites);
     } catch (error) {
       if (error instanceof UnauthorizedException) {
-        return res.status(HttpStatus.UNAUTHORIZED).json({ message: error.message });
+        return res.status(HttpStatus.UNAUTHORIZED).send({ message: error.message });
       }
-      return res
-        .status(HttpStatus.INTERNAL_SERVER_ERROR)
-        .json({ message: 'Ocorreu um erro ao buscar os favoritos, ' + error.message });
+      return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({ message: 'Ocorreu um erro ao buscar os favoritos, ' + error.message });
     }
   }
 
@@ -45,16 +32,14 @@ export class FavoritesController {
     const favoritesDto: FavoritesDto = { userId: currentUser.id, animeId: animeId };
     try {
       const favorites = await this.favoritesService.create(favoritesDto);
-      return res.status(HttpStatus.CREATED).json(favorites);
+      return res.status(HttpStatus.CREATED).send(favorites);
     } catch (error) {
       if (error instanceof UnauthorizedException) {
-        return res.status(HttpStatus.UNAUTHORIZED).json({ message: error.message });
+        return res.status(HttpStatus.UNAUTHORIZED).send({ message: error.message });
       } else if (error instanceof NotFoundException) {
-        return res.status(HttpStatus.NOT_FOUND).json({ message: error.message });
+        return res.status(HttpStatus.NOT_FOUND).send({ message: error.message });
       }
-      return res
-        .status(HttpStatus.INTERNAL_SERVER_ERROR)
-        .json({ message: 'Ocorreu um erro ao criar o favorito, ' + error.message });
+      return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({ message: 'Ocorreu um erro ao criar o favorito, ' + error.message });
     }
   }
 
@@ -65,16 +50,14 @@ export class FavoritesController {
     const favoritesDto: FavoritesDto = { userId: currentUser.id, animeId: animeId };
     try {
       await this.favoritesService.remove(favoritesDto);
-      return res.status(HttpStatus.OK).json({ message: 'Favorito removido com sucesso!' });
+      return res.status(HttpStatus.OK).send({ message: 'Favorito removido com sucesso!' });
     } catch (error) {
       if (error instanceof UnauthorizedException) {
-        return res.status(HttpStatus.UNAUTHORIZED).json({ message: error.message });
+        return res.status(HttpStatus.UNAUTHORIZED).send({ message: error.message });
       } else if (error instanceof NotFoundException) {
-        return res.status(HttpStatus.NOT_FOUND).json({ message: error.message });
+        return res.status(HttpStatus.NOT_FOUND).send({ message: error.message });
       }
-      return res
-        .status(HttpStatus.INTERNAL_SERVER_ERROR)
-        .json({ message: 'Ocorreu um erro ao remover dos favoritos, ' + error.message });
+      return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({ message: 'Ocorreu um erro ao remover dos favoritos, ' + error.message });
     }
   }
 }

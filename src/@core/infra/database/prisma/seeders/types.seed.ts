@@ -6,30 +6,27 @@ export async function createTypesAnimes() {
   const typesAnimesToCreate = [
     {
       id: 1,
-      name: 'Seriado',
+      name: 'seriado',
     },
     {
       id: 2,
-      name: 'Filme',
+      name: 'filme',
     },
   ];
 
-  const typesAnimesInLowerCase = typesAnimesToCreate.map((animesTypeData) => {
-    return {
-      ...animesTypeData,
-      name: animesTypeData.name.toLowerCase(),
-    };
-  });
-
-  for (const typesAnimesData of typesAnimesInLowerCase) {
+  for (const typesAnimesData of typesAnimesToCreate) {
     const existingTypesAnimes = await prisma.typesAnimes.findUnique({
-      where: { id: typesAnimesData.id },
+      where: { name: typesAnimesData.name },
     });
 
     if (!existingTypesAnimes) {
-      await prisma.typesAnimes.create({
-        data: typesAnimesData,
-      });
+      try {
+        await prisma.typesAnimes.create({
+          data: {
+            name: typesAnimesData.name,
+          },
+        });
+      } catch (error) {}
     }
   }
 }
