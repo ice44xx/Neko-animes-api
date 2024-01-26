@@ -6,14 +6,21 @@ import { LocalStrategy } from 'src/@core/infra/auth/strategies/local.strategy';
 import { JwtStrategy } from 'src/@core/infra/auth/strategies/jwt.strategy';
 import { AuthController } from '../../controller/auth/auth.controller';
 import { AuthServices } from '../../services/auth/auth.services';
+import { EnvConfigModule } from 'src/@core/infra/env-config/env-config.module';
+import { EnvConfigService } from 'src/@core/infra/env-config/env-config.service';
 
 @Module({
   imports: [
+    EnvConfigModule,
     UsersModule,
     PassportModule,
-    JwtModule.register({
-      secret: process.env.JWT_SECRET,
-      signOptions: { expiresIn: '24h' },
+    JwtModule.registerAsync({
+      imports: [EnvConfigModule],
+      inject: [EnvConfigService],
+      useFactory: async (envConfigService: EnvConfigService) => ({
+        secret: envConfigService.getJwtSecret(),
+        signOptions: { expiresIn: '24h' },
+      }),
     }),
   ],
   providers: [AuthServices, LocalStrategy, JwtStrategy],

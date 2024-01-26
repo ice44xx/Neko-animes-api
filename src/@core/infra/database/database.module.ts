@@ -19,9 +19,11 @@ import { TypesAnimesModule } from 'src/@core/app/modules/types-animes/types.modu
 import { BackgroundsAuthModule } from 'src/@core/app/modules/backgrounds-auth/backgrounds-auth.module';
 import { DubbedsModule } from 'src/@core/app/modules/dubbeds/dubbeds.module';
 import { CodesModule } from 'src/@core/app/modules/codes/codes.module';
+import { EnvConfigModule } from '../env-config/env-config.module';
 
 @Module({
   imports: [
+    EnvConfigModule.forRoot(),
     AnimesModule,
     BackgroundsModule,
     BackgroundsAuthModule,
