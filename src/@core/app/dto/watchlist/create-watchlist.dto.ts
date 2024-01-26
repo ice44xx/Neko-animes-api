@@ -17,11 +17,6 @@ export class CreateWatchListDto {
   @IsString()
   readonly thumbnailUrl: string;
 
-  @ApiProperty({ description: 'Url do episódio do anime' })
-  @IsNotEmpty({ message: 'A URL do vídeo não pode estar vazia' })
-  @IsString()
-  readonly videoUrl: string;
-
   @ApiProperty({ description: 'ID do episódio do anime' })
   @IsNotEmpty({ message: 'O ID do episódio não pode estar vazio' })
   @IsNumber()

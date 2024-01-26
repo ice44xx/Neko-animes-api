@@ -16,9 +16,6 @@ export class WatchListDto {
   @IsString()
   readonly thumbnailUrl?: string;
 
-  @IsString()
-  readonly videoUrl?: string;
-
   @IsNumber()
   readonly episodeId?: number;
 
