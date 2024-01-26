@@ -163,7 +163,6 @@ model WatchList {
   animeId      Int
   anime        String
   thumbnailUrl String
-  videoUrl     String
   episodeId    Int
   episodeName  String
   order        Int

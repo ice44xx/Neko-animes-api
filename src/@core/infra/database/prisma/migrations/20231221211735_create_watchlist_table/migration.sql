@@ -21,7 +21,6 @@ CREATE TABLE "watchlist" (
     "animeId" INTEGER NOT NULL,
     "anime" TEXT NOT NULL,
     "thumbnailUrl" TEXT NOT NULL,
-    "videoUrl" TEXT NOT NULL,
     "episodeId" INTEGER NOT NULL,
     "episodeName" TEXT NOT NULL,
     "order" INTEGER NOT NULL,
