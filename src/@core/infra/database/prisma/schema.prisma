@@ -17,6 +17,8 @@ model Users {
   password      String
   profile       String?
   birthday      DateTime?
+  color         String?
+  title         String?
   role          Roles           @relation(fields: [roleId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   roleId        Int
   createdAt     DateTime        @default(now())

@@ -1,12 +1,8 @@
 import { PrismaClient } from '@prisma/client';
-import { createEpisodes } from './episodes.seed';
 
 const prisma = new PrismaClient();
 
 export async function createSeasons() {
-  
-  await createEpisodes()
-  
   const seasonsToCreate = [
     {
       id: 1,

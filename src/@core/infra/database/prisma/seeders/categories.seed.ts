@@ -26,6 +26,9 @@ export async function createCategories() {
     'Psicológico',
     'Esportes',
     'Harem',
+    'Sobrenatural',
+    'Medicina',
+    'Escolar',
   ];
 
   for (const categoryName of categoriesToCreate) {

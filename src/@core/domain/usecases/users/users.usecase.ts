@@ -11,6 +11,7 @@ import { UpdateAdminsDto } from 'src/@core/app/dto/users/update-admins-dto';
 import { UpdateUsersProfileDto } from 'src/@core/app/dto/users/update-user-profile-dto';
 import { UpdatePasswordByEmailDto } from 'src/@core/app/dto/users/update-password-email-dto';
 import { CodesRepository } from '../../repositories/codes/codes.repository';
+import { UpdateUsersTitleEndColorDto } from 'src/@core/app/dto/users/update-users-title-end-color-dto';
 
 @Injectable()
 export class UsersUseCase {
@@ -55,7 +56,7 @@ export class UsersUseCase {
   }
 
   async create(createUsersDto: CreateUsersDto) {
-    const { password, ...userData } = createUsersDto;
+    const { password, title, ...userData } = createUsersDto;
     const saltRounds = 10;
     const hashedPassword = await bcrypt.hash(password, saltRounds);
 
@@ -72,6 +73,7 @@ export class UsersUseCase {
     const user = await this.usersRepository.create({
       ...userData,
       password: hashedPassword,
+      title: 'Novato',
       role: { connect: { id: defaultRole.id } },
     });
 
@@ -81,6 +83,8 @@ export class UsersUseCase {
       email: user.email,
       profile: user.profile,
       birthday: user.birthday,
+      color: user.color,
+      title: user.title,
       role: defaultRole.name,
       createdAt: user.createdAt,
       updatedAt: user.updatedAt,
@@ -108,8 +112,6 @@ export class UsersUseCase {
 
     const updateUser = await this.usersRepository.update(userId, updateUsersDto);
 
-    const role = await this.rolesRepository.findOneByName(user.role);
-
     return {
       id: updateUser.id,
       userName: updateUser.userName,
@@ -127,6 +129,16 @@ export class UsersUseCase {
     }
 
     await this.usersRepository.update(userId, updateUsersProfile);
+  }
+
+  async updateTitleEndColor(userId: number, updateUsersTitleEndColorDto: UpdateUsersTitleEndColorDto) {
+    const user = await this.usersRepository.findById(userId);
+
+    if (!user) {
+      throw new UnauthorizedException('Credenciais inválidas');
+    }
+
+    await this.usersRepository.update(userId, updateUsersTitleEndColorDto);
   }
 
   async updatePassword(userId: number, updateUsersPasswordDto: UpdateUsersPasswordDto) {

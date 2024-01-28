@@ -21,8 +21,11 @@ async function bootstrap() {
 
   app.register(fastifyCors, {
     origin: true,
-    methods: ['GET', 'PUT', 'POST', 'OPTIONS'],
+    methods: ['GET', 'PUT', 'POST', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
     credentials: true,
+    preflightContinue: false,
+    optionsSuccessStatus: 204,
   });
 
   if (envConfigService.getNodeEnv() === 'development') {

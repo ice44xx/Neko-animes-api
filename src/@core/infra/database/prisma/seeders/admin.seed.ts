@@ -39,6 +39,7 @@ export async function createAdmin() {
         userName: 'Neko Animes',
         email: 'nekopageanimes@gmail.com',
         birthday: birthday,
+        title: 'Rei Neko',
         password: hashedPassword,
         role: { connect: { id: adminRole?.id || 2 } },
       },

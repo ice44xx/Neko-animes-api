@@ -7,4 +7,5 @@ CREATE TABLE "codes" (
     CONSTRAINT "codes_pkey" PRIMARY KEY ("id")
 );
 
-
+-- CreateIndex
+CREATE UNIQUE INDEX "codes_code_key" ON "codes"("code");

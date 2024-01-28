@@ -14,6 +14,8 @@ export class UsersRepository {
         email: true,
         birthday: true,
         profile: true,
+        title: true,
+        color: true,
         createdAt: true,
         updatedAt: true,
         role: {
@@ -41,6 +43,8 @@ export class UsersRepository {
         password: true,
         birthday: true,
         profile: true,
+        title: true,
+        color: true,
         createdAt: true,
         updatedAt: true,
         role: {
@@ -72,6 +76,8 @@ export class UsersRepository {
         password: true,
         birthday: true,
         profile: true,
+        title: true,
+        color: true,
         createdAt: true,
         updatedAt: true,
         role: {
