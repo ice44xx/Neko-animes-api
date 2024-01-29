@@ -2,6 +2,7 @@ import { PrismaClient } from '@prisma/client';
 import { createTypesAnimes } from './types.seed';
 import { createDubbeds } from './dubbeds.seed';
 import { createCategories } from './categories.seed';
+import { createSeasons } from './seasons.seed';
 
 const prisma = new PrismaClient();
 
@@ -322,7 +323,7 @@ export async function createAnimes() {
       feature: true,
       year: '2023',
       status: 'Em lançamento',
-      categoryNames: ['fantasia', 'drama', 'mistério', 'romance'],
+      categoryNames: ['fantasia', 'drama', 'suspense', 'romance'],
       types: 'seriado',
       dubbeds: 'leg',
       classificationName: 'shoujo',
@@ -387,6 +388,169 @@ export async function createAnimes() {
       types: 'seriado',
       dubbeds: 'leg',
       classificationName: 'shoujo',
+    },
+    {
+      id: 26,
+      name: 'Yamada kun to Lv999 no Koi wo Suru',
+      synopsis:
+        'Akane Kinoshita pegou seu namorado tendo um caso com uma garota de um jogo online e ficou completamente arrasada. Ela tenta desestressar matando uns bichos no jogo, e acaba desabafando sobre seu caso com Yamada, um jogador de sua guilda ',
+      thumbnailUrl: 'https://res.cloudinary.com/doupbxhfd/image/upload/v1690132964/Thumbnails/Yamada-Kun_irbwbh_ikvg6y.webp',
+      background: 'https://res.cloudinary.com/doupbxhfd/image/upload/v1706326155/Thumbnails/backgrounds/yamada_kun_999_bgj4k5.webp',
+      feature: false,
+      year: '2023',
+      status: 'Completo',
+      categoryNames: ['romance', 'comédia'],
+      types: 'seriado',
+      dubbeds: 'leg',
+      classificationName: 'shoujo',
+    },
+    {
+      id: 27,
+      name: 'Loop 7-kaime no Akuyaku Reijou wa, Moto Tekikoku de Jiyuu Kimama na Hanayome Seikatsu wo Mankitsu suru',
+      synopsis:
+        'Rishe Irmgard Weitzner, filha de um duque, morreu aos 20 anos e retornou a um momento cinco anos antes, quando seu noivado foi desfeito. Ela já viveu esse loop temporal seis vezes, e viveu esses cinco anos diferentes todas as vezes. Agora, em sua sétima chance, ela está determinada a viver até a terceira ridade e passá-la relaxando.',
+      thumbnailUrl:
+        'https://res.cloudinary.com/doupbxhfd/image/upload/v1705984355/Thumbnails/Loop_7-kaime_no_Akuyaku_Reijou_wa_Moto_Tekikoku_de_Jiyuu_Kimama_na_Hanayome_Seikatsu_wo_Mankitsu_suru_ibw6pq.webp',
+      background:
+        'https://res.cloudinary.com/doupbxhfd/image/upload/v1705990928/Thumbnails/backgrounds/Loop_7-kaime_no_Akuyaku_Reijou_wa_Moto_Tekikoku_de_Jiyuu_Kimama_na_Hanayome_Seikatsu_wo_Mankitsu_suru_y6uogz.webp',
+      feature: false,
+      year: '2024',
+      status: 'Em lançamento',
+      categoryNames: ['fantasia', 'romance', 'aventura'],
+      types: 'seriado',
+      dubbeds: 'leg',
+      classificationName: 'shoujo',
+    },
+    {
+      id: 28,
+      name: 'Suki na Ko ga Megane wo Wasureta',
+      synopsis: 'Uma comédia romântica muito agradável sobre um garoto que só tem olhos para a garota que sempre esquece seus óculos!',
+      thumbnailUrl:
+        'https://res.cloudinary.com/doupbxhfd/image/upload/v1690132962/Thumbnails/Suki_na_Ko_ga_Megane_wo_Wasureta_b06kf5_cas0jz.webp',
+      background:
+        'https://res.cloudinary.com/doupbxhfd/image/upload/v1705977044/Thumbnails/backgrounds/Suki_na_Ko_ga_Megane_wo_Wasureta_zhzqgx.webp',
+      feature: false,
+      year: '2023',
+      status: 'Completo',
+      categoryNames: ['romance', 'comédia', 'drama'],
+      types: 'seriado',
+      dubbeds: 'leg',
+      classificationName: 'shoujo',
+    },
+    {
+      id: 29,
+      name: 'Kyuujitsu no Warumono-san',
+      synopsis:
+        'Em busca de aliviar sua alma cansada de tantos dias intensos de trabalho, ele decide visitar o zoológico para ver pandas e ir numa loja de conveniência para saborear um sorvete. Acompanhe como esse vilão aproveita ao máximo seus dias de folga, em uma comédia que vai alegrar sua alma!',
+      thumbnailUrl: 'https://res.cloudinary.com/doupbxhfd/image/upload/v1705984355/Thumbnails/Kyuujitsu_no_Warumono-san_ewhmaf.webp',
+      background:
+        'https://res.cloudinary.com/doupbxhfd/image/upload/v1705990926/Thumbnails/backgrounds/Kyuujitsu_no_Warumono-san_fgkqyl.webp',
+      feature: false,
+      year: '2024',
+      status: 'Em lançamento',
+      categoryNames: ['fantasia', 'isekai', 'comédia'],
+      types: 'seriado',
+      dubbeds: 'leg',
+      classificationName: 'kodomo',
+    },
+    {
+      id: 30,
+      name: 'Watashi no Shiawase na Kekkon',
+      synopsis:
+        'Miyo Saimori, filha infeliz de um casamento sem amor, tornou-se uma serva após a chegada da amante de seu pai e sua filha, Kaya. Seu destino era um casamento arranjado com Kiyoka Kudou, um capitão militar temido. Contrariando expectativas, Kiyoka se revela surpreendentemente bondoso, transformando as perspectivas dolorosas de Miyo em um futuro promissor.',
+      thumbnailUrl:
+        'https://res.cloudinary.com/doupbxhfd/image/upload/v1690132963/Thumbnails/Watashi_no_Shiawase_na_Kekkon_ehkinj_vmxqgz.webp',
+      background:
+        'https://res.cloudinary.com/doupbxhfd/image/upload/v1706351942/Thumbnails/backgrounds/Watashi_no_Shiawase_na_Kekkon_kkwsul.webp',
+      feature: false,
+      year: '2023',
+      status: 'Completo',
+      categoryNames: ['fantasia', 'romance', 'drama'],
+      types: 'seriado',
+      dubbeds: 'dub',
+      classificationName: 'shoujo',
+    },
+    {
+      id: 31,
+      name: 'Watashi no Shiawase na Kekkon',
+      synopsis:
+        'Miyo Saimori, filha infeliz de um casamento sem amor, tornou-se uma serva após a chegada da amante de seu pai e sua filha, Kaya. Seu destino era um casamento arranjado com Kiyoka Kudou, um capitão militar temido. Contrariando expectativas, Kiyoka se revela surpreendentemente bondoso, transformando as perspectivas dolorosas de Miyo em um futuro promissor.',
+      thumbnailUrl:
+        'https://res.cloudinary.com/doupbxhfd/image/upload/v1690132963/Thumbnails/Watashi_no_Shiawase_na_Kekkon_ehkinj_vmxqgz.webp',
+      background:
+        'https://res.cloudinary.com/doupbxhfd/image/upload/v1706351942/Thumbnails/backgrounds/Watashi_no_Shiawase_na_Kekkon_kkwsul.webp',
+      feature: false,
+      year: '2023',
+      status: 'Completo',
+      categoryNames: ['fantasia', 'romance', 'drama'],
+      types: 'seriado',
+      dubbeds: 'leg',
+      classificationName: 'shoujo',
+    },
+    {
+      id: 32,
+      name: 'Momochi-san Chi no Ayakashi Ouji',
+      synopsis:
+        'A órfã Himari Momochi herda uma propriedade ancestral no seu 16º aniversário. A Casa Momochi, na barreira entre os reinos humano e espiritual, exige que ela seja a guardiã entre os dois mundos. No entanto, ao se mudar, descobre três belos rapazes já na casa, um deles ocupando o papel que era dela!',
+      thumbnailUrl: 'https://res.cloudinary.com/doupbxhfd/image/upload/v1705984356/Thumbnails/Momochi-san_Chi_no_Ayakashi_Ooji_pifhvb.webp',
+      background:
+        'https://res.cloudinary.com/doupbxhfd/image/upload/v1705990928/Thumbnails/backgrounds/Momochi-san_Chi_no_Ayakashi_Ooji_wxdhct.webp',
+      feature: false,
+      year: '2024',
+      status: 'Em lançamento',
+      categoryNames: ['fantasia', 'romance', 'drama'],
+      types: 'seriado',
+      dubbeds: 'leg',
+      classificationName: 'shoujo',
+    },
+    {
+      id: 33,
+      name: 'The Foolish Angel Dances with the Devil',
+      synopsis:
+        'Masatora Akutsu, um demônio que está em uma missão de recrutamento numa escola humana, está atrás de aliados para o Inferno na luta contra os anjos celestiais. Mas quando ele se senta ao lado da cativante Lily Amane, ele terá uma surpresa celestial incrivelmente hilária!',
+      thumbnailUrl:
+        'https://res.cloudinary.com/doupbxhfd/image/upload/v1705984352/Thumbnails/The_Foolish_Angel_Dances_with_the_Devil_ohfo4m.webp',
+      background:
+        'https://res.cloudinary.com/doupbxhfd/image/upload/v1705990930/Thumbnails/backgrounds/Oroka_na_Tenshi_wa_Akuma_to_Odoru_jourdu.webp',
+      feature: false,
+      year: '2024',
+      status: 'Em lançamento',
+      categoryNames: ['comédia', 'romance', 'sobrenatural', 'escolar'],
+      types: 'seriado',
+      dubbeds: 'leg',
+      classificationName: 'shoujo',
+    },
+    {
+      id: 34,
+      name: 'Sokushi Cheat ga Saikyou sugite, Isekai no Yatsura ga Marude Aite ni Naranai n desu ga',
+      synopsis:
+        'Yogiri Takatou acorda em um mundo caótico durante uma viagem escolar. Sua turma foi transportada, e ele e uma colega são abandonados como isca para um dragão. Apesar de não se importar em morrer, decide proteger sua companheira. Com um poder secreto de invocar a Morte Instantânea, enfrenta monstros humildes de Nível 1000.',
+      thumbnailUrl: 'https://res.cloudinary.com/doupbxhfd/image/upload/v1705984351/Thumbnails/Sokushi_Cheat_ga_Saikyou_sugite_zrzsj6.webp',
+      background:
+        'https://res.cloudinary.com/doupbxhfd/image/upload/v1705990923/Thumbnails/backgrounds/Sokushi_Cheat_ga_Saikyou_sugite_c2xxn6.webp',
+      feature: false,
+      year: '2024',
+      status: 'Em lançamento',
+      categoryNames: ['ação', 'isekai', 'aventura'],
+      types: 'seriado',
+      dubbeds: 'leg',
+      classificationName: 'shounen',
+    },
+    {
+      id: 35,
+      name: 'Saikyou Tank no Meikyuu Kouryaku Tairyoku 9999 no Rare Skill-mochi Tank, Yuusha Party wo Tsuihou sareru',
+      synopsis:
+        'Rud, um shielder de defesa no nível 9999, integra a Equipe do Herói em incursões labirínticas. Sua missão: descobrir um tesouro oculto capaz de realizar qualquer desejo, visando a cura da amada irmã mais nova.',
+      thumbnailUrl: 'https://res.cloudinary.com/doupbxhfd/image/upload/v1705984351/Thumbnails/Saikyou_Tank_no_Meikyuu_Kouryaku_rdgbq8.webp',
+      background:
+        'https://res.cloudinary.com/doupbxhfd/image/upload/v1705990923/Thumbnails/backgrounds/Saikyou_Tank_no_Meikyuu_Kouryaku_xvqyvg.webp',
+      feature: false,
+      year: '2024',
+      status: 'Em lançamento',
+      categoryNames: ['fantasia', 'ação', 'aventura'],
+      types: 'seriado',
+      dubbeds: 'leg',
+      classificationName: 'shounen',
     },
   ];
 

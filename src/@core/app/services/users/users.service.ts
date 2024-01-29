@@ -8,6 +8,7 @@ import { CreateAdminsDto } from '../../dto/users/create-admins-dto';
 import { UpdateAdminsDto } from '../../dto/users/update-admins-dto';
 import { UpdateUsersProfileDto } from '../../dto/users/update-user-profile-dto';
 import { UpdatePasswordByEmailDto } from '../../dto/users/update-password-email-dto';
+import { UpdateUsersTitleEndColorDto } from '../../dto/users/update-users-title-end-color-dto';
 
 @Injectable()
 export class UsersService {
@@ -43,6 +44,10 @@ export class UsersService {
 
   async updateProfile(userId: number, updateUsersProfileDto: UpdateUsersProfileDto) {
     return await this.usersUseCase.updateProfile(userId, updateUsersProfileDto);
+  }
+
+  async updateTitleEndColor(userId: number, updateUsersTitleEndColorDto: UpdateUsersTitleEndColorDto) {
+    return await this.usersUseCase.updateTitleEndColor(userId, updateUsersTitleEndColorDto);
   }
 
   async updateAdmin(userId: number, updateAdminsDto: UpdateAdminsDto) {

@@ -14,13 +14,13 @@ export async function createClassifications() {
       id: 2,
       name: 'Seinen',
       desc: 'Profundo e maduro, este gênero é uma jornada para o público adulto, explorando temas complexos, psicologia dos personagens e tramas intrincadas.',
-      thumbnail: 'https://res.cloudinary.com/doupbxhfd/image/upload/v1703559297/Classifica%C3%A7%C3%B5es/Seinen_zwjfhg.webp',
+      thumbnail: 'https://res.cloudinary.com/doupbxhfd/image/upload/v1706353336/Classifica%C3%A7%C3%B5es/seinen_lloisr.webp',
     },
     {
       id: 3,
       name: 'Shoujo',
       desc: 'Romance, emoção e uma dose saudável de drama! Feito para o público feminino, esse gênero encanta com histórias de amor, amizade e jornadas emocionantes.',
-      thumbnail: 'https://res.cloudinary.com/doupbxhfd/image/upload/v1703559298/Classifica%C3%A7%C3%B5es/Shoujo_hrvf00.webp',
+      thumbnail: 'https://res.cloudinary.com/doupbxhfd/image/upload/v1706353931/Classifica%C3%A7%C3%B5es/shoujo_zqp8ue.webp',
     },
     {
       id: 4,

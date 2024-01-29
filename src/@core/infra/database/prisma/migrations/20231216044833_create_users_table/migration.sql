@@ -6,6 +6,8 @@ CREATE TABLE "users" (
     "password" TEXT NOT NULL,
     "profile" TEXT, 
     "birthday" DATE,
+    "color" TEXT,
+    "title" TEXT,
     "roleId" INTEGER NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,

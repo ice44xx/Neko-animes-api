@@ -25,6 +25,7 @@ import { CreateAdminsDto } from '../../dto/users/create-admins-dto';
 import { UpdateAdminsDto } from '../../dto/users/update-admins-dto';
 import { UpdateUsersProfileDto } from '../../dto/users/update-user-profile-dto';
 import { UpdatePasswordByEmailDto } from '../../dto/users/update-password-email-dto';
+import { UpdateUsersTitleEndColorDto } from '../../dto/users/update-users-title-end-color-dto';
 
 @ApiTags('Usuários')
 @Controller('users')
@@ -126,6 +127,23 @@ export class UsersController {
     try {
       const currentUser = req.user.id;
       const user = await this.usersService.updateProfile(currentUser, updateUsersProfileDto);
+      return res.status(HttpStatus.OK).send(user);
+    } catch (error) {
+      if (error instanceof ConflictException) {
+        return res.status(HttpStatus.CONFLICT).send({ message: error.message });
+      } else if (error instanceof UnauthorizedException) {
+        return res.status(HttpStatus.UNAUTHORIZED).send({ message: error.message });
+      }
+      return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({ message: 'Ocorreu um erro ao atualizar o usuário, ' + error.message });
+    }
+  }
+
+  @Roles(UserType.User)
+  @Put('title/color')
+  async updateTitleEndColor(@Request() req: AuthRequest, @Res() res, @Body() updateUsersTitleEndColorDto: UpdateUsersTitleEndColorDto) {
+    try {
+      const currentUser = req.user.id;
+      const user = await this.usersService.updateTitleEndColor(currentUser, updateUsersTitleEndColorDto);
       return res.status(HttpStatus.OK).send(user);
     } catch (error) {
       if (error instanceof ConflictException) {
