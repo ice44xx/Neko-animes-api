@@ -16,8 +16,8 @@ export class EpisodesUseCase {
     return await this.episodesRepository.findAll();
   }
 
-  async findTop10Newest() {
-    return await this.episodesRepository.findTop10Newest();
+  async findTop12Newest() {
+    return await this.episodesRepository.findTop12Newest();
   }
 
   async findByAnimeName(name: string) {

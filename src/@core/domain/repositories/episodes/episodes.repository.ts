@@ -58,7 +58,7 @@ export class EpisodesRepository {
     return formattedLikes;
   }
 
-  async findTop10Newest() {
+  async findTop12Newest() {
     return await this.prisma.episodes.findMany({
       where: {},
       select: {
