@@ -24,6 +24,11 @@ export class CategoriesRepository {
             name: true,
             synopsis: true,
             thumbnailUrl: true,
+            dubbeds: {
+              select: {
+                name: true,
+              },
+            },
           },
         },
       },

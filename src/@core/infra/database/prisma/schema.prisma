@@ -11,24 +11,26 @@ datasource db {
 }
 
 model Users {
-  id            Int             @id @default(autoincrement())
-  userName      String          @unique
-  email         String          @unique
-  password      String
-  profile       String?
-  birthday      DateTime?
-  color         String?
-  title         String?
-  role          Roles           @relation(fields: [roleId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  roleId        Int
-  createdAt     DateTime        @default(now())
-  updatedAt     DateTime        @default(now())
-  favorites     Favorites[]
-  comments      Comments[]
-  likesAnimes   LikesAnimes[]
-  likesEpisodes LikesEpisodes[]
-  likesComments LikesComments[]
-  watchList     WatchList[]
+  id                     Int                      @id @default(autoincrement())
+  userName               String                   @unique
+  email                  String                   @unique
+  password               String
+  profile                String?
+  birthday               DateTime?
+  color                  String?
+  title                  String?
+  role                   Roles                    @relation(fields: [roleId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  roleId                 Int
+  createdAt              DateTime                 @default(now())
+  updatedAt              DateTime                 @default(now())
+  favorites              Favorites[]
+  comments               Comments[]
+  commentResponses       CommentResponses[]
+  likesAnimes            LikesAnimes[]
+  likesEpisodes          LikesEpisodes[]
+  likesComments          LikesComments[]
+  watchList              WatchList[]
+  likesResponsesComments LikesResponsesComments[]
 
   @@map("users")
 }
@@ -177,17 +179,32 @@ model WatchList {
 }
 
 model Comments {
-  id         Int             @id @default(autoincrement())
+  id         Int                @id @default(autoincrement())
   text       String
-  users      Users           @relation(fields: [usersId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  users      Users              @relation(fields: [usersId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   usersId    Int
-  episodes   Episodes        @relation(fields: [episodesId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  episodes   Episodes           @relation(fields: [episodesId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   episodesId Int
+  responses  CommentResponses[]
   likes      LikesComments[]
-  createdAt  DateTime        @default(now())
-  updatedAt  DateTime        @default(now())
+  createdAt  DateTime           @default(now())
+  updatedAt  DateTime           @default(now())
 
   @@map("comments")
+}
+
+model CommentResponses {
+  id         Int                      @id @default(autoincrement())
+  text       String
+  users      Users                    @relation(fields: [usersId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  usersId    Int
+  comments   Comments                 @relation(fields: [commentsId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  commentsId Int
+  likes      LikesResponsesComments[]
+  createdAt  DateTime                 @default(now())
+  updatedAt  DateTime                 @default(now())
+
+  @@map("comment_responses")
 }
 
 model LikesComments {
@@ -199,6 +216,17 @@ model LikesComments {
   like       Boolean  @default(false)
 
   @@map("likes-comments")
+}
+
+model LikesResponsesComments {
+  id                 Int              @id @default(autoincrement())
+  commentResponses   CommentResponses @relation(fields: [commentResponsesId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  commentResponsesId Int
+  users              Users            @relation(fields: [usersId], references: [id])
+  usersId            Int
+  like               Boolean          @default(false)
+
+  @@map("likes-comments-responses")
 }
 
 model Backgrounds {

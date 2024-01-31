@@ -24,6 +24,11 @@ export class ClassificationsRepository {
             name: true,
             synopsis: true,
             thumbnailUrl: true,
+            dubbeds: {
+              select: {
+                name: true,
+              },
+            },
           },
         },
       },

@@ -15,6 +15,23 @@ export class CommentsRepository {
         createdAt: true,
         likes: true,
         episodesId: true,
+        responses: {
+          select: {
+            id: true,
+            text: true,
+            likes: true,
+            createdAt: true,
+            users: {
+              select: {
+                id: true,
+                userName: true,
+                profile: true,
+                color: true,
+                title: true,
+              },
+            },
+          },
+        },
         users: {
           select: {
             id: true,
@@ -30,6 +47,10 @@ export class CommentsRepository {
     const formattedLikes = comments.map((comment) => ({
       ...comment,
       likes: comment.likes.length,
+      responses: comment.responses.map((response) => ({
+        ...response,
+        likes: response.likes.length,
+      })),
     }));
 
     return formattedLikes;
@@ -44,6 +65,23 @@ export class CommentsRepository {
         createdAt: true,
         likes: true,
         episodesId: true,
+        responses: {
+          select: {
+            id: true,
+            text: true,
+            likes: true,
+            createdAt: true,
+            users: {
+              select: {
+                id: true,
+                userName: true,
+                profile: true,
+                color: true,
+                title: true,
+              },
+            },
+          },
+        },
         users: {
           select: {
             id: true,
@@ -59,6 +97,10 @@ export class CommentsRepository {
     const formattedLikes = comments.map((comment) => ({
       ...comment,
       likes: comment.likes.length,
+      responses: comment.responses.map((response) => ({
+        ...response,
+        likes: response.likes.length,
+      })),
     }));
 
     return formattedLikes;
@@ -73,6 +115,23 @@ export class CommentsRepository {
         createdAt: true,
         likes: true,
         episodesId: true,
+        responses: {
+          select: {
+            id: true,
+            text: true,
+            likes: true,
+            createdAt: true,
+            users: {
+              select: {
+                id: true,
+                userName: true,
+                profile: true,
+                color: true,
+                title: true,
+              },
+            },
+          },
+        },
         users: {
           select: {
             id: true,
@@ -88,6 +147,10 @@ export class CommentsRepository {
     const formattedLikes = comments.map((comment) => ({
       ...comment,
       likes: comment.likes.length,
+      responses: comment.responses.map((response) => ({
+        ...response,
+        likes: response.likes.length,
+      })),
     }));
 
     return formattedLikes;
