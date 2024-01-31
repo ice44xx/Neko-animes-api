@@ -20,6 +20,8 @@ import { BackgroundsAuthModule } from 'src/@core/app/modules/backgrounds-auth/ba
 import { DubbedsModule } from 'src/@core/app/modules/dubbeds/dubbeds.module';
 import { CodesModule } from 'src/@core/app/modules/codes/codes.module';
 import { EnvConfigModule } from '../env-config/env-config.module';
+import { LikesResponsesCommentsModule } from 'src/@core/app/modules/likes/likes-responses.module';
+import { ResponsesModule } from 'src/@core/app/modules/comments/responses.module';
 
 @Module({
   imports: [
@@ -32,11 +34,13 @@ import { EnvConfigModule } from '../env-config/env-config.module';
     CategoriesModule,
     ClassificationsModule,
     CommentsModule,
+    ResponsesModule,
     EpisodesModule,
     FavoritesModule,
     LikesAnimesModule,
     LikesCommentsModule,
     LikesEpisodesModule,
+    LikesResponsesCommentsModule,
     SeasonsModule,
     AuthModule,
     RolesModule,
