@@ -1,5 +1,5 @@
-import { PrismaClient } from '@prisma/client';
 import * as bcrypt from 'bcrypt';
+import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
@@ -24,11 +24,11 @@ export async function createAdmin() {
     return;
   }
 
-  const hashedPassword = await hashPassword('020619!Ns');
+  const hashedPassword = await hashPassword('9%-"}5M1Bp');
 
   const existingAdmin = await prisma.users.findUnique({
     where: {
-      email: 'nekopageanimes@gmail.com',
+      email: 'info@nekoanimes.com',
     },
   });
 
@@ -37,7 +37,7 @@ export async function createAdmin() {
     await prisma.users.create({
       data: {
         userName: 'Neko Animes',
-        email: 'nekopageanimes@gmail.com',
+        email: 'info@nekoanimes.com',
         birthday: birthday,
         title: 'Rei Neko',
         password: hashedPassword,
