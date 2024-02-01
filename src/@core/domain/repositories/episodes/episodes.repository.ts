@@ -9,6 +9,7 @@ export class EpisodesRepository {
   async findAll() {
     const episodes = await this.prisma.episodes.findMany({
       where: {},
+      orderBy: [{ id: 'asc' }, { episodeOrder: 'asc' }],
       select: {
         id: true,
         name: true,
@@ -16,6 +17,7 @@ export class EpisodesRepository {
         thumbnailUrl: true,
         episodeOrder: true,
         likes: true,
+
         seasons: {
           select: {
             id: true,
@@ -185,6 +187,9 @@ export class EpisodesRepository {
             createdAt: true,
           },
         },
+      },
+      orderBy: {
+        episodeOrder: 'asc',
       },
     });
 
