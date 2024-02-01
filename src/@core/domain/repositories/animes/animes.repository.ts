@@ -70,6 +70,7 @@ export class AnimesRepository {
         createdAt: true,
         updatedAt: true,
       },
+      orderBy: { createdAt: 'desc' },
     });
 
     const formattedLikes = animes.map((anime) => ({

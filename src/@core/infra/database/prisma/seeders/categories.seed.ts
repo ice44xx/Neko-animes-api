@@ -29,6 +29,8 @@ export async function createCategories() {
     'Sobrenatural',
     'Medicina',
     'Escolar',
+    'Yaoi',
+    'Yuri',
   ];
 
   for (const categoryName of categoriesToCreate) {
