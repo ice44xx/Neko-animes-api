@@ -21,7 +21,7 @@ export async function createBackgrounds() {
     },
     {
       id: 4,
-      url: 'https://res.cloudinary.com/doupbxhfd/image/upload/v1706169164/Planos%20de%20fundo/friren_wdki6z.webp',
+      url: 'https://res.cloudinary.com/doupbxhfd/image/upload/v1706237889/Planos%20de%20fundo/Sem_T%C3%ADtulo-1-Recuperado_jwx4zf.webp',
       order: 4,
     },
   ];
