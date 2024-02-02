@@ -224,8 +224,6 @@ export class UsersUseCase {
       throw new ConflictException('Usuário já existe');
     }
 
-    if (existingUser) throw new ConflictException('Usuário já existe');
-
     const existingUserName = await this.usersRepository.findByUserNameUnique(updateAdminsDto.userName);
 
     if (existingUserName && existingUserName.id !== userId) {
