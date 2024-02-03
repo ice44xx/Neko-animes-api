@@ -224,6 +224,7 @@ export class EpisodesRepository {
                 name: true,
                 types: true,
                 thumbnailUrl: true,
+                background: true,
               },
             },
           },

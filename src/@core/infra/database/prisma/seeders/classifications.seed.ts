@@ -7,31 +7,31 @@ export async function createClassifications() {
     {
       id: 1,
       name: 'Shounen',
-      desc: 'Energia, ação e aventura se fundem nesse gênero épico, ideal para quem busca histórias de superação, amizade e batalhas emocionantes.',
+      desc: 'Ação e aventura se fundem nesse gênero épico, ideal para quem busca histórias de superação e batalhas emocionantes.',
       thumbnail: 'https://res.cloudinary.com/doupbxhfd/image/upload/v1703559298/Classifica%C3%A7%C3%B5es/Shounen_xfflya.webp',
     },
     {
       id: 2,
       name: 'Seinen',
-      desc: 'Profundo e maduro, este gênero é uma jornada para o público adulto, explorando temas complexos, psicologia dos personagens e tramas intrincadas.',
+      desc: 'Profundo e maduro, este gênero é uma jornada para o público adulto, explorando temas complexos.',
       thumbnail: 'https://res.cloudinary.com/doupbxhfd/image/upload/v1706353336/Classifica%C3%A7%C3%B5es/seinen_lloisr.webp',
     },
     {
       id: 3,
       name: 'Shoujo',
-      desc: 'Romance, emoção e uma dose saudável de drama! Feito para o público feminino, esse gênero encanta com histórias de amor, amizade e jornadas emocionantes.',
+      desc: 'Romance, emoção e uma dose saudável de drama! Feito para o público feminino, esse gênero encanta com histórias de amor.',
       thumbnail: 'https://res.cloudinary.com/doupbxhfd/image/upload/v1706353931/Classifica%C3%A7%C3%B5es/shoujo_zqp8ue.webp',
     },
     {
       id: 4,
       name: 'Josei',
-      desc: 'Maturidade e realismo definem esse gênero voltado para mulheres adultas. Com narrativas maduras sobre relacionamentos complexos e desafios da vida adulta.',
+      desc: 'Maturidade e realismo definem esse gênero voltado para mulheres adultas. Com narrativas maduras.',
       thumbnail: 'https://res.cloudinary.com/doupbxhfd/image/upload/v1703559297/Classifica%C3%A7%C3%B5es/Josei_ksnco4.webp',
     },
     {
       id: 5,
       name: 'Kodomo',
-      desc: 'Cores vibrantes e lições divertidas! Projetado para as mentes jovens, este gênero cativante oferece histórias simples, educativas e cheias de diversão.',
+      desc: 'Cores vibrantes e lições divertidas! Projetado para jovens, este gênero oferece histórias educativas e cheias de diversão.',
       thumbnail: 'https://res.cloudinary.com/doupbxhfd/image/upload/v1703559297/Classifica%C3%A7%C3%B5es/Kodomo_gm30ta.webp',
     },
   ];
