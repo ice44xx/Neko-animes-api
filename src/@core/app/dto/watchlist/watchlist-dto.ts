@@ -23,5 +23,5 @@ export class WatchListDto {
   readonly episodeName?: string;
 
   @IsNumber()
-  readonly order?: number;
+  readonly type?: string;
 }

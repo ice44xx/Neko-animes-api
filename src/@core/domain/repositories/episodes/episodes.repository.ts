@@ -73,8 +73,15 @@ export class EpisodesRepository {
         updatedAt: true,
         seasons: {
           select: {
+            id: true,
             animeId: true,
-            anime: true,
+            anime: {
+              select: {
+                name: true,
+                thumbnailUrl: true,
+                types: true,
+              },
+            },
           },
         },
       },
@@ -168,6 +175,7 @@ export class EpisodesRepository {
               select: {
                 id: true,
                 name: true,
+                types: true,
               },
             },
           },
