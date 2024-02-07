@@ -50,6 +50,7 @@ model Animes {
   thumbnailUrl      String
   background        String?
   feature           Boolean         @default(false)
+  indicator         String
   year              String
   status            String
   categories        Categories[]
@@ -255,4 +256,13 @@ model Codes {
   createdAt DateTime @default(now())
 
   @@map("codes")
+}
+
+model Errors {
+  id        Int      @id @default(autoincrement())
+  anime     String
+  episodeId Int      @unique
+  createdAt DateTime @default(now())
+
+  @@map("errors")
 }

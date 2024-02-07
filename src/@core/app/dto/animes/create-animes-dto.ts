@@ -28,6 +28,11 @@ export class CreateAnimesDto {
   @IsBoolean()
   readonly feature: boolean;
 
+  @ApiProperty({ description: 'Idade recomandada para o anime' })
+  @IsNotEmpty({ message: 'A idade recomendada é obrigatória' })
+  @IsString()
+  readonly indicator: string;
+
   @ApiProperty({ description: 'Ano do anime' })
   @IsNotEmpty({ message: 'O ano é obrigatório' })
   @IsString()

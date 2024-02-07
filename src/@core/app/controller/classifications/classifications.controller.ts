@@ -25,6 +25,22 @@ export class ClassificationsController {
   }
 
   @Public()
+  @Get('id/:id')
+  async findById(@Res() res, @Param('id') id: number) {
+    try {
+      const classification = await this.classificationsService.findById({ id });
+      return res.status(HttpStatus.OK).send(classification);
+    } catch (error) {
+      if (error instanceof NotFoundException) {
+        return res.status(HttpStatus.NOT_FOUND).send({ message: error.message });
+      }
+      return res
+        .status(HttpStatus.INTERNAL_SERVER_ERROR)
+        .send({ message: `Ocorreu um erro ao buscar a classificação ${id}, ` + error.message });
+    }
+  }
+
+  @Public()
   @Get(':name')
   async findByName(@Res() res, @Param('name') name: string) {
     try {

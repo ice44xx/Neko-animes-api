@@ -13,6 +13,16 @@ export class ClassificationsUseCase {
     return classification;
   }
 
+  async findById({ id }: ClassificationsDto) {
+    const classification = await this.classificationsRepository.findById(id);
+
+    if (!classification) {
+      throw new NotFoundException('Classificação não encontrada');
+    }
+
+    return classification;
+  }
+
   async findByName({ name }: ClassificationsDto) {
     const classification = await this.classificationsRepository.findByName(name);
 
@@ -48,9 +58,9 @@ export class ClassificationsUseCase {
       throw new NotFoundException(`Classificação ${id} não foi encontrada`);
     }
 
-    const existingClassificationName = await this.classificationsRepository.findByName(name);
+    const existingClassificationName = await this.classificationsRepository.findById(id);
 
-    if (existingClassificationName) {
+    if (existingClassificationName.id !== id) {
       throw new ConflictException('Já existe uma Classificação com este nome');
     }
 

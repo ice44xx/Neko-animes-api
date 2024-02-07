@@ -23,6 +23,22 @@ export class CategoriesController {
   }
 
   @Public()
+  @Get('id/:id')
+  async findByid(@Res() res, @Param('id') id: number) {
+    try {
+      const categories = await this.categoriesService.findById({ id });
+      return res.status(HttpStatus.OK).send(categories);
+    } catch (error) {
+      if (error instanceof NotFoundException) {
+        return res.status(HttpStatus.NOT_FOUND).send({ message: error.message });
+      }
+      return res
+        .status(HttpStatus.INTERNAL_SERVER_ERROR)
+        .send({ message: `Ocorreu um erro ao buscar a categoria ${id}, ` + error.message });
+    }
+  }
+
+  @Public()
   @Get(':name')
   async findByName(@Res() res, @Param('name') name: string) {
     try {

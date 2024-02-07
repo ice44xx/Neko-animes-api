@@ -7,7 +7,7 @@ export class CategoriesRepository {
   constructor(private readonly prisma: PrismaService) {}
 
   async findAll() {
-    return this.prisma.categories.findMany();
+    return this.prisma.categories.findMany({ orderBy: { id: 'asc' } });
   }
 
   async findById(id: number) {

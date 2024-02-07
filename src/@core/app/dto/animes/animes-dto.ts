@@ -20,6 +20,9 @@ export class AnimesDto {
   readonly feature?: boolean;
 
   @IsString()
+  readonly indicator?: string;
+
+  @IsString()
   readonly year?: string;
 
   @IsString()

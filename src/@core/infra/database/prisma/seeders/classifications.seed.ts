@@ -8,7 +8,7 @@ export async function createClassifications() {
       id: 1,
       name: 'Shounen',
       desc: 'Ação e aventura se fundem nesse gênero épico, ideal para quem busca histórias de superação e batalhas emocionantes.',
-      thumbnail: 'https://res.cloudinary.com/doupbxhfd/image/upload/v1703559298/Classifica%C3%A7%C3%B5es/Shounen_xfflya.webp',
+      thumbnail: 'https://res.cloudinary.com/doupbxhfd/image/upload/v1707142575/Classifica%C3%A7%C3%B5es/Shounen_xxwxqo.webp',
     },
     {
       id: 2,
@@ -26,13 +26,13 @@ export async function createClassifications() {
       id: 4,
       name: 'Josei',
       desc: 'Maturidade e realismo definem esse gênero voltado para mulheres adultas. Com narrativas maduras.',
-      thumbnail: 'https://res.cloudinary.com/doupbxhfd/image/upload/v1703559297/Classifica%C3%A7%C3%B5es/Josei_ksnco4.webp',
+      thumbnail: 'https://res.cloudinary.com/doupbxhfd/image/upload/v1707142575/Classifica%C3%A7%C3%B5es/Josei_lmvmv7.webp',
     },
     {
       id: 5,
       name: 'Kodomo',
       desc: 'Cores vibrantes e lições divertidas! Projetado para jovens, este gênero oferece histórias educativas e cheias de diversão.',
-      thumbnail: 'https://res.cloudinary.com/doupbxhfd/image/upload/v1703559297/Classifica%C3%A7%C3%B5es/Kodomo_gm30ta.webp',
+      thumbnail: 'https://res.cloudinary.com/doupbxhfd/image/upload/v1707142575/Classifica%C3%A7%C3%B5es/Kodomo_zineoj.webp',
     },
   ];
 
@@ -40,8 +40,6 @@ export async function createClassifications() {
     return {
       ...classificationData,
       name: classificationData.name.toLowerCase(),
-      desc: classificationData.desc.toLowerCase(),
-      thumbnail: classificationData.thumbnail.toLowerCase(),
     };
   });
 

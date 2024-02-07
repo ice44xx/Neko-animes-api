@@ -48,18 +48,12 @@ export async function createSeasons() {
     },
     {
       id: 8,
-      name: 'Temporada 3 Overlord',
-      order: 3,
-      animeId: 7,
-    },
-    {
-      id: 9,
       name: 'Temporada 1 Chainsaw man',
       order: 1,
       animeId: 4,
     },
     {
-      id: 10,
+      id: 9,
       name: 'One Piece Film: Strong World',
       order: 1,
       animeId: 13,

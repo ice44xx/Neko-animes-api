@@ -5,6 +5,7 @@ CREATE TABLE "animes" (
     "synopsis" TEXT NOT NULL,
     "thumbnailUrl" TEXT NOT NULL,
     "background" TEXT,
+    "indicator" TEXT NOT NULL,
     "feature" BOOLEAN NOT NULL DEFAULT false,
     "year" TEXT NOT NULL,
     "status" TEXT NOT NULL,
