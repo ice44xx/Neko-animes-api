@@ -77,6 +77,7 @@ export class EpisodesRepository {
             animeId: true,
             anime: {
               select: {
+                id: true,
                 name: true,
                 thumbnailUrl: true,
                 types: true,
