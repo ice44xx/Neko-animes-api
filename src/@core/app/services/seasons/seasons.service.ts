@@ -16,6 +16,10 @@ export class SeasonsService {
     return this.seasonsUseCase.findByName({ name });
   }
 
+  async findByAnimeId({ id }: SeasonsDto) {
+    return this.seasonsUseCase.findByAnimeId({ id });
+  }
+
   async findById({ id }: SeasonsDto) {
     return this.seasonsUseCase.findById({ id });
   }
