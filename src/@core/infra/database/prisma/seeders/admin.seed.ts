@@ -24,7 +24,7 @@ export async function createAdmin() {
     return;
   }
 
-  const hashedPassword = await hashPassword('9%-"}5M1Bp');
+  const hashedPassword = await hashPassword('9%-32+5M1Bp');
 
   const existingAdmin = await prisma.users.findUnique({
     where: {

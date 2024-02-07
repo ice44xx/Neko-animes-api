@@ -12,6 +12,10 @@ export class BackgroundsAuthService {
     return await this.backgroundAuthUseCase.findAll();
   }
 
+  async findById({ id }: BackgroundsDto) {
+    return await this.backgroundAuthUseCase.findById({ id });
+  }
+
   async create(createBackgroundsDto: CreateBackgroundsAuthDto) {
     return await this.backgroundAuthUseCase.create(createBackgroundsDto);
   }

@@ -12,6 +12,10 @@ export class BackgroundsService {
     return await this.backgroundUseCase.findAll();
   }
 
+  async findById({ id }: BackgroundsDto) {
+    return await this.backgroundUseCase.findById({ id });
+  }
+
   async create(createBackgroundsDto: CreateBackgroundsDto) {
     return await this.backgroundUseCase.create(createBackgroundsDto);
   }

@@ -13,6 +13,16 @@ export class CategoriesUseCase {
     return categories;
   }
 
+  async findById({ id }: CategoriesDto) {
+    const categories = await this.categoriesRepository.findById(id);
+
+    if (!categories) {
+      throw new NotFoundException('Categoria não encontrada');
+    }
+
+    return categories;
+  }
+
   async findByName({ name }: CreateCategoriesDto) {
     const categories = await this.categoriesRepository.findByName(name);
 

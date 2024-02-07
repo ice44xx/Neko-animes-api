@@ -22,6 +22,7 @@ import { CodesModule } from 'src/@core/app/modules/codes/codes.module';
 import { EnvConfigModule } from '../env-config/env-config.module';
 import { LikesResponsesCommentsModule } from 'src/@core/app/modules/likes/likes-responses.module';
 import { ResponsesModule } from 'src/@core/app/modules/comments/responses.module';
+import { ErrorsModule } from 'src/@core/app/modules/errors/errors.module';
 
 @Module({
   imports: [
@@ -47,6 +48,7 @@ import { ResponsesModule } from 'src/@core/app/modules/comments/responses.module
     UsersModule,
     WatchlistModule,
     CodesModule,
+    ErrorsModule,
   ],
   providers: [PrismaService],
 })

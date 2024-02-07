@@ -25,6 +25,20 @@ export class BackgroundsController {
     }
   }
 
+  @Public()
+  @Get(':id')
+  async findById(@Res() res, @Param('id') id: number) {
+    try {
+      const background = await this.backgroundsService.findById({ id });
+      return res.status(HttpStatus.OK).send(background);
+    } catch (error) {
+      if (error instanceof NotFoundException) {
+        return res.status(HttpStatus.NOT_FOUND).send({ message: error.message });
+      }
+      return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({ message: 'Ocorreu um erro ao buscar os backgrounds, ' + error.message });
+    }
+  }
+
   @Roles(UserType.Admin)
   @Post('create')
   async create(@Res() res, @Body() createBackgroundsDto: CreateBackgroundsDto) {

@@ -18,6 +18,16 @@ export class BackgroundsAuthUseCase {
     return backgroundsAuth;
   }
 
+  async findById({ id }: BackgroundsAuthDto) {
+    const background = await this.backgroundsAuthRepository.findById(id);
+
+    if (!background) {
+      throw new NotFoundException(`Background ${id} não encontrado`);
+    }
+
+    return background;
+  }
+
   async create(createBackgroundsDto: CreateBackgroundsAuthDto) {
     return await this.backgroundsAuthRepository.create(createBackgroundsDto);
   }

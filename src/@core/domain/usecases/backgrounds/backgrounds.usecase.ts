@@ -18,6 +18,16 @@ export class BackgroundsUseCase {
     return backgrounds;
   }
 
+  async findById({ id }: BackgroundsDto) {
+    const background = await this.backgroundsRepository.findById(id);
+
+    if (!background) {
+      throw new NotFoundException(`Background ${id} não encontrado`);
+    }
+
+    return background;
+  }
+
   async create(createBackgroundsDto: CreateBackgroundsDto) {
     return await this.backgroundsRepository.create(createBackgroundsDto);
   }
