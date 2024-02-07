@@ -20,6 +20,10 @@ export class SeasonsUseCase {
     return this.seasonsRepository.findByName(name);
   }
 
+  async findByAnimeId({ id }: SeasonsDto) {
+    return this.seasonsRepository.findByAnimeId(id);
+  }
+
   async findById({ id }: SeasonsDto) {
     return this.seasonsRepository.findById(id);
   }

@@ -62,6 +62,38 @@ export class SeasonsRepository {
     });
   }
 
+  async findByAnimeId(id: number) {
+    return this.prisma.seasons.findMany({
+      where: {
+        anime: {
+          id: id,
+        },
+      },
+      select: {
+        id: true,
+        name: true,
+        order: true,
+        anime: {
+          select: {
+            id: true,
+            name: true,
+            types: true,
+          },
+        },
+        episodes: {
+          select: {
+            id: true,
+            name: true,
+            url: true,
+            thumbnailUrl: true,
+            episodeOrder: true,
+            likes: true,
+          },
+        },
+      },
+    });
+  }
+
   async findByFirst(animeId: number, name: string) {
     return this.prisma.seasons.findFirst({ where: { animeId, name } });
   }

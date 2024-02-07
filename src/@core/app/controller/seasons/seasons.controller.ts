@@ -29,7 +29,18 @@ export class SeasonsController {
       const seasons = await this.seasonsService.findByName({ name });
       return res.status(HttpStatus.OK).send(seasons);
     } catch (error) {
-      return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({ message: `Ocorreu um erro ao buscar a temporda ${name} ` });
+      return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({ message: `Ocorreu um erro ao buscar a temporada ${name} ` });
+    }
+  }
+
+  @Public()
+  @Get('/animeId/:id')
+  async findByAnimeId(@Res() res, @Param('id') id: number) {
+    try {
+      const seasons = await this.seasonsService.findByAnimeId({ id });
+      return res.status(HttpStatus.OK).send(seasons);
+    } catch (error) {
+      return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({ message: `Ocorreu um erro ao buscar a temporada ${id} do anime ` });
     }
   }
 
@@ -40,7 +51,7 @@ export class SeasonsController {
       const seasons = await this.seasonsService.findById({ id });
       return res.status(HttpStatus.OK).send(seasons);
     } catch (error) {
-      return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({ message: `Ocorreu um erro ao buscar a temporda ${id} ` });
+      return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({ message: `Ocorreu um erro ao buscar a temporada ${id} ` });
     }
   }
 
