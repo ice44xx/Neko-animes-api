@@ -27,8 +27,8 @@ export class CreateWatchListDto {
   @IsString()
   readonly episodeName: string;
 
-  @ApiProperty({ description: 'Ordem do episódio' })
-  @IsNotEmpty({ message: 'A ordem não pode estar vazia' })
-  @IsNumber()
-  readonly order: number;
+  @ApiProperty({ description: 'Tipo do filme' })
+  @IsNotEmpty({ message: 'O tipo do filme precisa ser informado' })
+  @IsString()
+  readonly type: string;
 }

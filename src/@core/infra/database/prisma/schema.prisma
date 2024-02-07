@@ -170,7 +170,7 @@ model WatchList {
   thumbnailUrl String
   episodeId    Int
   episodeName  String
-  order        Int
+  type         String
   user         Users    @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   userId       Int
   createdAt    DateTime @default(now())
