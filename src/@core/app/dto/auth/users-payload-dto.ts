@@ -14,6 +14,12 @@ export class UsersPayloadDto {
   readonly profile: string;
 
   @IsString()
+  readonly title: string;
+
+  @IsString()
+  readonly color: string;
+
+  @IsString()
   readonly role: string;
 
   @IsString()
