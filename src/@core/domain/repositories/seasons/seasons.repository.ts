@@ -8,6 +8,7 @@ export class SeasonsRepository {
 
   async findAll() {
     return this.prisma.seasons.findMany({
+      orderBy: [{ id: 'desc' }, { order: 'asc' }],
       select: {
         id: true,
         name: true,
