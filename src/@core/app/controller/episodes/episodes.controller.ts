@@ -26,9 +26,9 @@ export class EpisodesController {
 
   @Public()
   @Get('newest')
-  async findTop14Newest(@Res() res) {
+  async findLastNewest(@Res() res) {
     try {
-      const episodes = await this.episodesService.findTop12Newest();
+      const episodes = await this.episodesService.findLastNewest();
       return res.status(HttpStatus.OK).send(episodes);
     } catch (error) {
       return res

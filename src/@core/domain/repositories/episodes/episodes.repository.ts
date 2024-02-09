@@ -9,7 +9,7 @@ export class EpisodesRepository {
   async findAll() {
     const episodes = await this.prisma.episodes.findMany({
       where: {},
-      orderBy: [{ id: 'asc' }, { episodeOrder: 'asc' }],
+      orderBy: [{ id: 'desc' }, { episodeOrder: 'asc' }],
       select: {
         id: true,
         name: true,
@@ -60,7 +60,7 @@ export class EpisodesRepository {
     return formattedLikes;
   }
 
-  async findTop12Newest() {
+  async findLastNewest() {
     return await this.prisma.episodes.findMany({
       where: {},
       select: {
@@ -87,7 +87,6 @@ export class EpisodesRepository {
           },
         },
       },
-      take: 12,
       orderBy: [{ updatedAt: 'desc' }, { createdAt: 'desc' }],
     });
   }
