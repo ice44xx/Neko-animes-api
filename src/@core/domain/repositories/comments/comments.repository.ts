@@ -28,6 +28,7 @@ export class CommentsRepository {
                 profile: true,
                 color: true,
                 title: true,
+                role: true,
               },
             },
           },
@@ -39,6 +40,7 @@ export class CommentsRepository {
             profile: true,
             title: true,
             color: true,
+            role: true,
           },
         },
       },
@@ -47,8 +49,10 @@ export class CommentsRepository {
     const formattedLikes = comments.map((comment) => ({
       ...comment,
       likes: comment.likes.length,
+      users: { ...comment.users, role: comment.users.role.name },
       responses: comment.responses.map((response) => ({
         ...response,
+        users: { ...response.users, role: response.users.role.name },
         likes: response.likes.length,
       })),
     }));
@@ -78,6 +82,7 @@ export class CommentsRepository {
                 profile: true,
                 color: true,
                 title: true,
+                role: true,
               },
             },
           },
@@ -89,6 +94,7 @@ export class CommentsRepository {
             profile: true,
             title: true,
             color: true,
+            role: true,
           },
         },
       },
@@ -96,9 +102,11 @@ export class CommentsRepository {
 
     const formattedLikes = comments.map((comment) => ({
       ...comment,
+      users: { ...comment.users, role: comment.users.role.name },
       likes: comment.likes.length,
       responses: comment.responses.map((response) => ({
         ...response,
+        users: { ...response.users, role: response.users.role.name },
         likes: response.likes.length,
       })),
     }));
@@ -128,6 +136,7 @@ export class CommentsRepository {
                 profile: true,
                 color: true,
                 title: true,
+                role: true,
               },
             },
           },
@@ -139,6 +148,7 @@ export class CommentsRepository {
             profile: true,
             title: true,
             color: true,
+            role: true,
           },
         },
       },
@@ -146,9 +156,11 @@ export class CommentsRepository {
 
     const formattedLikes = comments.map((comment) => ({
       ...comment,
+      users: { ...comment.users, role: comment.users.role.name },
       likes: comment.likes.length,
       responses: comment.responses.map((response) => ({
         ...response,
+        users: { ...response.users, role: response.users.role.name },
         likes: response.likes.length,
       })),
     }));
