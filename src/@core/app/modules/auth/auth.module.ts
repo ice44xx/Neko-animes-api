@@ -19,7 +19,7 @@ import { EnvConfigService } from 'src/@core/infra/env-config/env-config.service'
       inject: [EnvConfigService],
       useFactory: async (envConfigService: EnvConfigService) => ({
         secret: envConfigService.getJwtSecret(),
-        signOptions: { expiresIn: '24h' },
+        signOptions: { expiresIn: envConfigService.getJwtExpiresInSeconds() },
       }),
     }),
   ],
