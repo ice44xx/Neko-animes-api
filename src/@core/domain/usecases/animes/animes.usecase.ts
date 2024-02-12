@@ -164,6 +164,7 @@ export class AnimesUseCase {
       categories: {
         set: categories.map((category) => ({ name: category.name })),
       },
+      updatedAt: new Date(),
     });
 
     return {

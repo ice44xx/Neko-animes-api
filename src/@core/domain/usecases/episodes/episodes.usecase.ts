@@ -84,6 +84,7 @@ export class EpisodesUseCase {
     const episodeUpdate = await this.episodesRepository.update(episodeId, {
       name: nameLower,
       seasons: { connect: { id: seasonId } },
+      updatedAt: new Date(),
       ...episodesData,
     });
 

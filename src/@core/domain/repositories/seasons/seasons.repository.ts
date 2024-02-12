@@ -37,6 +37,7 @@ export class SeasonsRepository {
   async findByName(name: string) {
     return this.prisma.seasons.findMany({
       where: { name: { contains: name, mode: 'insensitive' } },
+      orderBy: [{ updatedAt: 'desc' }, { createdAt: 'desc' }],
       select: {
         id: true,
         name: true,
