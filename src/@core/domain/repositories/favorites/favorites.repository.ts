@@ -9,6 +9,7 @@ export class FavoritesRepository {
   async findAllFavoritesUser(userId: number) {
     const favorites = await this.prisma.favorites.findMany({
       where: { userId },
+      orderBy: [{ updatedAt: 'desc' }, { createdAt: 'desc' }],
       select: {
         animes: true,
         favorite: true,
