@@ -26,6 +26,7 @@ export class EpisodesRepository {
               select: {
                 id: true,
                 name: true,
+                background: true,
               },
             },
           },
