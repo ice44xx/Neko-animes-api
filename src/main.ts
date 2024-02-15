@@ -3,7 +3,6 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
-import { generateSeeds } from './@core/infra/database/prisma/seeders/generator.seed';
 import { FastifyAdapter, NestFastifyApplication } from '@nestjs/platform-fastify';
 import { EnvConfigService } from './@core/infra/env-config/env-config.service';
 

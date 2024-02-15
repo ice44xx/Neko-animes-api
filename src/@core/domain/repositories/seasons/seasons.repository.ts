@@ -47,6 +47,7 @@ export class SeasonsRepository {
             name: true,
             synopsis: true,
             thumbnailUrl: true,
+            background: true,
             status: true,
           },
         },
