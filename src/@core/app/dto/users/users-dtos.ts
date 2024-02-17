@@ -11,5 +11,11 @@ export class UsersDto {
   readonly email?: string;
 
   @IsString()
+  readonly color?: string;
+
+  @IsString()
+  readonly title?: string;
+
+  @IsString()
   readonly password?: string;
 }

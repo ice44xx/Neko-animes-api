@@ -25,7 +25,7 @@ export class CreateUsersDto {
   @Transform(({ value }) => new Date(value))
   readonly birthday: Date;
 
-  @ApiProperty({ description: 'Cor do usuário', example: '#white' })
+  @ApiProperty({ description: 'Cor do usuário', example: '#FFFF' })
   @IsString()
   @IsOptional()
   readonly color?: string;

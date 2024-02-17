@@ -10,20 +10,31 @@ export class UpdateAdminsDto {
   @IsString()
   readonly userName: string;
 
-  @ApiProperty({ description: 'Email do administrador', example: 'example@example.com' })
+  @ApiProperty({ description: 'Email do usuário', example: 'example@example.com' })
   @IsNotEmpty({ message: 'O email é obrigatório' })
   @IsEmail({}, { message: 'O email fornecido é inválido' })
   @IsString()
   readonly email: string;
 
-  @ApiProperty({ description: 'Data de aniversário do administrador', example: '1990-01-01' })
+  @ApiProperty({ description: 'Data de aniversário do usuário', example: '1990-01-01' })
   @IsDate()
   @Transform(({ value }) => new Date(value))
   readonly birthday: Date;
 
+  @ApiProperty({ description: 'Foto de perfil do usuário' })
   @IsString()
   @IsOptional()
   readonly profile: string;
+
+  @ApiProperty({ description: 'Cor do usuário', example: '#FFFFF' })
+  @IsString()
+  @IsOptional()
+  readonly color: string;
+
+  @ApiProperty({ description: 'Título do usuário', example: 'Oni supremo' })
+  @IsString()
+  @IsOptional()
+  readonly title: string;
 
   @ApiProperty({ description: 'ID da função do administrador', example: 1 })
   @IsNotEmpty({ message: 'A role é obrigatório' })

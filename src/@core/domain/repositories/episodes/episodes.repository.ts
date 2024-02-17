@@ -120,6 +120,7 @@ export class EpisodesRepository {
               select: {
                 id: true,
                 name: true,
+                background: true,
               },
             },
           },
@@ -180,6 +181,7 @@ export class EpisodesRepository {
                 id: true,
                 name: true,
                 types: true,
+                background: true,
               },
             },
           },
