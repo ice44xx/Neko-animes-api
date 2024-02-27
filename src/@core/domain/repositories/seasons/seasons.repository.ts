@@ -84,6 +84,9 @@ export class SeasonsRepository {
           },
         },
         episodes: {
+          orderBy: {
+            episodeOrder: 'asc',
+          },
           select: {
             id: true,
             name: true,
