@@ -19,6 +19,9 @@ export class TypesAnimesRepository {
       where: { name },
       select: {
         animes: {
+          orderBy: {
+            createdAt: 'desc',
+          },
           select: {
             id: true,
             name: true,

@@ -7,6 +7,9 @@
   "license": "UNLICENSED",
   "scripts": {
     "build": "nest build",
+    "migrate:dev": "npx prisma migrate dev --schema ./src/@core/infra/database/prisma/schema.prisma",
+    "migrate:generate": "npx prisma generate  --schema ./src/@core/infra/database/prisma/schema.prisma",
+    "migrate:deploy": "npx prisma migrate deploy --schema ./src/@core/infra/database/prisma/schema.prisma",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start",
     "start:dev": "dotenv nest start -e.env.development --watch",
